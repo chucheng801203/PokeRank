@@ -13,6 +13,26 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $this->call([
+            AbilitySeeder::class,
+            ItemSeeder::class,
+            TypeSeeder::class,
+            PokemonSeeder::class,
+            PokeformSeeder::class,
+            PoketypeSeeder::class,
+            MoveSeeder::class,
+            NatureSeeder::class,
+            RankSeasonListSeeder::class,
+            RankAbilitySeeder::class,
+            RankItemSeeder::class,
+            RankLoseMoveSeeder::class,
+            RankLosePokemonSeeder::class,
+            RankMoveSeeder::class,
+            RankNatureSeeder::class,
+            RankPokemonSeeder::class,
+            RankTopPokemonSeeder::class,
+            RankWinMoveSeeder::class,
+            RankWinPokemonSeeder::class,
+        ]);
     }
 }

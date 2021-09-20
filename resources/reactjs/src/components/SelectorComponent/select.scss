@@ -1,0 +1,120 @@
+.pr-select {
+    font-size: 1rem;
+    display: block;
+    line-height: inherit;
+
+    &-selector {
+        position: relative;
+        width: 100%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        border: none;
+        border-radius: 0.25em;
+        padding: 0.4em 2em 0.4em 0.6em;
+        line-height: inherit;
+        cursor: pointer;
+        -webkit-user-select: none;
+        user-select: none;
+        overflow: hidden;
+        background-color: #1b1b1b;
+        outline: none;
+        transition: 0.15s;
+        box-shadow: 0 0 0 0 rgb(107, 107, 107);
+        color: #d6d6d6;
+
+        &:focus,
+        &:active,
+        &-focus {
+            box-shadow: 0 0 0 3px rgb(107, 107, 107) !important;
+        }
+    }
+
+    &-selector-suIcon {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1.5em;
+        height: 1.5em;
+        overflow: hidden;
+        & > * {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    }
+
+    &-selector-suIcon {
+        right: 0.3em;
+    }
+
+    &-selector-placeholder {
+        color: #9e9e9e;
+    }
+}
+
+.pr-input-select {
+    position: relative;
+    width: 360px;
+    line-height: inherit;
+
+    .pr-input-select-selector-focus {
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3) !important;
+    }
+
+    &-icon-btn {
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background-color: #1a1a1a;
+        border-radius: 0 4px 4px 0;
+    }
+}
+
+.pr-select-popup-list {
+    background-color: #1b1b1b;
+    border: none;
+    border-radius: 0.25em;
+    padding: 4px 0;
+    box-shadow: 0 0 0 3px rgb(107, 107, 107);
+    transform-origin: 50% 0;
+    max-height: 16em;
+    overflow: auto;
+    animation: show-pr-select-popup-list 0.15s linear;
+}
+
+.pr-select-popup-listItem {
+    line-height: inherit;
+    -webkit-user-select: none;
+    user-select: none;
+    transition: background-color 0.15s;
+    cursor: pointer;
+
+    & > * {
+        // display: block;
+        // width: 100%;
+        // height: 100%;
+        // padding: 0.4em 0.6em;
+        // color: #d6d6d6;
+        // text-decoration: none;
+    }
+
+    &-selected {
+        background-color: #5a5a5a;
+    }
+
+    &:hover {
+        background-color: #6b6b6b;
+    }
+}
+
+@keyframes show-pr-select-popup-list {
+    from {
+        opacity: 0.4;
+        transform: scaleY(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: scaleY(1);
+    }
+}

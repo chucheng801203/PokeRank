@@ -1,0 +1,13 @@
+.pr-select-popup-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    z-index: 1000;
+    font-size: 1rem;
+
+    .pr-select-popup-container {
+        display: none;
+    }
+}

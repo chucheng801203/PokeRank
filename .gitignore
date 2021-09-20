@@ -13,3 +13,6 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+
+# 前端 js 編譯生成的檔案
+/public/static
