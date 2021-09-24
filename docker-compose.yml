@@ -14,7 +14,7 @@ services:
       MYSQL_USER: pokerank
       MYSQL_PASSWORD: 67d29e7a9ec377bc9757172778bc03ef
       MYSQL_DATABASE: PokeRank
-      MYSQL_DOMAIN_NAME: mysql
+      MYSQL_HOSTNAME: mysql
     networks:
       - app-network
     deploy:
@@ -33,7 +33,7 @@ services:
     volumes:
       - .:/var/www/PokeRank
     environment:
-      PHPFPM_DOMAIN_NAME: phpfpm
+      PHPFPM_HOSTNAME: phpfpm
     networks:
       - app-network
     deploy:
