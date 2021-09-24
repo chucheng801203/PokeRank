@@ -1,0 +1,72 @@
+version: "3.9"
+services:
+  app:
+    container_name: phpfpm
+    build:
+      context: .
+      dockerfile: ./docker/phpfpm/Dockerfile
+    restart: always
+    ports:
+      - "9000:9000"
+    volumes:
+      - .:/var/www/PokeRank
+    environment:
+      MYSQL_USER: pokerank
+      MYSQL_PASSWORD: 67d29e7a9ec377bc9757172778bc03ef
+      MYSQL_DATABASE: PokeRank
+      MYSQL_DOMAIN_NAME: mysql
+    networks:
+      - app-network
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 50M
+  webserver:
+    container_name: nginx
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - .:/var/www/PokeRank
+    environment:
+      PHPFPM_DOMAIN_NAME: phpfpm
+    networks:
+      - app-network
+    deploy:
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 50M
+  db:
+    container_name: mysql
+    image: mysql:8.0.19
+    command: |
+      --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: yes
+      MYSQL_DATABASE: PokeRank
+      MYSQL_USER: pokerank
+      MYSQL_PASSWORD: 67d29e7a9ec377bc9757172778bc03ef
+    networks:
+      - app-network
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 500M
+networks:
+  app-network:
+    driver: bridge
+volumes:
+  dbdata:
+    driver: local
+      
