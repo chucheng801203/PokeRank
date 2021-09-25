@@ -5,6 +5,18 @@ services:
     build:
       context: .
       dockerfile: ./docker/dev/phpfpm/Dockerfile
+    command:
+      - bash
+      - "-c"
+      - |
+        cp /var/www/PokeRank/.env.example /var/www/PokeRank/.env
+
+        composer install
+
+        php artisan key:generate
+        php artisan storage:link
+
+        php-fpm
     restart: always
     ports:
       - "9000:9000"
@@ -17,11 +29,6 @@ services:
       MYSQL_PASSWORD: 67d29e7a9ec377bc9757172778bc03ef
     networks:
       - app-network
-    deploy:
-      resources:
-        limits:
-          cpus: '0.1'
-          memory: 50M
   webserver:
     container_name: nginx
     build:
@@ -36,11 +43,6 @@ services:
       PHPFPM_HOSTNAME: phpfpm
     networks:
       - app-network
-    deploy:
-      resources:
-        limits:
-          cpus: '0.05'
-          memory: 50M
   db:
     container_name: mysql
     image: mysql:8.0.19
@@ -58,11 +60,17 @@ services:
       MYSQL_PASSWORD: 67d29e7a9ec377bc9757172778bc03ef
     networks:
       - app-network
-    deploy:
-      resources:
-        limits:
-          cpus: '0.1'
-          memory: 500M
+  node:
+    container_name: node
+    image: node:16.10.0
+    command:
+      - bash
+      - "-c"
+      - |
+        cd /PokeRank/resources/reactjs && npm install && npm run watch
+    restart: always
+    volumes:
+      - .:/PokeRank
 networks:
   app-network:
     driver: bridge
