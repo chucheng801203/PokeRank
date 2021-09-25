@@ -4,17 +4,37 @@ services:
     container_name: phpfpm
     build:
       context: .
-      dockerfile: ./docker/dev/phpfpm/Dockerfile
+      dockerfile: ./docker/prod/phpfpm/Dockerfile
+    depends_on:
+      - db
+    command:
+      - bash
+      - "-c"
+      - |
+        mv /PokeRank/* /var/www/PokeRank
+        mv /PokeRank/.* /var/www/PokeRank
+        cp /var/www/PokeRank/.env.example /var/www/PokeRank/.env
+
+        chown -R www-data:www-data /var/www/PokeRank
+        chmod -R 755 /var/www/PokeRank
+
+        php artisan key:generate
+        php artisan storage:link
+        php artisan config:cache
+        php artisan route:cache
+        php artisan view:cache
+
+        php-fpm
     restart: always
     ports:
       - "9000:9000"
     volumes:
-      - .:/var/www/PokeRank
+      - webapp:/var/www/PokeRank
     environment:
       MYSQL_HOSTNAME: mysql
-      MYSQL_DATABASE: PokeRank
-      MYSQL_USER: pokerank
-      MYSQL_PASSWORD: 67d29e7a9ec377bc9757172778bc03ef
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     networks:
       - app-network
     deploy:
@@ -26,12 +46,14 @@ services:
     container_name: nginx
     build:
       context: .
-      dockerfile: ./docker/dev/nginx/Dockerfile
+      dockerfile: ./docker/prod/nginx/Dockerfile
+    depends_on:
+      - app
     restart: always
     ports:
       - "80:80"
     volumes:
-      - .:/var/www/PokeRank
+      - webapp:/var/www/PokeRank
     environment:
       PHPFPM_HOSTNAME: phpfpm
     networks:
@@ -53,9 +75,9 @@ services:
       - dbdata:/var/lib/mysql
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: yes
-      MYSQL_DATABASE: PokeRank
-      MYSQL_USER: pokerank
-      MYSQL_PASSWORD: 67d29e7a9ec377bc9757172778bc03ef
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     networks:
       - app-network
     deploy:
@@ -68,5 +90,7 @@ networks:
     driver: bridge
 volumes:
   dbdata:
+    driver: local
+  webapp:
     driver: local
       
