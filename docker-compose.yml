@@ -11,10 +11,10 @@ services:
     volumes:
       - .:/var/www/PokeRank
     environment:
-      MYSQL_USER: pokerank
-      MYSQL_PASSWORD: 67d29e7a9ec377bc9757172778bc03ef
-      MYSQL_DATABASE: PokeRank
       MYSQL_HOSTNAME: mysql
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     networks:
       - app-network
     deploy:
@@ -53,9 +53,9 @@ services:
       - dbdata:/var/lib/mysql
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: yes
-      MYSQL_DATABASE: PokeRank
-      MYSQL_USER: pokerank
-      MYSQL_PASSWORD: 67d29e7a9ec377bc9757172778bc03ef
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     networks:
       - app-network
     deploy:
