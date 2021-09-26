@@ -1,7 +1,4 @@
-declare module "*.svg" {
-    const content: any;
-    export default content;
-}
+/// <reference types="react-scripts" />
 
 declare module "*.css" {
     const content: any;
