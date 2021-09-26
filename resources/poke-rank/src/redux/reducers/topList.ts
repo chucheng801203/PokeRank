@@ -11,6 +11,7 @@ export type TopListState = {
     };
 };
 
+/* eslint import/no-anonymous-default-export: [2, {"allowArrowFunction": true}] */
 export default (
     state: TopListState = {},
     action: TopListAction

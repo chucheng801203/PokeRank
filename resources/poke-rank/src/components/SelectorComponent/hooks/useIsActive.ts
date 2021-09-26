@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 import { contains } from "../../../util";
 
-type useIsActive = (
+const useIsActive: (
     selectorRef: React.RefObject<HTMLDivElement>
-) => [boolean, React.Dispatch<React.SetStateAction<boolean>>];
-
-const useIsActive: useIsActive = (selectorRef) => {
+) => [boolean, React.Dispatch<React.SetStateAction<boolean>>] = (selectorRef) => {
     const [isActive, setIsActive] = useState<boolean>(false);
 
     const hidePopupList = () => {

@@ -3,19 +3,17 @@ import { useSelector } from "react-redux";
 import { useHistory, Link } from "react-router-dom";
 import PmSelectListItem from "./PmSelectListItem";
 import { getSeasonState, getRuleState } from "../redux/selectors";
-import styles from "./index.scss";
+import styles from "./index.module.scss";
 import arrowBackIcon from "../images/arrow_back_black_24dp.svg";
 
-type PokemonSelectorPage = React.FC<{
+const PokemonSelectorPage: React.FC<{
     value?: string;
     pokemonOptions?: Array<{
         id: number;
         name: string;
     }>;
     onChange?: (v: string) => void;
-}>;
-
-const PokemonSelectorPage: PokemonSelectorPage = ({
+}> = ({
     value,
     pokemonOptions,
     onChange,

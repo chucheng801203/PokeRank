@@ -2,7 +2,7 @@ import React from "react";
 import { DefaultSelector, Option } from "../components/SelectorComponent";
 import { SelectValue } from "./SelectorComponent/DefaultSelector";
 
-export type SelectorProps = {
+const Selector: React.FC<{
     value: SelectValue;
     onChange: (v: SelectValue) => void;
     optionData: Array<{
@@ -10,11 +10,7 @@ export type SelectorProps = {
         text: string;
     }>;
     [otherProps: string]: any;
-};
-
-type Selector = React.FC<SelectorProps>;
-
-const Selector: Selector = ({ value, onChange, optionData, ...otherProps }) => {
+}> = ({ value, onChange, optionData, ...otherProps }) => {
     return (
         <DefaultSelector value={value} onChange={onChange} {...otherProps}>
             {optionData.map((option, i) => (

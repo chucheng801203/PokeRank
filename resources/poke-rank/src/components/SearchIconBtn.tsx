@@ -1,15 +1,11 @@
 import React from "react";
-import styles from "./index.scss";
+import styles from "./index.module.scss";
 import searchIcon from "../images/search_black_24dp.svg";
 
-export interface SearchIconProps {
+const SearchIconBtn: React.FC<{
     className?: string;
     [otherProps: string]: any;
-}
-
-type SearchIconBtn = React.FC<SearchIconProps>;
-
-const SearchIconBtn: SearchIconBtn = ({ className = "", ...otherProps }) => {
+}> = ({ className = "", ...otherProps }) => {
     return (
         <button
             className={`${styles["search-icon-btn"]} ${className}`}

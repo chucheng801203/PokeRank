@@ -3,38 +3,30 @@ import { Link, useLocation } from "react-router-dom";
 import PmTypeBlock from "./PmTypeBlock";
 import LoadingBlock from "./LoadingBlock";
 import PrContext, { PR_DATA } from "../PrContext";
-import bootstrap from "bootstrap/dist/css/bootstrap-grid.min.css";
-import styles from "./index.scss";
+import styles from "./index.module.scss";
 
-type PmInfoBlock = React.FC<{
-    pmId?: number;
-    formId?: number;
-    pmRank?: number;
-    isLoading?: boolean;
-}>;
-
-const LoadingMode = (prData: PR_DATA) => (
+const LoadingMode = (prData: typeof PR_DATA) => (
     <div className={styles["pr-info-block"]}>
-        <div className={`${bootstrap["d-sm-flex"]} ${bootstrap["mb-3"]}`}>
+        <div className="d-sm-flex mb-3">
             <div
-                className={`${bootstrap["d-flex"]} ${bootstrap["align-items-center"]} ${bootstrap["mr-sm-auto"]} ${bootstrap["mb-2"]} ${bootstrap["mb-sm-0"]}`}
+                className="d-flex align-items-center mr-sm-auto mb-2 mb-sm-0"
             >
                 <LoadingBlock
-                    className={`${styles["info-loading-name"]} ${bootstrap["mr-2"]}`}
+                    className={`${styles["info-loading-name"]} mr-2`}
                 />
                 <LoadingBlock
-                    className={`${styles["info-loading-rank"]} ${bootstrap["mr-auto"]}`}
+                    className={`${styles["info-loading-rank"]} mr-auto`}
                 />
             </div>
             <div
-                className={`${bootstrap["d-flex"]} ${bootstrap["align-items-center"]}`}
+                className="d-flex align-items-center"
             >
                 <LoadingBlock className={styles["info-type"]} />
                 <LoadingBlock className={styles["info-type"]} />
             </div>
         </div>
         <div
-            className={`${bootstrap["d-flex"]} ${bootstrap["flex-wrap"]} ${bootstrap["mb-3"]}`}
+            className="d-flex flex-wrap mb-3"
         >
             <LoadingBlock className={styles["info-img"]} />
         </div>
@@ -61,7 +53,12 @@ const LoadingMode = (prData: PR_DATA) => (
     </div>
 );
 
-const PmInfoBlock: PmInfoBlock = ({ pmId, formId, pmRank, isLoading }) => {
+const PmInfoBlock: React.FC<{
+    pmId?: number;
+    formId?: number;
+    pmRank?: number;
+    isLoading?: boolean;
+}> = ({ pmId, formId, pmRank, isLoading }) => {
     const prData = useContext(PrContext);
 
     const location = useLocation();
@@ -91,21 +88,21 @@ const PmInfoBlock: PmInfoBlock = ({ pmId, formId, pmRank, isLoading }) => {
 
     return (
         <div className={styles["pr-info-block"]}>
-            <div className={`${bootstrap["d-sm-flex"]} ${bootstrap["mb-3"]}`}>
+            <div className="d-sm-flex mb-3">
                 <div
-                    className={`${bootstrap["d-flex"]} ${bootstrap["align-items-center"]} ${bootstrap["mr-sm-auto"]} ${bootstrap["mb-2"]} ${bootstrap["mb-sm-0"]}`}
+                    className="d-flex align-items-center mr-sm-auto mb-2 mb-sm-0"
                 >
                     <h1
-                        className={`${styles["info-name"]} ${bootstrap["mr-2"]}`}
+                        className={`${styles["info-name"]} mr-2`}
                     >
                         {`No. ${pmId}`} {prData.pokemon[pmId]}
                     </h1>
-                    <div className={bootstrap["mr-auto"]}>
+                    <div className="mr-auto">
                         {typeof pmRank === "number" && `# ${pmRank + 1}`}
                     </div>
                 </div>
                 <div
-                    className={`${bootstrap["d-flex"]} ${bootstrap["align-items-center"]}`}
+                    className="d-flex align-items-center"
                 >
                     {prData.pokemon_types[pmId][formId].map((v, i) => (
                         <PmTypeBlock
@@ -117,7 +114,7 @@ const PmInfoBlock: PmInfoBlock = ({ pmId, formId, pmRank, isLoading }) => {
                 </div>
             </div>
             <div
-                className={`${bootstrap["d-flex"]} ${bootstrap["flex-wrap"]} ${bootstrap["mb-3"]}`}
+                className="d-flex flex-wrap mb-3"
             >
                 {prData.pokemon_types[pmId].map((v, i) => (
                     <Link key={i} to={`/${pmId}/${i}${location.search}`}>

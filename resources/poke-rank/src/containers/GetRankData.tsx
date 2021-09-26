@@ -13,18 +13,26 @@ import {
 } from "../redux/selectors";
 import PrContext from "../PrContext";
 import { defaultState } from "../redux/store";
-import bootstrap from "bootstrap/dist/css/bootstrap-grid.min.css";
-
-export type PokemonDetailUrlParams = {
-    pmId: string;
-    formId: string;
-};
 
 const GetRankData: React.FC = () => {
-    const { pmId, formId } = useParams<PokemonDetailUrlParams>();
+    const { pmId, formId } = useParams<{
+        pmId: string;
+        formId: string;
+    }>();
+    const historyState = useHistory();
+    const prData = useContext(PrContext);
+    const dispatch = useDispatch();
+    const season = useSelector(getSeasonState);
+    const rule = useSelector(getRuleState);
+    const rankData = useSelector(getRankDataState);
+
+    useEffect(() => {
+        if (shouldLoading) dispatch(rankDataAction(pmIdNum));
+
+        window.scroll(0, 0);
+    });
 
     if (!/^\d+$/.test(pmId) || !/^\d+$/.test(formId)) {
-        const historyState = useHistory();
         const { rule, season } = defaultState;
 
         historyState.replace("", {
@@ -35,15 +43,8 @@ const GetRankData: React.FC = () => {
         return null;
     }
 
-    const prData = useContext(PrContext);
-
     const pmIdNum = parseInt(pmId);
     const formIdNum = parseInt(formId);
-
-    const dispatch = useDispatch();
-    const season = useSelector(getSeasonState);
-    const rule = useSelector(getRuleState);
-    const rankData = useSelector(getRankDataState);
 
     const currentRankData = rankData[season[0].value as number];
     const now = Date.now();
@@ -52,12 +53,6 @@ const GetRankData: React.FC = () => {
         !currentRankData ||
         !currentRankData[pmIdNum] ||
         now > currentRankData[pmIdNum].expires;
-
-    useEffect(() => {
-        if (shouldLoading) dispatch(rankDataAction(pmIdNum));
-
-        window.scroll(0, 0);
-    });
 
     let pmInfo: React.ReactNode;
     let teamPokemons: React.ReactNode;
@@ -337,10 +332,10 @@ const GetRankData: React.FC = () => {
         <>
             {pmInfo}
 
-            <div className={`${bootstrap["row"]}`}>
+            <div className="row">
                 {teamPokemons && (
                     <div
-                        className={`${bootstrap["col-12"]} ${bootstrap["col-md-6"]} ${bootstrap["col-xl-4"]} ${bootstrap["mb-3"]}`}
+                        className="col-12 col-md-6 col-xl-4 mb-3"
                     >
                         <PmList listTitle="一起加入對戰隊伍的寶可夢TOP10">
                             {teamPokemons}
@@ -349,16 +344,16 @@ const GetRankData: React.FC = () => {
                 )}
 
                 <div
-                    className={`${bootstrap["col-12"]} ${bootstrap["col-md-6"]} ${bootstrap["col-xl-8"]}`}
+                    className="col-12 col-md-6 col-xl-8"
                 >
-                    <div className={bootstrap["row"]}>
+                    <div className="row">
                         {(move || nature) && (
                             <div
-                                className={`${bootstrap["col-12"]} ${bootstrap["col-xl-6"]}`}
+                                className="col-12 col-xl-6"
                             >
                                 {move && (
                                     <PmList
-                                        className={bootstrap["mb-3"]}
+                                        className="mb-3"
                                         listTitle="招式"
                                     >
                                         {move}
@@ -367,7 +362,7 @@ const GetRankData: React.FC = () => {
 
                                 {nature && (
                                     <PmList
-                                        className={bootstrap["mb-3"]}
+                                        className="mb-3"
                                         listTitle="性格"
                                     >
                                         {nature}
@@ -378,11 +373,11 @@ const GetRankData: React.FC = () => {
 
                         {(ability || item) && (
                             <div
-                                className={`${bootstrap["col-12"]} ${bootstrap["col-xl-6"]}`}
+                                className="col-12 col-xl-6"
                             >
                                 {ability && (
                                     <PmList
-                                        className={bootstrap["mb-3"]}
+                                        className="mb-3"
                                         listTitle="特性"
                                     >
                                         {ability}
@@ -391,7 +386,7 @@ const GetRankData: React.FC = () => {
 
                                 {item && (
                                     <PmList
-                                        className={bootstrap["mb-3"]}
+                                        className="mb-3"
                                         listTitle="道具"
                                     >
                                         {item}
@@ -405,15 +400,15 @@ const GetRankData: React.FC = () => {
 
             {(winPokemons || winMove) && (
                 <div
-                    className={bootstrap["mb-4"]}
+                    className="mb-4"
                     style={{ border: "1px solid #5e5e5e" }}
                 />
             )}
 
-            <div className={`${bootstrap["row"]}`}>
+            <div className="row">
                 {winPokemons && (
                     <div
-                        className={`${bootstrap["col-12"]} ${bootstrap["col-md-6"]} ${bootstrap["mb-3"]}`}
+                        className="col-12 col-md-6 mb-3"
                     >
                         <PmList listTitle="這隻寶可夢打倒的寶可夢TOP10">
                             {winPokemons}
@@ -423,7 +418,7 @@ const GetRankData: React.FC = () => {
 
                 {winMove && (
                     <div
-                        className={`${bootstrap["col-12"]} ${bootstrap["col-md-6"]} ${bootstrap["mb-3"]}`}
+                        className="col-12 col-md-6 mb-3"
                     >
                         <PmList listTitle="這隻寶可夢打倒對手時使用的招式TOP10">
                             {winMove}
@@ -434,15 +429,15 @@ const GetRankData: React.FC = () => {
 
             {(losePokemons || loseMove) && (
                 <div
-                    className={bootstrap["mb-4"]}
+                    className="mb-4"
                     style={{ border: "1px solid #5e5e5e" }}
                 />
             )}
 
-            <div className={`${bootstrap["row"]}`}>
+            <div className="row">
                 {losePokemons && (
                     <div
-                        className={`${bootstrap["col-12"]} ${bootstrap["col-md-6"]} ${bootstrap["mb-3"]}`}
+                        className="col-12 col-md-6 mb-3"
                     >
                         <PmList listTitle="打倒這隻寶可夢的寶可夢TOP10">
                             {losePokemons}
@@ -452,7 +447,7 @@ const GetRankData: React.FC = () => {
 
                 {loseMove && (
                     <div
-                        className={`${bootstrap["col-12"]} ${bootstrap["col-md-6"]} ${bootstrap["mb-3"]}`}
+                        className="col-12 col-md-6 mb-3"
                     >
                         <PmList listTitle="對手打倒這隻寶可夢時使用的招式TOP10">
                             {loseMove}

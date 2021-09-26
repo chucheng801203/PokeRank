@@ -8,11 +8,9 @@ import { RuleState } from "../redux/reducers/rule";
 import { SeasonState } from "../redux/reducers/season";
 import { defaultState } from "../redux/store";
 
-type HomePageLink = React.FC<{
+const HomePageLink: React.FC<{
     className?: string;
-}>;
-
-const HomePageLink: HomePageLink = ({ children, className }) => {
+}> = ({ children, className }) => {
     const dispatch = useDispatch();
     const history = useHistory();
     const location = useLocation<{ rule: RuleState; season: SeasonState }>();
@@ -51,7 +49,7 @@ const HomePageLink: HomePageLink = ({ children, className }) => {
     };
 
     return (
-        <a className={className} onClick={onClick}>
+        <a className={className} onClick={onClick} href="/#">
             {children}
         </a>
     );

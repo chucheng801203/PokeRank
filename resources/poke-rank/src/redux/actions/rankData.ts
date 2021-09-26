@@ -125,11 +125,9 @@ export const rankDataCheck = (rankData: any) => {
     return true;
 };
 
-type getRankData = (
+const getRankData: (
     pmId: number
-) => ThunkAction<void, RootState, unknown, RankDataAction>;
-
-const getRankData: getRankData = (pmId) => (dispatch, getState) => {
+) => ThunkAction<void, RootState, unknown, RankDataAction> = (pmId) => (dispatch, getState) => {
     const state = getState();
     const url = `/api/rank/pokemon/${state.season[0].value}/${pmId}`;
 

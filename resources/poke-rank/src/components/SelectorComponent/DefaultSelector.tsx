@@ -3,7 +3,7 @@ import Popup from "../PopupComponent";
 import { convertNodeToOption } from "./Option";
 import OptionList from "./OptionList";
 import useIsActive from "./hooks/useIsActive";
-import selectStyle from "./select.scss";
+import selectStyle from "./select.module.scss";
 import expandMoreIcon from "../../images/expand_more_black_24dp.svg";
 
 export type SelectValue = Array<{
@@ -62,15 +62,15 @@ const DefaultSelector: React.FC<DefaultSelectorProps> = ({
         getCurrentValue()
     );
 
-    useEffect(() => {
-        const nextValue = getCurrentValue();
+    const nextValue = getCurrentValue();
 
+    useEffect(() => {
         if (
             nextValue.length > 0 &&
             nextValue[0].index !== currentValue[0].index
         )
             setCurrentValue(nextValue);
-    });
+    }, [nextValue, currentValue]);
 
     const selectorRef = useRef<HTMLDivElement>(null);
 

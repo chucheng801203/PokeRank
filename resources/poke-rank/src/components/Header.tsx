@@ -5,15 +5,14 @@ import PokemonSelector from "../containers/PokemonSelector";
 import SearchIconBtn from "./SearchIconBtn";
 import RuleSelector from "../containers/RuleSelector";
 import SeasonSelector from "../containers/SeasonSelector";
-import bootstrap from "bootstrap/dist/css/bootstrap-grid.min.css";
-import styles from "./index.scss";
+import styles from "./index.module.scss";
 
 const Header: React.FC = () => (
     <nav
-        className={`${styles["pr-header"]} ${bootstrap["container-fluid"]} ${bootstrap["d-flex"]} ${bootstrap["align-items-center"]}`}
+        className={`${styles["pr-header"]} container-fluid d-flex align-items-center`}
     >
         <div
-            className={`${bootstrap["container"]} ${bootstrap["d-flex"]} ${bootstrap["align-items-center"]}`}
+            className="container d-flex align-items-center"
             style={{ lineHeight: "1.3" }}
         >
             <HomePageLink className={styles["pr-header-logo"]}>

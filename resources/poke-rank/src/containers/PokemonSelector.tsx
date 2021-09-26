@@ -12,13 +12,11 @@ import {
 } from "../redux/selectors";
 import PrContext from "../PrContext";
 
-type PokemonInputSelector = React.FC<{
+const PokemonInputSelector: React.FC<{
     className?: string;
     SufixIconBtn?: React.ComponentType<any>;
     placeholder?: string;
-}>;
-
-const PokemonInputSelector: PokemonInputSelector = ({ ...props }) => {
+}> = ({ ...props }) => {
     const prData = useContext(PrContext);
 
     const dispatch = useDispatch();

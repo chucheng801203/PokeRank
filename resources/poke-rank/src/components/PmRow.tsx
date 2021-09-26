@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 import LoadingBlock from "./LoadingBlock";
 import PmTypeBlock from "./PmTypeBlock";
 import { getSeasonState, getRuleState } from "../redux/selectors";
-import styles from "./index.scss";
+import styles from "./index.module.scss";
 
-export interface PmRowProps {
+const PmRow: React.FC<{
     className?: string;
     isLoading?: boolean;
     pmRank?: number; // pokemon 排名
@@ -16,11 +16,7 @@ export interface PmRowProps {
     pmName?: string; // pokemon 名稱
     pmType?: Array<number>; // pokemon 屬性 id
     [otherProps: string]: any;
-}
-
-type PmRow = React.FC<PmRowProps>;
-
-const PmRow: PmRow = ({
+}> = ({
     isLoading,
     className = "",
     pmRank = 0,

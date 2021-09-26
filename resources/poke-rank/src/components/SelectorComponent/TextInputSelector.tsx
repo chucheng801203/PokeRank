@@ -4,7 +4,7 @@ import { SelectValue } from "./DefaultSelector";
 import { convertNodeToOption, OptionData } from "./Option";
 import OptionList from "./OptionList";
 import useIsActive from "./hooks/useIsActive";
-import selectStyle from "./select.scss";
+import selectStyle from "./select.module.scss";
 
 export type TextInputSelectorProps = {
     value?: string;
@@ -17,9 +17,7 @@ export type TextInputSelectorProps = {
     onSufixIconBtnClick?: (v: SelectValue) => void;
 };
 
-type TextInputSelector = React.FC<TextInputSelectorProps>;
-
-const TextInputSelector: TextInputSelector = ({
+const TextInputSelector: React.FC<TextInputSelectorProps> = ({
     value,
     placeholder,
     SufixIconBtn,
@@ -42,9 +40,9 @@ const TextInputSelector: TextInputSelector = ({
     );
 
     useEffect(() => {
-        if (value !== undefined && value !== currentValue)
+        if (value !== undefined)
             setCurrentValue(value);
-    });
+    }, [value]);
 
     const onInputChangeHandler = (v: string) => {
         setCurrentValue(v);
@@ -121,8 +119,6 @@ const TextInputSelector: TextInputSelector = ({
                 const v = getOptionListValue(optionListValueIndex);
 
                 if (!v || !v[0]) return;
-
-                const text = v[0].text.toString();
 
                 break;
             case "Escape":

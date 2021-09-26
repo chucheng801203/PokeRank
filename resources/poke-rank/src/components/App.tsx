@@ -8,14 +8,13 @@ import HistoryContainer from "../containers/HistoryContainer";
 import GetRankData from "../containers/GetRankData";
 import MobilePokemonSelector from "../containers/MobilePokemonSelector";
 import { defaultState } from "../redux/store";
-import bootstrap from "bootstrap/dist/css/bootstrap-grid.min.css";
-import styles from "./index.scss";
+import styles from "./index.module.scss";
 
 const App: React.FC = () => (
     <div className={styles["pr-app"]}>
         <HistoryContainer />
         <Header />
-        <div className={bootstrap["container"]}>
+        <div className="container">
             <div className={styles["pr-app-season-selector"]}>
                 <SeasonSelector />
             </div>

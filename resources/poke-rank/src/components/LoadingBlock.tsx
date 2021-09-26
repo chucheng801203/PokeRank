@@ -1,14 +1,10 @@
 import React from "react";
-import styles from "./index.scss";
+import styles from "./index.module.scss";
 
-export interface LoadingBlockProps {
+const LoadingBlock: React.FC<{
     className?: string;
     [otherProps: string]: any;
-}
-
-type LoadingBlock = React.FC<LoadingBlockProps>;
-
-const LoadingBlock: LoadingBlock = ({ className = "", ...otherProps }) => {
+}> = ({ className = "", ...otherProps }) => {
     return (
         <div
             className={`${styles["pr-loading-block"]} ${className}`}

@@ -44,9 +44,7 @@ export const topListTypeCheck = (topList: TopListResponse) => {
     return true;
 };
 
-type getTopList = ThunkAction<void, RootState, unknown, TopListAction>;
-
-const getTopList: getTopList = (dispatch, getState) => {
+const getTopList: ThunkAction<void, RootState, unknown, TopListAction> = (dispatch, getState) => {
     const state = getState();
     const url = `/api/rank/top150/${state.season[0].value}/${state.rule[0].value}`;
 

@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import OptionItem from "./OptionItem";
 import { SelectValue } from "./DefaultSelector";
 import { OptionData } from "./Option";
-import selectStyle from "./select.scss";
+import selectStyle from "./select.module.scss";
 
 export type OptionListProps = {
     selectorRef: React.RefObject<HTMLDivElement>;

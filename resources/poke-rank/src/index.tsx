@@ -9,6 +9,7 @@ import reportWebVitals from './reportWebVitals';
 import "react-app-polyfill/ie11";
 import "core-js/features/promise";
 import "core-js/features/array/includes";
+import "bootstrap/dist/css/bootstrap-grid.min.css";
 
 ReactDOM.render(
   <React.StrictMode>

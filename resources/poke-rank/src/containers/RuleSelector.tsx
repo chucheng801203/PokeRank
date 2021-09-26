@@ -8,12 +8,10 @@ import { getSeasonState, getRuleState } from "../redux/selectors";
 import PrContext from "../PrContext";
 import { getParameterByName } from "../util";
 
-type RuleSelector = React.FC<{
+const RuleSelector: React.FC<{
     className?: string;
     style?: React.CSSProperties;
-}>;
-
-const RuleSelector: RuleSelector = ({ className, style }) => {
+}> = ({ className, style }) => {
     const prData = useContext(PrContext);
     const season = useSelector(getSeasonState);
     const rule = useSelector(getRuleState);

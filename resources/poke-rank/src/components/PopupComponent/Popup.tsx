@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import PopupContainer from "./PopupContainer";
 import { checkParentHasFixedProp } from "../../util";
-import popupStyle from "./popup.scss";
+import popupStyle from "./popup.module.scss";
 
 export interface PopupProps {
     triggerRef: React.RefObject<HTMLDivElement>;

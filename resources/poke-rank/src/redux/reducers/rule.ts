@@ -5,6 +5,7 @@ export interface RuleState {
     value: number;
 }
 
+/* eslint import/no-anonymous-default-export: [2, {"allowArrowFunction": true}] */
 export default (
     state: Array<RuleState> = [],
     action: RuleAction

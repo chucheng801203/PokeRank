@@ -1,6 +1,6 @@
 import React from "react";
 
-export type PR_DATA = {
+export const PR_DATA: {
     rules: Array<{ value: number; text: string }>;
     seasons: Array<{
         value: number;
@@ -16,9 +16,7 @@ export type PR_DATA = {
     pokemon: { [id: number]: string };
     pokemon_types: Array<Array<Array<number>>>;
     type_weakness: Array<Array<number>>;
-};
-
-export const PR_DATA: PR_DATA = JSON.parse(
+} = JSON.parse(
     document.getElementById("__PR_DATA__")?.textContent as string
 );
 

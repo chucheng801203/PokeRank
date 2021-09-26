@@ -1,10 +1,9 @@
 import React from "react";
-import bootstrap from "bootstrap/dist/css/bootstrap-grid.min.css";
-import styles from "./index.scss";
+import styles from "./index.module.scss";
 
 const Footer: React.FC = () => (
     <footer
-        className={`${styles["pr-footer"]} ${bootstrap["container-fluid"]}`}
+        className={`${styles["pr-footer"]} container-fluid`}
     >
         <span>
             Pokémon and all respective names are trademark & © of Nintendo

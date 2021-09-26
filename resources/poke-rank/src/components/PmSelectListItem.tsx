@@ -1,16 +1,12 @@
 import React from "react";
-import styles from "./index.scss";
+import styles from "./index.module.scss";
 
-export interface PmSelectListContentProps {
+const PmSelectListContent: React.FC<{
     className?: string;
     pmAvatar?: string; // pokemon 圖片
     pmId?: number; // pokemon 編號
     pmName?: string; // pokemon 名稱
-}
-
-type PmSelectListContent = React.FC<PmSelectListContentProps>;
-
-const PmSelectListContent: PmSelectListContent = ({
+}> = ({
     className = "",
     pmAvatar = "",
     pmId = 0,

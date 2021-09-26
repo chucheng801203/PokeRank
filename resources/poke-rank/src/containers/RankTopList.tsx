@@ -10,11 +10,9 @@ import {
 } from "../redux/selectors";
 import PrContext from "../PrContext";
 
-type RankTopList = React.FC<{
+const RankTopList: React.FC<{
     className?: string;
-}>;
-
-const RankTopList: RankTopList = ({ className }) => {
+}> = ({ className }) => {
     const prData = useContext(PrContext);
 
     const dispatch = useDispatch();

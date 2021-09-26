@@ -1,15 +1,11 @@
 import React, { useContext } from "react";
 import PrContext from "../PrContext";
 
-export interface PmTypeBlockProps {
+const PmTypeBlock: React.FC<{
     style?: React.CSSProperties;
     pmType: number; // pokemon 屬性 id
     [otherProps: string]: any;
-}
-
-type PmTypeBlock = React.FC<PmTypeBlockProps>;
-
-const PmTypeBlock: PmTypeBlock = ({ style, pmType, ...otherProps }) => {
+}> = ({ style, pmType, ...otherProps }) => {
     const prData = useContext(PrContext);
 
     // pokemon 屬性區塊的背景色

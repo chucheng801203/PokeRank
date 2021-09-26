@@ -13,6 +13,7 @@ export type RankDataState = {
     };
 };
 
+/* eslint import/no-anonymous-default-export: [2, {"allowArrowFunction": true}] */
 const storeRankData = (
     state: RankDataState,
     action: RankDataAction

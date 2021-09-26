@@ -1,16 +1,12 @@
 import React from "react";
-import styles from "./index.scss";
+import styles from "./index.module.scss";
 
-export interface PmListProps {
+const PmList: React.FC<{
     className?: string;
     children?: React.ReactNode;
     listTitle?: string;
     [otherProps: string]: any;
-}
-
-type PmList = React.FC<PmListProps>;
-
-const PmList: PmList = ({
+}> = ({
     className = "",
     children,
     listTitle,

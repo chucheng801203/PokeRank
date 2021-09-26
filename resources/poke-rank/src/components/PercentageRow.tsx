@@ -1,15 +1,13 @@
 import React from "react";
 import LoadingBlock from "./LoadingBlock";
-import styles from "./index.scss";
+import styles from "./index.module.scss";
 
-type PercentageRow = React.FC<{
+const PercentageRow: React.FC<{
     rank?: number;
     name?: string;
     percentage?: number | string;
     isLoading?: boolean;
-}>;
-
-const PercentageRow: PercentageRow = ({
+}> = ({
     rank,
     name,
     percentage,
