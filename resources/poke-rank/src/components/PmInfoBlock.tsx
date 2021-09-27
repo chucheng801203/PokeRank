@@ -124,7 +124,7 @@ const PmInfoBlock: React.FC<{
                             }`}
                         >
                             <img
-                                src={`/storage/pokemon_images/cap${pmId}_f${i}_s0.png`}
+                                src={`https://pokerank.s3.ap-northeast-1.amazonaws.com/images/cap${pmId}_f${i}_s0.png`}
                                 alt="pokemon"
                             />
                         </figure>

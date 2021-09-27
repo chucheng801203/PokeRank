@@ -46,7 +46,7 @@ export const topListTypeCheck = (topList: TopListResponse) => {
 
 const getTopList: ThunkAction<void, RootState, unknown, TopListAction> = (dispatch, getState) => {
     const state = getState();
-    const url = `/api/rank/top150/${state.season[0].value}/${state.rule[0].value}`;
+    const url = `https://pokerank.s3.ap-northeast-1.amazonaws.com/rank_data/${state.season[0].value}/top_list/${state.rule[0].value}.json`;
 
     import("axios").then((axios) => {
         axios.default

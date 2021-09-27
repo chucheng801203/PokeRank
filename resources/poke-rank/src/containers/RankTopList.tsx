@@ -44,7 +44,7 @@ const RankTopList: React.FC<{
                 <PmRow
                     key={i}
                     pmRank={pokeDex.ranking}
-                    pmAvatar={`/storage/pokemon_images/cap${pokeDex.pokemon.id}_f${pokeDex.pokemon.form_id}_s0.png`}
+                    pmAvatar={`https://pokerank.s3.ap-northeast-1.amazonaws.com/images/cap${pokeDex.pokemon.id}_f${pokeDex.pokemon.form_id}_s0.png`}
                     pmId={pokeDex.pokemon.id}
                     pmFormId={pokeDex.pokemon.form_id}
                     pmName={prData.pokemon[pokeDex.pokemon.id]}

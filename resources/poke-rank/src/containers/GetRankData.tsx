@@ -135,7 +135,7 @@ const GetRankData: React.FC = () => {
                         <PmRow
                             key={i}
                             pmRank={i}
-                            pmAvatar={`/storage/pokemon_images/cap${v.id}_f${v.form_id}_s0.png`}
+                            pmAvatar={`https://pokerank.s3.ap-northeast-1.amazonaws.com/images/cap${v.id}_f${v.form_id}_s0.png`}
                             pmId={v.id}
                             pmFormId={v.form_id}
                             pmName={prData.pokemon[v.id]}
@@ -246,7 +246,7 @@ const GetRankData: React.FC = () => {
                     <PmRow
                         key={i}
                         pmRank={i}
-                        pmAvatar={`/storage/pokemon_images/cap${v.id}_f${v.form_id}_s0.png`}
+                        pmAvatar={`https://pokerank.s3.ap-northeast-1.amazonaws.com/images/cap${v.id}_f${v.form_id}_s0.png`}
                         pmId={v.id}
                         pmFormId={v.form_id}
                         pmName={prData.pokemon[v.id]}
@@ -294,7 +294,7 @@ const GetRankData: React.FC = () => {
                         <PmRow
                             key={i}
                             pmRank={i}
-                            pmAvatar={`/storage/pokemon_images/cap${v.id}_f${v.form_id}_s0.png`}
+                            pmAvatar={`https://pokerank.s3.ap-northeast-1.amazonaws.com/images/cap${v.id}_f${v.form_id}_s0.png`}
                             pmId={v.id}
                             pmFormId={v.form_id}
                             pmName={prData.pokemon[v.id]}
