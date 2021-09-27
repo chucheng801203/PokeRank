@@ -40,27 +40,28 @@ class DownloadPokemonImages extends Command
      */
     public function handle(PokemonHome $pm)
     {
-        $tmp_path = 'tmp_pokemon_image_' . date('YmdHis');
+        $tmp_path = 'pokemon_image_' . date('Ymd');
 
-        if (! is_dir(storage_path() . '/app/' . $tmp_path)) {
-            if (! Storage::makeDirectory($tmp_path)) {
-                throw new \Exception("無法創建目錄 {$tmp_path}");
-            }
+        if (! Storage::makeDirectory($tmp_path)) {
+            throw new \Exception('無法創建目錄 ' . storage_path("app/{$tmp_path}"));
         }
 
         foreach (Pokeform::all() as $pf) {
-            $pm->download_pokemon_image(storage_path() . '/app/' . $tmp_path, $pf->pm_id, $pf->form_id);
+            $pm->download_pokemon_image(
+                storage_path("app/{$tmp_path}"),
+                $pf->pm_id,
+                $pf->form_id
+            );
         }
 
-        $public_path = 'public/pokemon_images';
-
-        if (is_dir(storage_path() . '/app/' . $public_path)) {
-            if (! Storage::deleteDirectory($public_path)) {
-                throw new \Exception("無法刪除目錄 {$public_path}.");
-            }
+        $files = Storage::files($tmp_path);
+        foreach($files as $file) {
+            Storage::disk('s3')->put(
+                'images/' . basename($file), 
+                file_get_contents(storage_path("app/{$file}")),
+                'public'
+            );
         }
-
-        rename(storage_path() . '/app/' . $tmp_path, storage_path() . '/app/' . $public_path);
 
         return 0;
     }
