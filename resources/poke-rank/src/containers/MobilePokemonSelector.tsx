@@ -3,10 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import PokemonSelectorPage from "../components/PokemonSelectorPage";
 import searchTextAction from "../redux/actions/searchText";
 import { getSearchTextState } from "../redux/selectors";
-import PrContext from "../PrContext";
+import PageDataContext from "../PageDataContext";
 
 const MobilePokemonSelector: React.FC = () => {
-    const prData = useContext(PrContext);
+    const pageData = useContext(PageDataContext);
 
     const dispatch = useDispatch();
 
@@ -16,12 +16,12 @@ const MobilePokemonSelector: React.FC = () => {
 
     let filterPmId: Array<string>;
     if (!str) {
-        filterPmId = Object.keys(prData.pokemon).slice(0, 9);
+        filterPmId = Object.keys(pageData.pokemon).slice(0, 9);
     } else {
-        filterPmId = Object.keys(prData.pokemon).filter((i) => {
+        filterPmId = Object.keys(pageData.pokemon).filter((i) => {
             return (
                 i.indexOf(str) !== -1 ||
-                prData.pokemon[parseInt(i)].indexOf(str) !== -1
+                pageData.pokemon[parseInt(i)].indexOf(str) !== -1
             );
         });
     }
@@ -33,7 +33,7 @@ const MobilePokemonSelector: React.FC = () => {
         const index = parseInt(i);
         return {
             id: index,
-            name: prData.pokemon[index],
+            name: pageData.pokemon[index],
         };
     });
 

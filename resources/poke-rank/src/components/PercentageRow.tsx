@@ -7,12 +7,7 @@ const PercentageRow: React.FC<{
     name?: string;
     percentage?: number | string;
     isLoading?: boolean;
-}> = ({
-    rank,
-    name,
-    percentage,
-    isLoading,
-}) => {
+}> = ({ rank, name, percentage, isLoading }) => {
     return (
         <li className={styles["pr-percentage-row"]}>
             <div className={styles["row-content"]}>

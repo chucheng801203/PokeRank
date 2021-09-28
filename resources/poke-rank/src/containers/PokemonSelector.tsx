@@ -10,14 +10,14 @@ import {
     getRuleState,
     getSearchTextState,
 } from "../redux/selectors";
-import PrContext from "../PrContext";
+import PageDataContext from "../PageDataContext";
 
 const PokemonInputSelector: React.FC<{
     className?: string;
     SufixIconBtn?: React.ComponentType<any>;
     placeholder?: string;
 }> = ({ ...props }) => {
-    const prData = useContext(PrContext);
+    const pageData = useContext(PageDataContext);
 
     const dispatch = useDispatch();
     const season = useSelector(getSeasonState);
@@ -49,10 +49,10 @@ const PokemonInputSelector: React.FC<{
             value={searchText}
             {...props}
         >
-            {Object.keys(prData.pokemon).map((i) => {
+            {Object.keys(pageData.pokemon).map((i) => {
                 const index = parseInt(i);
                 return (
-                    <Option key={i} value={i} text={prData.pokemon[index]}>
+                    <Option key={i} value={i} text={pageData.pokemon[index]}>
                         <Link
                             style={{ color: "#d6d6d6", textDecoration: "none" }}
                             to={{
@@ -61,14 +61,14 @@ const PokemonInputSelector: React.FC<{
                                 state: {
                                     rule: rule[0],
                                     season: season[0],
-                                    searchText: prData.pokemon[index],
+                                    searchText: pageData.pokemon[index],
                                 },
                             }}
                         >
                             <PmSelectListItem
                                 pmAvatar={`https://pokerank.s3.ap-northeast-1.amazonaws.com/images/cap${i}_f0_s0.png`}
                                 pmId={index}
-                                pmName={prData.pokemon[index]}
+                                pmName={pageData.pokemon[index]}
                             />
                         </Link>
                     </Option>

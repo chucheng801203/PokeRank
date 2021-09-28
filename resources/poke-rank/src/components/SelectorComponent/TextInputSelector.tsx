@@ -40,8 +40,7 @@ const TextInputSelector: React.FC<TextInputSelectorProps> = ({
     );
 
     useEffect(() => {
-        if (value !== undefined)
-            setCurrentValue(value);
+        if (value !== undefined) setCurrentValue(value);
     }, [value]);
 
     const onInputChangeHandler = (v: string) => {
@@ -177,9 +176,8 @@ const TextInputSelector: React.FC<TextInputSelectorProps> = ({
                     onClick={(e: React.MouseEvent<HTMLElement>) => {
                         e.preventDefault();
                         if (onSufixIconBtnClick) {
-                            const value = getOptionListValue(
-                                optionListValueIndex
-                            );
+                            const value =
+                                getOptionListValue(optionListValueIndex);
 
                             if (!value || !value[0]) return;
 

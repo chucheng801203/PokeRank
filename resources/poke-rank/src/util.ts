@@ -1,3 +1,6 @@
+import { PageDataType } from "./PageDataContext";
+import { RootState } from "./redux/store";
+
 /**
  * 取得網址 query string 的參數值
  * @param string
@@ -71,4 +74,24 @@ export const getNodeText = (node: any): string => {
         return getNodeText(node.props.children);
 
     return "";
+};
+
+export const getDefaultState = (pageData: PageDataType): RootState => {
+    const defaultRule = {
+        index: 0,
+        value: pageData.rules[0].value,
+    };
+
+    const defaultSeason = {
+        index: pageData.seasons.length - 1,
+        value: pageData.seasons[pageData.seasons.length - 1].value,
+    };
+
+    return {
+        rule: [defaultRule],
+        season: [defaultSeason],
+        topList: {},
+        rankData: [],
+        searchText: "",
+    };
 };

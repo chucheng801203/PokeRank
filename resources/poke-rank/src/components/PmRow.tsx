@@ -1,14 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import LoadingBlock from "./LoadingBlock";
 import PmTypeBlock from "./PmTypeBlock";
 import { getSeasonState, getRuleState } from "../redux/selectors";
 import styles from "./index.module.scss";
 
 const PmRow: React.FC<{
     className?: string;
-    isLoading?: boolean;
     pmRank?: number; // pokemon 排名
     pmAvatar?: string; // pokemon 圖片
     pmId?: number; // pokemon 編號
@@ -17,7 +15,6 @@ const PmRow: React.FC<{
     pmType?: Array<number>; // pokemon 屬性 id
     [otherProps: string]: any;
 }> = ({
-    isLoading,
     className = "",
     pmRank = 0,
     pmAvatar = "",
@@ -30,38 +27,7 @@ const PmRow: React.FC<{
     const season = useSelector(getSeasonState);
     const rule = useSelector(getRuleState);
 
-    const rowContent = isLoading ? (
-        <li className={`${styles["pr-pm-row"]} ${className}`} {...otherProps}>
-            <div
-                className={`${styles["pm-row-container"]} ${styles["pm-row-container-loading"]}`}
-            >
-                <div className={`${styles["pm-row-content"]}`}>
-                    <LoadingBlock
-                        className={`${styles["pm-row-loading-rank"]}`}
-                    />
-                    <LoadingBlock
-                        className={`${styles["pm-row-loading-img"]}`}
-                    />
-                    <div className={`${styles["pm-row-info"]}`}>
-                        <LoadingBlock
-                            className={`${styles["pm-row-loading-id"]}`}
-                        />
-                        <LoadingBlock
-                            className={`${styles["pm-row-loading-name"]}`}
-                        />
-                    </div>
-                    <div className={`${styles["pm-row-types"]}`}>
-                        <LoadingBlock
-                            className={`${styles["pm-row-loading-type"]}`}
-                        />
-                        <LoadingBlock
-                            className={`${styles["pm-row-loading-type"]}`}
-                        />
-                    </div>
-                </div>
-            </div>
-        </li>
-    ) : (
+    return (
         <li className={`${styles["pr-pm-row"]} ${className}`} {...otherProps}>
             <Link
                 className={`${styles["pm-row-link"]}`}
@@ -101,8 +67,6 @@ const PmRow: React.FC<{
             </Link>
         </li>
     );
-
-    return rowContent;
 };
 
 export default PmRow;

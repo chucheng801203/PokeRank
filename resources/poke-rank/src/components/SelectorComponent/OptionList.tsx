@@ -40,7 +40,9 @@ const OptionList: React.FC<OptionListProps> = ({
             );
 
             if (selected) {
-                optionListRef.current.scrollTop = (selected as HTMLDivElement).offsetTop;
+                optionListRef.current.scrollTop = (
+                    selected as HTMLDivElement
+                ).offsetTop;
             }
         }
     });

@@ -13,11 +13,7 @@ const PokemonSelectorPage: React.FC<{
         name: string;
     }>;
     onChange?: (v: string) => void;
-}> = ({
-    value,
-    pokemonOptions,
-    onChange,
-}) => {
+}> = ({ value, pokemonOptions, onChange }) => {
     const history = useHistory();
     const season = useSelector(getSeasonState);
     const rule = useSelector(getRuleState);

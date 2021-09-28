@@ -2,15 +2,13 @@ import React, { useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import PmTypeBlock from "./PmTypeBlock";
 import LoadingBlock from "./LoadingBlock";
-import PrContext, { PR_DATA } from "../PrContext";
+import PageDataContext, { PageDataType } from "../PageDataContext";
 import styles from "./index.module.scss";
 
-const LoadingMode = (prData: typeof PR_DATA) => (
+const LoadingMode = (pageData: PageDataType) => (
     <div className={styles["pr-info-block"]}>
         <div className="d-sm-flex mb-3">
-            <div
-                className="d-flex align-items-center mr-sm-auto mb-2 mb-sm-0"
-            >
+            <div className="d-flex align-items-center mr-sm-auto mb-2 mb-sm-0">
                 <LoadingBlock
                     className={`${styles["info-loading-name"]} mr-2`}
                 />
@@ -18,22 +16,18 @@ const LoadingMode = (prData: typeof PR_DATA) => (
                     className={`${styles["info-loading-rank"]} mr-auto`}
                 />
             </div>
-            <div
-                className="d-flex align-items-center"
-            >
+            <div className="d-flex align-items-center">
                 <LoadingBlock className={styles["info-type"]} />
                 <LoadingBlock className={styles["info-type"]} />
             </div>
         </div>
-        <div
-            className="d-flex flex-wrap mb-3"
-        >
+        <div className="d-flex flex-wrap mb-3">
             <LoadingBlock className={styles["info-img"]} />
         </div>
         <div style={{ overflowX: "auto" }}>
             <div className={styles["info-weakness-table"]}>
                 <div className={styles["info-table-tr"]}>
-                    {prData.types.map((v, i) => (
+                    {pageData.types.map((v, i) => (
                         <div key={i} className={styles["info-table-td"]}>
                             <LoadingBlock
                                 style={{ width: "100%", height: "100%" }}
@@ -42,7 +36,7 @@ const LoadingMode = (prData: typeof PR_DATA) => (
                     ))}
                 </div>
                 <div className={styles["info-table-tr"]}>
-                    {prData.types.map((v, i) => (
+                    {pageData.types.map((v, i) => (
                         <div key={i} className={styles["info-table-td"]}>
                             --
                         </div>
@@ -59,25 +53,25 @@ const PmInfoBlock: React.FC<{
     pmRank?: number;
     isLoading?: boolean;
 }> = ({ pmId, formId, pmRank, isLoading }) => {
-    const prData = useContext(PrContext);
+    const pageData = useContext(PageDataContext);
 
     const location = useLocation();
 
     if (isLoading || typeof pmId !== "number" || typeof formId !== "number")
-        return LoadingMode(prData);
+        return LoadingMode(pageData);
 
-    const pmTypes = prData.pokemon_types;
+    const pmTypes = pageData.pokemon_types;
 
-    if (!pmTypes[pmId] || !pmTypes[pmId][formId]) return LoadingMode(prData);
+    if (!pmTypes[pmId] || !pmTypes[pmId][formId]) return LoadingMode(pageData);
 
     const damage: Array<number> = [];
     for (let i = 0; i < pmTypes[pmId][formId].length; i++) {
         const typeId = pmTypes[pmId][formId][i];
-        if (!prData.type_weakness[typeId]) {
+        if (!pageData.type_weakness[typeId]) {
             continue;
         }
 
-        prData.type_weakness[typeId].forEach((v, j) => {
+        pageData.type_weakness[typeId].forEach((v, j) => {
             if (typeof damage[j] !== "number") {
                 damage[j] = v;
             } else {
@@ -89,22 +83,16 @@ const PmInfoBlock: React.FC<{
     return (
         <div className={styles["pr-info-block"]}>
             <div className="d-sm-flex mb-3">
-                <div
-                    className="d-flex align-items-center mr-sm-auto mb-2 mb-sm-0"
-                >
-                    <h1
-                        className={`${styles["info-name"]} mr-2`}
-                    >
-                        {`No. ${pmId}`} {prData.pokemon[pmId]}
+                <div className="d-flex align-items-center mr-sm-auto mb-2 mb-sm-0">
+                    <h1 className={`${styles["info-name"]} mr-2`}>
+                        {`No. ${pmId}`} {pageData.pokemon[pmId]}
                     </h1>
                     <div className="mr-auto">
                         {typeof pmRank === "number" && `# ${pmRank + 1}`}
                     </div>
                 </div>
-                <div
-                    className="d-flex align-items-center"
-                >
-                    {prData.pokemon_types[pmId][formId].map((v, i) => (
+                <div className="d-flex align-items-center">
+                    {pageData.pokemon_types[pmId][formId].map((v, i) => (
                         <PmTypeBlock
                             key={i}
                             className={styles["info-type"]}
@@ -113,10 +101,8 @@ const PmInfoBlock: React.FC<{
                     ))}
                 </div>
             </div>
-            <div
-                className="d-flex flex-wrap mb-3"
-            >
-                {prData.pokemon_types[pmId].map((v, i) => (
+            <div className="d-flex flex-wrap mb-3">
+                {pageData.pokemon_types[pmId].map((v, i) => (
                     <Link key={i} to={`/${pmId}/${i}${location.search}`}>
                         <figure
                             className={`${styles["info-img"]} ${
@@ -134,7 +120,7 @@ const PmInfoBlock: React.FC<{
             <div style={{ overflowX: "auto" }}>
                 <div className={styles["info-weakness-table"]}>
                     <div className={styles["info-table-tr"]}>
-                        {prData.types.map((v, i) => (
+                        {pageData.types.map((v, i) => (
                             <div key={i} className={styles["info-table-td"]}>
                                 <PmTypeBlock
                                     pmType={i}

@@ -44,7 +44,10 @@ export const topListTypeCheck = (topList: TopListResponse) => {
     return true;
 };
 
-const getTopList: ThunkAction<void, RootState, unknown, TopListAction> = (dispatch, getState) => {
+const getTopList: ThunkAction<void, RootState, unknown, TopListAction> = (
+    dispatch,
+    getState
+) => {
     const state = getState();
     const url = `https://pokerank.s3.ap-northeast-1.amazonaws.com/rank_data/${state.season[0].value}/top_list/${state.rule[0].value}.json`;
 

@@ -6,12 +6,7 @@ const PmList: React.FC<{
     children?: React.ReactNode;
     listTitle?: string;
     [otherProps: string]: any;
-}> = ({
-    className = "",
-    children,
-    listTitle,
-    ...otherProps
-}) => {
+}> = ({ className = "", children, listTitle, ...otherProps }) => {
     return (
         <section
             className={`${styles["pr-pm-list"]} ${className}`}

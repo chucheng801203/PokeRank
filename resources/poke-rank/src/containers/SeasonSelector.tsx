@@ -5,14 +5,14 @@ import Selector from "../components/Selector";
 import { SelectValue } from "../components/SelectorComponent/DefaultSelector";
 import toggleSeason from "../redux/actions/season";
 import { getSeasonState, getRuleState } from "../redux/selectors";
-import PrContext from "../PrContext";
+import PageDataContext from "../PageDataContext";
 import { getParameterByName } from "../util";
 
 const SeasonSelector: React.FC<{
     className?: string;
     style?: React.CSSProperties;
 }> = ({ className, style }) => {
-    const prData = useContext(PrContext);
+    const pageData = useContext(PageDataContext);
     const season = useSelector(getSeasonState);
     const rule = useSelector(getRuleState);
 
@@ -46,7 +46,7 @@ const SeasonSelector: React.FC<{
         <Selector
             value={season}
             onChange={onChange}
-            optionData={prData.seasons}
+            optionData={pageData.seasons}
             className={className}
             style={style}
         />

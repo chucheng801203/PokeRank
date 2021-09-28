@@ -127,33 +127,34 @@ export const rankDataCheck = (rankData: any) => {
 
 const getRankData: (
     pmId: number
-) => ThunkAction<void, RootState, unknown, RankDataAction> = (pmId) => (dispatch, getState) => {
-    const state = getState();
-    const url = `https://pokerank.s3.ap-northeast-1.amazonaws.com/rank_data/${state.season[0].value}/${pmId}.json`;
+) => ThunkAction<void, RootState, unknown, RankDataAction> =
+    (pmId) => (dispatch, getState) => {
+        const state = getState();
+        const url = `https://pokerank.s3.ap-northeast-1.amazonaws.com/rank_data/${state.season[0].value}/${pmId}.json`;
 
-    import("axios").then((axios) => {
-        axios.default
-            .get<RankDataResponse>(url)
-            .then(function (response) {
-                const { data } = response;
+        import("axios").then((axios) => {
+            axios.default
+                .get<RankDataResponse>(url)
+                .then(function (response) {
+                    const { data } = response;
 
-                if (!rankDataCheck(data)) {
+                    if (!rankDataCheck(data)) {
+                        alert("與伺服器連接失敗，請稍後在試。");
+                        return;
+                    }
+
+                    dispatch({
+                        type: GET_RANK_DATA,
+                        season: state.season[0].value,
+                        pmId: pmId,
+                        rankData: data,
+                    });
+                })
+                .catch((e) => {
                     alert("與伺服器連接失敗，請稍後在試。");
-                    return;
-                }
-
-                dispatch({
-                    type: GET_RANK_DATA,
-                    season: state.season[0].value,
-                    pmId: pmId,
-                    rankData: data,
+                    console.log(e);
                 });
-            })
-            .catch((e) => {
-                alert("與伺服器連接失敗，請稍後在試。");
-                console.log(e);
-            });
-    });
-};
+        });
+    };
 
 export default getRankData;

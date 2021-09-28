@@ -15,7 +15,7 @@ export type RankDataState = {
 
 /* eslint import/no-anonymous-default-export: [2, {"allowArrowFunction": true}] */
 const storeRankData = (
-    state: RankDataState,
+    state: RankDataState = {},
     action: RankDataAction
 ): RankDataState => {
     const time = new Date(new Date().toDateString()).getTime() + 86400000;

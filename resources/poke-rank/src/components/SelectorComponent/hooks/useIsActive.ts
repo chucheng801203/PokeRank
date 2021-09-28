@@ -3,7 +3,9 @@ import { contains } from "../../../util";
 
 const useIsActive: (
     selectorRef: React.RefObject<HTMLDivElement>
-) => [boolean, React.Dispatch<React.SetStateAction<boolean>>] = (selectorRef) => {
+) => [boolean, React.Dispatch<React.SetStateAction<boolean>>] = (
+    selectorRef
+) => {
     const [isActive, setIsActive] = useState<boolean>(false);
 
     const hidePopupList = () => {

@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
-import PrContext from "../PrContext";
+import PageDataContext from "../PageDataContext";
 
 const PmTypeBlock: React.FC<{
     style?: React.CSSProperties;
     pmType: number; // pokemon 屬性 id
     [otherProps: string]: any;
 }> = ({ style, pmType, ...otherProps }) => {
-    const prData = useContext(PrContext);
+    const pageData = useContext(PageDataContext);
 
     // pokemon 屬性區塊的背景色
     const pokemonTypeColor: {
@@ -40,7 +40,7 @@ const PmTypeBlock: React.FC<{
 
     return (
         <div style={elemStyle} {...otherProps}>
-            {prData.types[pmType]}
+            {pageData.types[pmType]}
         </div>
     );
 };

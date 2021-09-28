@@ -1,6 +1,7 @@
 import React from "react";
 
-export const PR_DATA: {
+export type PageDataType = {
+    page_loading: boolean;
     rules: Array<{ value: number; text: string }>;
     seasons: Array<{
         value: number;
@@ -16,8 +17,20 @@ export const PR_DATA: {
     pokemon: { [id: number]: string };
     pokemon_types: Array<Array<Array<number>>>;
     type_weakness: Array<Array<number>>;
-} = JSON.parse(
-    document.getElementById("__PR_DATA__")?.textContent as string
-);
+};
 
-export default React.createContext(PR_DATA);
+export const defaultPageData: PageDataType = {
+    page_loading: true,
+    rules: [],
+    seasons: [],
+    items: [],
+    abilities: [],
+    moves: [],
+    natures: [],
+    types: [],
+    pokemon: {},
+    pokemon_types: [],
+    type_weakness: [],
+};
+
+export default React.createContext(defaultPageData);

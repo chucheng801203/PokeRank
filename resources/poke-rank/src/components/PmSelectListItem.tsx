@@ -6,12 +6,7 @@ const PmSelectListContent: React.FC<{
     pmAvatar?: string; // pokemon 圖片
     pmId?: number; // pokemon 編號
     pmName?: string; // pokemon 名稱
-}> = ({
-    className = "",
-    pmAvatar = "",
-    pmId = 0,
-    pmName = "",
-}) => {
+}> = ({ className = "", pmAvatar = "", pmId = 0, pmName = "" }) => {
     return (
         <div className={`${styles["pr-pm-select-list-content"]} ${className}`}>
             <div className={styles["content-id"]}>No. {pmId}</div>
