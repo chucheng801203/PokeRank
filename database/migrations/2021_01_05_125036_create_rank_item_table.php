@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Schema;
 class CreateRankItemTable extends Migration
 {
     protected $tableName = 'rank_item';
+
     /**
      * Run the migrations.
      *

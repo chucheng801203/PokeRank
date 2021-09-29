@@ -8,20 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 class Poketype extends Model
 {
     use HasFactory;
-    
+
     protected $table = 'poketype';
 
-    protected $primaryKey = NULL;
+    protected $primaryKey = null;
 
     public $incrementing = false;
 
     protected $fillable = ['pf_id', 'type_id'];
 
-    public function pokeform() {
+    public function pokeform()
+    {
         return $this->belongsTo(Pokeform::class, 'pf_id', 'id');
     }
 
-    public function Type() {
+    public function Type()
+    {
         return $this->belongsTo(Type::class, 'type_id', 'id');
     }
 }

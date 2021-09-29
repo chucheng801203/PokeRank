@@ -7,6 +7,7 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 class MoveCollection extends ResourceCollection
 {
     public $preserveKeys = true;
+
     /**
      * Transform the resource collection into an array.
      *
@@ -16,7 +17,8 @@ class MoveCollection extends ResourceCollection
     public function toArray($request)
     {
         $col_name = 'name_zh_tw';
-        return $this->collection->mapWithKeys(function ($item, $key) use($col_name) {
+
+        return $this->collection->mapWithKeys(function ($item, $key) use ($col_name) {
             return [
                 $item['id'] => [
                     'id' => $item['id'],

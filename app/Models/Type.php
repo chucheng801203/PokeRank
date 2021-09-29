@@ -15,11 +15,13 @@ class Type extends Model
 
     protected $fillable = ['id', 'name_zh_tw', 'name_en', 'name_jp'];
 
-    public function move() {
+    public function move()
+    {
         return $this->hasMany(Move::class, 'type_id', 'id');
     }
 
-    public function poketype() {
+    public function poketype()
+    {
         return $this->hasMany(Poketype::class, 'type_id', 'id');
     }
 }

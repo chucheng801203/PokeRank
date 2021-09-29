@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Schema;
 class CreateRankSeasonList extends Migration
 {
     protected $tableName = 'rank_season_list';
+
     /**
      * Run the migrations.
      *

@@ -2,15 +2,15 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Storage;
-use App\Models\Pokemon;
-use App\Models\Pokeform;
-use App\Models\RankTopPokemon;
-use App\Models\RankSeasonList;
-use App\Http\Resources\RankTopPokemonResource;
 use App\Http\Resources\IdPercentageCollection;
 use App\Http\Resources\RankPokemonCollection;
+use App\Http\Resources\RankTopPokemonResource;
+use App\Models\Pokeform;
+use App\Models\Pokemon;
+use App\Models\RankSeasonList;
+use App\Models\RankTopPokemon;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Storage;
 
 class uploadPokemonRankDataToS3 extends Command
 {
@@ -46,7 +46,7 @@ class uploadPokemonRankDataToS3 extends Command
      */
     public function handle()
     {
-        $tmp_path = 'pokemon_rank_data_' . date('Ymd');
+        $tmp_path = 'pokemon_rank_data_'.date('Ymd');
 
         $seasons = $this->option('season');
 
@@ -59,8 +59,8 @@ class uploadPokemonRankDataToS3 extends Command
                 break;
             default:
                 $seasons = array_column(RankSeasonList::select('season')->where('season', $seasons)->get()->toArray(), 'season');
-                
-                if(count($seasons) === 0) {
+
+                if (count($seasons) === 0) {
                     throw new \Exception('season 為無效參數');
                 }
 
@@ -69,25 +69,27 @@ class uploadPokemonRankDataToS3 extends Command
 
         $pokemons = Pokemon::select('id')->get();
 
-        foreach($seasons as $season_number) {
-            foreach($pokemons as $pm) {
+        foreach ($seasons as $season_number) {
+            foreach ($pokemons as $pm) {
                 // pokemon 本賽季排名
                 $top_rank = [];
                 $top_rank_data = $pm->rankTopPokemon()
                                 ->with('Pokeform')
                                 ->where('season_number', $season_number)
                                 ->get();
-                
-                foreach($top_rank_data as $rank) {
-                    if(empty($top_rank[$rank->rule]))
+
+                foreach ($top_rank_data as $rank) {
+                    if (empty($top_rank[$rank->rule])) {
                         $top_rank[$rank->rule] = [];
-    
-                    if(empty($top_rank[$rank->rule][$rank->pokeform->form_id]))
+                    }
+
+                    if (empty($top_rank[$rank->rule][$rank->pokeform->form_id])) {
                         $top_rank[$rank->rule][$rank->pokeform->form_id] = [];
-                    
+                    }
+
                     $top_rank[$rank->rule][$rank->pokeform->form_id] = $rank->ranking;
                 }
-    
+
                 $r = [
                     'rank' => $top_rank,
                     'team' => [
@@ -178,10 +180,10 @@ class uploadPokemonRankDataToS3 extends Command
                         ),
                     ],
                 ];
-    
+
                 $content = json_encode($r);
-                Storage::put($tmp_path . '/' . $season_number . '/' . $pm->id . '.json', $content);
-                Storage::disk('s3')->put('rank_data/' . $season_number . '/' . $pm->id . '.json', $content, 'public');
+                Storage::put($tmp_path.'/'.$season_number.'/'.$pm->id.'.json', $content);
+                Storage::disk('s3')->put('rank_data/'.$season_number.'/'.$pm->id.'.json', $content, 'public');
 
                 echo "{$season_number} {$pm->id}\n";
             }
@@ -194,8 +196,8 @@ class uploadPokemonRankDataToS3 extends Command
                                 ->get()
                 )
             );
-            Storage::put($tmp_path . '/' . $season_number . '/top_list/0.json', $content);
-            Storage::disk('s3')->put('rank_data/' . $season_number . '/top_list/0.json',  $single_top_list, 'public');
+            Storage::put($tmp_path.'/'.$season_number.'/top_list/0.json', $content);
+            Storage::disk('s3')->put('rank_data/'.$season_number.'/top_list/0.json', $single_top_list, 'public');
 
             $doublie_top_list = json_encode(
                 RankTopPokemonResource::collection(
@@ -205,10 +207,10 @@ class uploadPokemonRankDataToS3 extends Command
                                 ->get()
                 )
             );
-            Storage::put($tmp_path . '/' . $season_number . '/top_list/1.json', $content);
-            Storage::disk('s3')->put('rank_data/' . $season_number . '/top_list/1.json',  $doublie_top_list, 'public');
+            Storage::put($tmp_path.'/'.$season_number.'/top_list/1.json', $content);
+            Storage::disk('s3')->put('rank_data/'.$season_number.'/top_list/1.json', $doublie_top_list, 'public');
         }
-        
+
         return 0;
     }
 }

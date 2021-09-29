@@ -15,7 +15,8 @@ class Nature extends Model
 
     protected $fillable = ['id', 'name_zh_tw', 'name_en', 'name_jp'];
 
-    public function rankNature() {
+    public function rankNature()
+    {
         return $this->hasMany(RankNature::class, 'nature_id', 'id');
     }
 }

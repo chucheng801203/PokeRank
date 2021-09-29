@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Schema;
 class CreateRankWinMoveTable extends Migration
 {
     protected $tableName = 'rank_win_move';
+
     /**
      * Run the migrations.
      *

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 class CreateAbilityTable extends Migration
 {
     protected $tableName = 'ability';
-    
+
     /**
      * Run the migrations.
      *

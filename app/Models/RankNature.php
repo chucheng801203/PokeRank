@@ -11,17 +11,19 @@ class RankNature extends Model
 
     protected $table = 'rank_nature';
 
-    protected $primaryKey = NULL;
+    protected $primaryKey = null;
 
     public $incrementing = false;
 
     protected $fillable = ['pf_id', 'season_number', 'rule', 'nature_id', 'percentage', 'sort'];
 
-    public function nature() {
+    public function nature()
+    {
         return $this->belongsTo(Nature::class, 'nature_id', 'id');
     }
 
-    public function pokeform() {
+    public function pokeform()
+    {
         return $this->belongsTo(Pokeform::class, 'pf_id', 'id');
     }
 }
