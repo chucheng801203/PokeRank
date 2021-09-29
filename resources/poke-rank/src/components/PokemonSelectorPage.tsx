@@ -65,7 +65,7 @@ const PokemonSelectorPage: React.FC<{
                             }}
                         >
                             <PmSelectListItem
-                                pmAvatar={`/storage/pokemon_images/cap${o.id}_f0_s0.png`}
+                                pmAvatar={`https://pokerank.s3.ap-northeast-1.amazonaws.com/images/cap${o.id}_f0_s0.png`}
                                 pmId={o.id}
                                 pmName={o.name}
                                 className={styles["option-list-item"]}
