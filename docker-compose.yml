@@ -1,46 +1,26 @@
 version: "3.9"
 services:
   app:
-    container_name: phpfpm
+    container_name: phpcli
     build:
       context: .
-      dockerfile: ./docker/dev/phpfpm/Dockerfile
+      dockerfile: ./docker/phpcli/Dockerfile
+    tty: true
+    stdin_open: true
     command:
       - bash
       - "-c"
       - |
-        cp /var/www/PokeRank/.env.example /var/www/PokeRank/.env
-
         composer install
-
         php artisan key:generate
-        php artisan storage:link
-
-        php-fpm
-    restart: always
-    ports:
-      - "9000:9000"
+        php -a
     volumes:
       - .:/var/www/PokeRank
     environment:
       MYSQL_HOSTNAME: mysql
-      MYSQL_DATABASE: PokeRank
-      MYSQL_USER: pokerank
-      MYSQL_PASSWORD: 67d29e7a9ec377bc9757172778bc03ef
-    networks:
-      - app-network
-  webserver:
-    container_name: nginx
-    build:
-      context: .
-      dockerfile: ./docker/dev/nginx/Dockerfile
-    restart: always
-    ports:
-      - "80:80"
-    volumes:
-      - .:/var/www/PokeRank
-    environment:
-      PHPFPM_HOSTNAME: phpfpm
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     networks:
       - app-network
   db:
@@ -55,22 +35,24 @@ services:
       - dbdata:/var/lib/mysql
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: yes
-      MYSQL_DATABASE: PokeRank
-      MYSQL_USER: pokerank
-      MYSQL_PASSWORD: 67d29e7a9ec377bc9757172778bc03ef
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     networks:
       - app-network
-  node:
-    container_name: node
-    image: node:16.10.0
-    command:
-      - bash
-      - "-c"
-      - |
-        cd /PokeRank/resources/reactjs && npm install && npm run watch
-    restart: always
-    volumes:
-      - .:/PokeRank
+  # node:
+  #   container_name: node
+  #   image: node:16.10.0
+  #   command:
+  #     - bash
+  #     - "-c"
+  #     - |
+  #       cd /PokeRank/resources/poke-rank && npm install && npm run start
+  #   restart: always
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - .:/PokeRank
 networks:
   app-network:
     driver: bridge
