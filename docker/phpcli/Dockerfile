@@ -1,4 +1,4 @@
-FROM php:7.4-fpm
+FROM php:7.4-cli
 
 # set work directory
 WORKDIR /var/www/PokeRank
@@ -16,11 +16,9 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" &&
     mv composer.phar /usr/local/bin/composer
 
 # copy php configs
-COPY ./docker/dev/phpfpm/config/php.ini-development $PHP_INI_DIR/php.ini
-COPY ./docker/dev/phpfpm/config/www.conf /usr/local/etc/php-fpm.d/www.conf
+COPY ./docker/phpcli/config/php.ini-development $PHP_INI_DIR/php.ini
 
 # change time zone
 RUN ln -sf /usr/share/zoneinfo/ROC /etc/localtime
 
-EXPOSE 9000
-CMD ["php-fpm"]
+CMD ["php", "-a"]
