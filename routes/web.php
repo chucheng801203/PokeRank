@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\MainController;
-use App\Http\Controllers\RankController;
 use Illuminate\Support\Facades\Route;
 
 /*
