@@ -2,21 +2,21 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Storage;
-use App\Models\RankSeasonList;
-use App\Models\Item;
-use App\Models\Ability;
-use App\Models\Move;
-use App\Models\Nature;
-use App\Models\Type;
-use App\Models\Pokemon;
-use App\Models\Poketype;
-use App\Http\Resources\RankSeasonListResource;
 use App\Http\Resources\IdNameCollection;
 use App\Http\Resources\MoveCollection;
 use App\Http\Resources\PokeTypeCollection;
+use App\Http\Resources\RankSeasonListResource;
 use App\Libraries\Pokemon\PokemonHome;
+use App\Models\Ability;
+use App\Models\Item;
+use App\Models\Move;
+use App\Models\Nature;
+use App\Models\Pokemon;
+use App\Models\Poketype;
+use App\Models\RankSeasonList;
+use App\Models\Type;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Storage;
 
 class UploadPokemonDataToS3 extends Command
 {
@@ -54,7 +54,7 @@ class UploadPokemonDataToS3 extends Command
         $pr_data = [
             // 賽季列表
             'seasons' => RankSeasonListResource::collection(RankSeasonList::all()),
-            
+
             // 賽制
             'rules' => [
                 ['value'=> 0, 'text' => '單打'],
@@ -86,12 +86,12 @@ class UploadPokemonDataToS3 extends Command
             'type_weakness' => $pm->type_weakness(),
         ];
 
-        $file_name = 'pokemon_data_' . date('Ymd') . '.json';
-        
+        $file_name = 'pokemon_data_'.date('Ymd').'.json';
+
         Storage::put($file_name, json_encode($pr_data));
 
         Storage::disk('s3')->put(
-            'pr_data.json', 
+            'pr_data.json',
             file_get_contents(storage_path("app/{$file_name}")),
             'public'
         );

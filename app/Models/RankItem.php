@@ -11,17 +11,19 @@ class RankItem extends Model
 
     protected $table = 'rank_item';
 
-    protected $primaryKey = NULL;
+    protected $primaryKey = null;
 
     public $incrementing = false;
 
     protected $fillable = ['pf_id', 'season_number', 'rule', 'item_id', 'percentage', 'sort'];
 
-    public function item() {
+    public function item()
+    {
         return $this->belongsTo(Item::class, 'item_id', 'id');
     }
 
-    public function pokeform() {
+    public function pokeform()
+    {
         return $this->belongsTo(Pokeform::class, 'pf_id', 'id');
     }
 }

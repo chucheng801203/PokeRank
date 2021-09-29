@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Schema;
 class CreateRankNatureTable extends Migration
 {
     protected $tableName = 'rank_nature';
+
     /**
      * Run the migrations.
      *

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Schema;
 class CreateRankWinPokemonTable extends Migration
 {
     protected $tableName = 'rank_win_pokemon';
+
     /**
      * Run the migrations.
      *

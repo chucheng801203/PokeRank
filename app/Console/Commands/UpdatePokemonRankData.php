@@ -2,22 +2,22 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
-use App\Models\RankSeasonList;
-use App\Models\RankMove;
-use App\Models\RankWinMove;
-use App\Models\RankLoseMove;
-use App\Models\RankPokemon;
-use App\Models\RankWinPokemon;
-use App\Models\RankLosePokemon;
-use App\Models\RankAbility;
-use App\Models\RankItem;
-use App\Models\RankNature;
-use App\Models\RankTopPokemon;
-use App\Models\Pokeform;
 use App\Libraries\Pokemon\PokemonHome;
 use App\Libraries\Pokemon\PokemonRankDataAdapter;
+use App\Models\Pokeform;
+use App\Models\RankAbility;
+use App\Models\RankItem;
+use App\Models\RankLoseMove;
+use App\Models\RankLosePokemon;
+use App\Models\RankMove;
+use App\Models\RankNature;
+use App\Models\RankPokemon;
+use App\Models\RankSeasonList;
+use App\Models\RankTopPokemon;
+use App\Models\RankWinMove;
+use App\Models\RankWinPokemon;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 class UpdatePokemonRankData extends Command
 {
@@ -53,8 +53,8 @@ class UpdatePokemonRankData extends Command
      */
     public function handle(PokemonHome $pm)
     {
-        DB::transaction(function() use($pm) {
-            $date_time = date("Y-m-d H:i:s");
+        DB::transaction(function () use ($pm) {
+            $date_time = date('Y-m-d H:i:s');
 
             $season = $this->option('season');
 
@@ -64,7 +64,7 @@ class UpdatePokemonRankData extends Command
                 $d = array_values($data);
 
                 RankSeasonList::updateOrCreate(
-                    ['season' => $season_num], 
+                    ['season' => $season_num],
                     [
                         'season' => $season_num,
                         'start' => date('Y-m-d H:i:s', strtotime($d[0]['start'])),
@@ -133,17 +133,16 @@ class UpdatePokemonRankData extends Command
                     foreach ($w as $ranking => $pm_data) {
                         $pf = Pokeform::where([
                             'pm_id' => $pm_data['id'],
-                            'form_id' => $pm_data['form']
+                            'form_id' => $pm_data['form'],
                         ])->first();
 
-                        
                         $data[] = [
                             'pf_id' => $pf->id,
                             'season_number' => $season_num,
                             'rule' => $rule,
                             'ranking' => $ranking,
                             'created_at' => $date_time,
-                            'updated_at' => $date_time
+                            'updated_at' => $date_time,
                         ];
                     }
 

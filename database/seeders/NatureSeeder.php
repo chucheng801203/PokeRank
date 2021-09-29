@@ -15,7 +15,7 @@ class NatureSeeder extends Seeder
     public function run()
     {
         DB::transaction(function () {
-            $sql_path = __DIR__  . '/development_data/nature.sql';
+            $sql_path = __DIR__.'/development_data/nature.sql';
             if (is_readable($sql_path)) {
                 $sql = file_get_contents($sql_path);
                 if (! empty($sql)) {

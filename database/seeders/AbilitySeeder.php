@@ -15,7 +15,7 @@ class AbilitySeeder extends Seeder
     public function run()
     {
         DB::transaction(function () {
-            $sql_path = __DIR__  . '/development_data/ability.sql';
+            $sql_path = __DIR__.'/development_data/ability.sql';
             if (is_readable($sql_path)) {
                 $sql = file_get_contents($sql_path);
                 if (! empty($sql)) {

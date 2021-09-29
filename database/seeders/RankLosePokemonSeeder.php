@@ -15,7 +15,7 @@ class RankLosePokemonSeeder extends Seeder
     public function run()
     {
         DB::transaction(function () {
-            $sql_path = __DIR__  . '/development_data/rank_lose_pokemon.sql';
+            $sql_path = __DIR__.'/development_data/rank_lose_pokemon.sql';
             if (is_readable($sql_path)) {
                 $sql = file_get_contents($sql_path);
                 if (! empty($sql)) {

@@ -11,17 +11,19 @@ class RankAbility extends Model
 
     protected $table = 'rank_ability';
 
-    protected $primaryKey = NULL;
+    protected $primaryKey = null;
 
     public $incrementing = false;
 
     protected $fillable = ['pf_id', 'season_number', 'rule', 'ability_id', 'percentage', 'sort'];
 
-    public function ability() {
+    public function ability()
+    {
         return $this->belongsTo(Ability::class, 'ability_id', 'id');
     }
 
-    public function pokeform() {
+    public function pokeform()
+    {
         return $this->belongsTo(Pokeform::class, 'pf_id', 'id');
     }
 }
