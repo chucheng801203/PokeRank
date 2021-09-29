@@ -2,4 +2,6 @@
 
 namespace App\Libraries\Pokemon\Exceptions;
 
-class PokemonException extends \Exception {}
+class PokemonException extends \Exception
+{
+}

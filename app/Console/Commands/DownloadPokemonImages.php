@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Libraries\Pokemon\PokemonHome;
+use App\Models\Pokeform;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
-use App\Models\Pokeform;
-use App\Libraries\Pokemon\PokemonHome;
 
 class DownloadPokemonImages extends Command
 {
@@ -40,10 +40,10 @@ class DownloadPokemonImages extends Command
      */
     public function handle(PokemonHome $pm)
     {
-        $tmp_path = 'pokemon_image_' . date('Ymd');
+        $tmp_path = 'pokemon_image_'.date('Ymd');
 
         if (! Storage::makeDirectory($tmp_path)) {
-            throw new \Exception('無法創建目錄 ' . storage_path("app/{$tmp_path}"));
+            throw new \Exception('無法創建目錄 '.storage_path("app/{$tmp_path}"));
         }
 
         foreach (Pokeform::all() as $pf) {
@@ -55,9 +55,9 @@ class DownloadPokemonImages extends Command
         }
 
         $files = Storage::files($tmp_path);
-        foreach($files as $file) {
+        foreach ($files as $file) {
             Storage::disk('s3')->put(
-                'images/' . basename($file), 
+                'images/'.basename($file),
                 file_get_contents(storage_path("app/{$file}")),
                 'public'
             );

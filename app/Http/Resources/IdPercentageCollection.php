@@ -7,6 +7,7 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 class IdPercentageCollection extends ResourceCollection
 {
     public $preserveKeys = true;
+
     /**
      * Transform the resource collection into an array.
      *
@@ -17,13 +18,15 @@ class IdPercentageCollection extends ResourceCollection
     {
         $data = [];
 
-        foreach($this->collection as $rank) {
-            if(empty($data[$rank->rule])) 
+        foreach ($this->collection as $rank) {
+            if (empty($data[$rank->rule])) {
                 $data[$rank->rule] = [];
+            }
 
-            if(empty($data[$rank->rule][$rank->pokeform->form_id]))
+            if (empty($data[$rank->rule][$rank->pokeform->form_id])) {
                 $data[$rank->rule][$rank->pokeform->form_id] = [];
-            
+            }
+
             $data[$rank->rule][$rank->pokeform->form_id][] = [
                 'id' => $rank->id,
                 'percentage' => $rank->percentage,

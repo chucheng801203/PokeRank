@@ -2,17 +2,17 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
-use App\Models\Pokeform;
-use App\Models\Poketype;
-use App\Models\Pokemon;
-use App\Models\Type;
+use App\Libraries\Pokemon\PokemonHome;
 use App\Models\Ability;
 use App\Models\Item;
-use App\Models\Nature;
 use App\Models\Move;
-use App\Libraries\Pokemon\PokemonHome;
+use App\Models\Nature;
+use App\Models\Pokeform;
+use App\Models\Pokemon;
+use App\Models\Poketype;
+use App\Models\Type;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 class UpdatePokemonData extends Command
 {
@@ -47,16 +47,16 @@ class UpdatePokemonData extends Command
      */
     public function handle(PokemonHome $pm)
     {
-        DB::transaction(function() use($pm) {
+        DB::transaction(function () use ($pm) {
             $tables = ['pokemon', 'type', 'ability', 'item', 'nature', 'move'];
 
             foreach ($tables as $name) {
                 $data = $pm->get_pokemon_data($name);
-                
+
                 foreach ($data[$name] as $id => $v) {
-                    $updates = [ 
-                        'name_zh_tw' => $v['zh_tw'], 
-                        'name_en' => $v['en'], 
+                    $updates = [
+                        'name_zh_tw' => $v['zh_tw'],
+                        'name_en' => $v['en'],
                         'name_jp' => $v['jp'],
                     ];
 
@@ -85,19 +85,19 @@ class UpdatePokemonData extends Command
             }
 
             $pokeform = $pm->get_pokeform_type_code();
-    
+
             foreach ($pokeform as $pm_id => $v) {
                 foreach ($v as $form_id => $w) {
                     $pf = Pokeform::updateOrCreate([
-                        'pm_id' => $pm_id, 
-                        'form_id' => $form_id
+                        'pm_id' => $pm_id,
+                        'form_id' => $form_id,
                     ]);
-    
+
                     foreach ($w as $type_id) {
                         Poketype::updateOrCreate([
-                            'pf_id' => $pf->id, 
+                            'pf_id' => $pf->id,
                             // 有可能會有小數點，將小數點轉成整數
-                            'type_id' => intval($type_id)
+                            'type_id' => intval($type_id),
                         ]);
                     }
                 }

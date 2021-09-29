@@ -16,7 +16,7 @@ class RankSeasonListResource extends JsonResource
     {
         return [
             'value' => $this->season,
-            'text' => '第 ' . $this->season . ' 季',
+            'text' => '第 '.$this->season.' 季',
             'start' => $this->start,
             'end' => $this->end,
         ];

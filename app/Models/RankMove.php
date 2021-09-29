@@ -11,17 +11,19 @@ class RankMove extends Model
 
     protected $table = 'rank_move';
 
-    protected $primaryKey = NULL;
+    protected $primaryKey = null;
 
     public $incrementing = false;
 
     protected $fillable = ['pf_id', 'season_number', 'rule', 'move_id', 'percentage', 'sort'];
 
-    public function move() {
+    public function move()
+    {
         return $this->belongsTo(Move::class, 'move_id', 'id');
     }
 
-    public function pokeform() {
+    public function pokeform()
+    {
         return $this->belongsTo(Pokeform::class, 'pf_id', 'id');
     }
 }

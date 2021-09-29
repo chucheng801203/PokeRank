@@ -11,11 +11,12 @@ class Ability extends Model
 
     protected $table = 'ability';
 
-    public $incrementing = false;   
+    public $incrementing = false;
 
     protected $fillable = ['id', 'name_zh_tw', 'name_en', 'name_jp', 'percentage'];
 
-    public function rankAbility() {
+    public function rankAbility()
+    {
         return $this->hasMany(RankAbility::class, 'ability_id', 'id');
     }
 }

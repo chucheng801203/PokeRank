@@ -15,19 +15,23 @@ class Move extends Model
 
     protected $fillable = ['id', 'name_zh_tw', 'name_en', 'name_jp', 'type_id', 'percentage'];
 
-    public function type() {
+    public function type()
+    {
         return $this->belongsTo(Type::class, 'type_id', 'id');
     }
 
-    public function rankMove() {
+    public function rankMove()
+    {
         return $this->hasMany(RankMove::class, 'move_id', 'id');
     }
 
-    public function rankWinMove() {
+    public function rankWinMove()
+    {
         return $this->hasMany(RankWinMove::class, 'move_id', 'id');
     }
 
-    public function rankLoseMove() {
+    public function rankLoseMove()
+    {
         return $this->hasMany(RankLoseMove::class, 'move_id', 'id');
     }
 }

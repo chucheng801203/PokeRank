@@ -11,13 +11,14 @@ class RankTopPokemon extends Model
 
     protected $table = 'rank_top_pokemon';
 
-    protected $primaryKey = NULL;
+    protected $primaryKey = null;
 
     public $incrementing = false;
 
     protected $fillable = ['pf_id', 'season_number', 'rule', 'ranking'];
 
-    public function pokeform() {
+    public function pokeform()
+    {
         return $this->belongsTo(Pokeform::class, 'pf_id', 'id');
     }
 }
