@@ -23,7 +23,6 @@ const HomePageLink: React.FC<{
         if (!pageData.page_loading) {
             const { state } = location;
             const { rule, season } = getDefaultState(pageData);
-            console.log(state.season.index, season[0].index, pageData);
             
             if (state.rule.index !== rule[0].index) {
                 dispatch(toggleRule(rule[0]));
