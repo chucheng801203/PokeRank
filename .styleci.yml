@@ -7,3 +7,6 @@ php:
     not-name:
       - index.php
       - server.php
+js: false
+ts: false
+css: false
