@@ -93,7 +93,10 @@ class UploadPokemonDataToS3 extends Command
         Storage::disk('s3')->put(
             'pr_data.json',
             file_get_contents(storage_path("app/{$file_name}")),
-            'public'
+            [
+                'visibility' => 'public',
+                'CacheControl' => 'max-age=86400',
+            ]
         );
 
         return 0;

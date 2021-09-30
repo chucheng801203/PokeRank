@@ -183,7 +183,10 @@ class uploadPokemonRankDataToS3 extends Command
 
                 $content = json_encode($r);
                 Storage::put($tmp_path.'/'.$season_number.'/'.$pm->id.'.json', $content);
-                Storage::disk('s3')->put('rank_data/'.$season_number.'/'.$pm->id.'.json', $content, 'public');
+                Storage::disk('s3')->put('rank_data/'.$season_number.'/'.$pm->id.'.json', $content, [
+                    'visibility' => 'public',
+                    'CacheControl' => 'max-age=86400',
+                ]);
 
                 echo "{$season_number} {$pm->id}\n";
             }
@@ -197,7 +200,10 @@ class uploadPokemonRankDataToS3 extends Command
                 )
             );
             Storage::put($tmp_path.'/'.$season_number.'/top_list/0.json', $content);
-            Storage::disk('s3')->put('rank_data/'.$season_number.'/top_list/0.json', $single_top_list, 'public');
+            Storage::disk('s3')->put('rank_data/'.$season_number.'/top_list/0.json', $single_top_list, [
+                'visibility' => 'public',
+                'CacheControl' => 'max-age=86400',
+            ]);
 
             $doublie_top_list = json_encode(
                 RankTopPokemonResource::collection(
@@ -208,7 +214,10 @@ class uploadPokemonRankDataToS3 extends Command
                 )
             );
             Storage::put($tmp_path.'/'.$season_number.'/top_list/1.json', $content);
-            Storage::disk('s3')->put('rank_data/'.$season_number.'/top_list/1.json', $doublie_top_list, 'public');
+            Storage::disk('s3')->put('rank_data/'.$season_number.'/top_list/1.json', $doublie_top_list, [
+                'visibility' => 'public',
+                'CacheControl' => 'max-age=86400',
+            ]);
         }
 
         return 0;
