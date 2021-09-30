@@ -24,7 +24,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('pokemon:update-rank --season=latest')->dailyAt('5:00');
+        $schedule->command('pokemon:update-data')->monthlyOn(1, '14:00');
+        $schedule->command('pokemon:download-images')->monthlyOn(1, '14:05');
     }
 
     /**
