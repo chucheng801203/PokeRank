@@ -156,7 +156,7 @@ class UpdatePokemonRankData extends Command
             '--season' => $season_input,
         ]);
 
-        Log::info('pokemon:update-data --season='.$season_input.' 命令已執行完畢');
+        Log::info('pokemon:update-rank --season='.$season_input.' 命令已執行完畢');
 
         return 0;
     }
