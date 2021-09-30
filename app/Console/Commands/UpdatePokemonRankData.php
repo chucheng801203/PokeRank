@@ -53,10 +53,10 @@ class UpdatePokemonRankData extends Command
      */
     public function handle(PokemonHome $pm)
     {
-        DB::transaction(function () use ($pm) {
-            $date_time = date('Y-m-d H:i:s');
+        $season = $this->option('season');
 
-            $season = $this->option('season');
+        DB::transaction(function () use ($pm, $season) {
+            $date_time = date('Y-m-d H:i:s');
 
             $season_list = $pm->get_season_list();
 
@@ -150,6 +150,10 @@ class UpdatePokemonRankData extends Command
                 }
             }
         });
+
+        $this->call('pokemon:upload-rank-to-S3', [
+            '--season' => $season
+        ]);
 
         return 0;
     }
