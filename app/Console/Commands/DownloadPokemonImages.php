@@ -59,7 +59,10 @@ class DownloadPokemonImages extends Command
             Storage::disk('s3')->put(
                 'images/'.basename($file),
                 file_get_contents(storage_path("app/{$file}")),
-                'public'
+                [
+                    'visibility' => 'public',
+                    'CacheControl' => 'max-age=86400',
+                ]
             );
         }
 

@@ -104,6 +104,8 @@ class UpdatePokemonData extends Command
             }
         });
 
+        $this->call('pokemon:upload-data-to-S3');
+
         return 0;
     }
 }

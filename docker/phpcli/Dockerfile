@@ -7,6 +7,7 @@ WORKDIR /var/www/PokeRank
 RUN apt-get update && apt-get install -y \
         libzip-dev \
         zip \
+        cron \
     && docker-php-ext-install -j$(nproc) pdo_mysql zip
 
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
