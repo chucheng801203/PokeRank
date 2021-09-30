@@ -11,6 +11,7 @@ use App\Models\RankSeasonList;
 use App\Models\RankTopPokemon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class uploadPokemonRankDataToS3 extends Command
 {
@@ -48,7 +49,7 @@ class uploadPokemonRankDataToS3 extends Command
     {
         $tmp_path = 'pokemon_rank_data_'.date('Ymd');
 
-        $seasons = $this->option('season');
+        $seasons = $season_input = $this->option('season');
 
         switch ($seasons) {
             case 'latest':
@@ -219,6 +220,8 @@ class uploadPokemonRankDataToS3 extends Command
                 'CacheControl' => 'max-age=86400',
             ]);
         }
+
+        Log::info('pokemon:upload-rank-to-S3 --season='.$season_input.' 命令已執行完畢');
 
         return 0;
     }

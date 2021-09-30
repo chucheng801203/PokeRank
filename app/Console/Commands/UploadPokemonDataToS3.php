@@ -17,6 +17,7 @@ use App\Models\RankSeasonList;
 use App\Models\Type;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class UploadPokemonDataToS3 extends Command
 {
@@ -98,6 +99,8 @@ class UploadPokemonDataToS3 extends Command
                 'CacheControl' => 'max-age=86400',
             ]
         );
+
+        Log::info('pokemon:upload-data-to-S3 命令已執行完畢');
 
         return 0;
     }

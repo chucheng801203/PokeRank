@@ -6,6 +6,7 @@ use App\Libraries\Pokemon\PokemonHome;
 use App\Models\Pokeform;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class DownloadPokemonImages extends Command
 {
@@ -65,6 +66,8 @@ class DownloadPokemonImages extends Command
                 ]
             );
         }
+
+        Log::info('pokemon:download-images 命令已執行完畢');
 
         return 0;
     }
