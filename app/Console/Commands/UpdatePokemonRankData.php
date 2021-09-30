@@ -18,6 +18,7 @@ use App\Models\RankWinMove;
 use App\Models\RankWinPokemon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class UpdatePokemonRankData extends Command
 {
@@ -53,9 +54,9 @@ class UpdatePokemonRankData extends Command
      */
     public function handle(PokemonHome $pm)
     {
-        $season = $this->option('season');
+        $seasons = $season_input = $this->option('season');
 
-        DB::transaction(function () use ($pm, $season) {
+        DB::transaction(function () use ($pm, $seasons) {
             $date_time = date('Y-m-d H:i:s');
 
             $season_list = $pm->get_season_list();
@@ -73,23 +74,23 @@ class UpdatePokemonRankData extends Command
                 );
             }
 
-            switch ($season) {
+            switch ($seasons) {
                 case 'latest':
-                    $season = [max(array_keys($season_list))];
+                    $seasons = [max(array_keys($season_list))];
                     break;
                 case 'all':
-                    $season = array_keys($season_list);
+                    $seasons = array_keys($season_list);
                     break;
                 default:
-                    if (! $pm->is_valid_season_num($season)) {
+                    if (! $pm->is_valid_season_num($seasons)) {
                         throw new \Exception('season 為無效參數');
                     }
 
-                    $season = [$season];
+                    $seasons = [$seasons];
                     break;
             }
 
-            foreach ($season as $season_num) {
+            foreach ($seasons as $season_num) {
                 $battle_data = $pm->get_rank_data($season_num);
 
                 RankMove::where('season_number', $season_num)->delete();
@@ -152,8 +153,10 @@ class UpdatePokemonRankData extends Command
         });
 
         $this->call('pokemon:upload-rank-to-S3', [
-            '--season' => $season
+            '--season' => $season_input,
         ]);
+
+        Log::info('pokemon:update-data --season='.$season_input.' 命令已執行完畢');
 
         return 0;
     }

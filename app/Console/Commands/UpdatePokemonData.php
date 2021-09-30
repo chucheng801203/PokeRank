@@ -13,6 +13,7 @@ use App\Models\Poketype;
 use App\Models\Type;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class UpdatePokemonData extends Command
 {
@@ -105,6 +106,8 @@ class UpdatePokemonData extends Command
         });
 
         $this->call('pokemon:upload-data-to-S3');
+
+        Log::info('pokemon:update-data 命令已執行完畢');
 
         return 0;
     }
