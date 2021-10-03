@@ -4,11 +4,10 @@ namespace System;
 
 require __DIR__.'/../vendor/autoload.php';
 
+use Illuminate\Database\Capsule\Manager as Capsule;
 use Symfony\Component\Console\Application as SymfonyApplication;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Dotenv\Dotenv;
-use Illuminate\Database\Capsule\Manager as Capsule;
-use Illuminate\Filesystem\Filesystem;
 
 class Application
 {
@@ -22,8 +21,8 @@ class Application
 
     public static function getInstance()
     {
-        if(!static::$instance) {
-            static::$instance = new static;
+        if (!static::$instance) {
+            static::$instance = new static();
         }
 
         return static::$instance;
@@ -39,16 +38,18 @@ class Application
     {
         $dotenv = new Dotenv();
         $dotenv->load($path);
+
         return $this;
     }
 
     /** 初始化資料庫 */
     public function initDataBase($config)
     {
-        $capsule = new Capsule;
+        $capsule = new Capsule();
         $capsule->addConnection($config);
         $capsule->setAsGlobal();
         $capsule->bootEloquent();
+
         return $this;
     }
 
@@ -67,14 +68,14 @@ class Application
 
         $fileSystem = $this->services['fileSystem'];
         $files = $fileSystem->glob($this->basePath($dirPath.'/*.php'));
-        
-        foreach($files as $file) {
+
+        foreach ($files as $file) {
             $path_parts = pathinfo($file);
 
             $commandName = $commandNamespace.$path_parts['filename'];
 
-            $command = NULL;
-            
+            $command = null;
+
             if (class_exists($commandName)) {
                 $command = $this->commandDependencyInject($commandName);
             }
@@ -94,35 +95,34 @@ class Application
         $params = $command->getConstructor()->getParameters();
 
         $args = [];
-        foreach($params as $param) {
+        foreach ($params as $param) {
             if ($param->getType()->isBuiltin()) {
                 continue;
             }
 
             if (class_exists($dependencyClass = $param->getType()->getName())) {
                 $match = false;
-                foreach($this->services as $service) {
-                    if(get_class($service) === $dependencyClass) {
+                foreach ($this->services as $service) {
+                    if (get_class($service) === $dependencyClass) {
                         array_push($args, $service);
                         $match = true;
                     }
                 }
 
-                if (! $match) {
-                    array_push($args, new $dependencyClass);
+                if (!$match) {
+                    array_push($args, new $dependencyClass());
                 }
-            }
-            else 
-            {
-
+            } else {
             }
         }
+
         return $command->newInstanceArgs($args);
     }
-    
+
     public function setBasePath($basePath)
     {
         $this->basePath = rtrim($basePath, '\/');
+
         return $this;
     }
 
