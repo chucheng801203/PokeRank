@@ -31,35 +31,41 @@ class DownloadPokemonImages extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $fileSystem = $this->fileSystem;
-        $S3 = $this->S3;
-        $pm  = $this->pm;
-
-        $tmp_path = 'pokemon_image_'.date('Ymd');
-
-        $fileSystem->ensureDirectoryExists(storage_path("app/{$tmp_path}"), 0755, true);
-
-        foreach (Pokeform::all() as $pf) {
-            $pm->download_pokemon_image(
-                storage_path("app/{$tmp_path}"),
-                $pf->pm_id,
-                $pf->form_id
-            );
+        try {
+            $fileSystem = $this->fileSystem;
+            $S3 = $this->S3;
+            $pm  = $this->pm;
+    
+            $tmp_path = 'pokemon_image_'.date('Ymd');
+    
+            $fileSystem->ensureDirectoryExists(storage_path("app/{$tmp_path}"), 0755, true);
+    
+            foreach (Pokeform::all() as $pf) {
+                $pm->download_pokemon_image(
+                    storage_path("app/{$tmp_path}"),
+                    $pf->pm_id,
+                    $pf->form_id
+                );
+            }
+    
+            $files = $fileSystem->files(storage_path("app/{$tmp_path}"));
+            foreach ($files as $file) {
+                $S3->putObject([
+                    'Bucket' => $_ENV['AWS_BUCKET'],
+                    'Key'    => 'images/'.basename($file),
+                    'SourceFile'   => $file,
+                    'ACL'    => 'public-read',
+                    'CacheControl' => 'max-age=86400',
+                ]);
+            }
+    
+            $this->log->info('pokemonHome:download-images 命令已執行完畢');
+    
+            return Command::SUCCESS;
+        } catch (\Exception $e) {
+            $this->log->error($e->getMessage());
+            echo $e->getMessage()."\n";
+            return Command::FAILURE;
         }
-
-        $files = $fileSystem->files(storage_path("app/{$tmp_path}"));
-        foreach ($files as $file) {
-            $S3->putObject([
-                'Bucket' => $_ENV['AWS_BUCKET'],
-                'Key'    => 'images/'.basename($file),
-                'SourceFile'   => $file,
-                'ACL'    => 'public-read',
-                'CacheControl' => 'max-age=86400',
-            ]);
-        }
-
-        $this->log->info('pokemonHome:download-images 命令已執行完畢');
-
-        return Command::SUCCESS;
     }
 }

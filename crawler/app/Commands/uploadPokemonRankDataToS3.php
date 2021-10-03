@@ -46,201 +46,207 @@ class uploadPokemonRankDataToS3 extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $fileSystem = $this->fileSystem;
-        $S3 = $this->S3;
-
-        $tmp_path = 'pokemon_rank_data_'.date('Ymd');
-
-        $seasons = $season_input = $input->getOption('season');
-
-        switch ($seasons) {
-            case 'latest':
-                $seasons = [RankSeasonList::select('season')->max('season')];
-                break;
-            case 'all':
-                $seasons = array_column(RankSeasonList::select('season')->get()->toArray(), 'season');
-                break;
-            default:
-                $seasons = array_column(RankSeasonList::select('season')->where('season', $seasons)->get()->toArray(), 'season');
-
-                if (count($seasons) === 0) {
-                    throw new \Exception('season 為無效參數');
-                }
-
-                break;
-        }
-
-        $pokemons = Pokemon::select('id')->get();
-
-        foreach ($seasons as $season_number) {
-            foreach ($pokemons as $pm) {
-                // pokemon 本賽季排名
-                $top_rank = [];
-                $top_rank_data = $pm->rankTopPokemon()
-                                ->with('Pokeform')
-                                ->where('season_number', $season_number)
-                                ->get();
-
-                foreach ($top_rank_data as $rank) {
-                    if (empty($top_rank[$rank->rule])) {
-                        $top_rank[$rank->rule] = [];
+        try {
+            $fileSystem = $this->fileSystem;
+            $S3 = $this->S3;
+    
+            $tmp_path = 'pokemon_rank_data_'.date('Ymd');
+    
+            $seasons = $season_input = $input->getOption('season');
+    
+            switch ($seasons) {
+                case 'latest':
+                    $seasons = [RankSeasonList::select('season')->max('season')];
+                    break;
+                case 'all':
+                    $seasons = array_column(RankSeasonList::select('season')->get()->toArray(), 'season');
+                    break;
+                default:
+                    $seasons = array_column(RankSeasonList::select('season')->where('season', $seasons)->get()->toArray(), 'season');
+    
+                    if (count($seasons) === 0) {
+                        throw new \Exception('season 為無效參數');
                     }
-
-                    if (empty($top_rank[$rank->rule][$rank->pokeform->form_id])) {
-                        $top_rank[$rank->rule][$rank->pokeform->form_id] = [];
+    
+                    break;
+            }
+    
+            $pokemons = Pokemon::select('id')->get();
+    
+            foreach ($seasons as $season_number) {
+                foreach ($pokemons as $pm) {
+                    // pokemon 本賽季排名
+                    $top_rank = [];
+                    $top_rank_data = $pm->rankTopPokemon()
+                                    ->with('Pokeform')
+                                    ->where('season_number', $season_number)
+                                    ->get();
+    
+                    foreach ($top_rank_data as $rank) {
+                        if (empty($top_rank[$rank->rule])) {
+                            $top_rank[$rank->rule] = [];
+                        }
+    
+                        if (empty($top_rank[$rank->rule][$rank->pokeform->form_id])) {
+                            $top_rank[$rank->rule][$rank->pokeform->form_id] = [];
+                        }
+    
+                        $top_rank[$rank->rule][$rank->pokeform->form_id] = $rank->ranking;
                     }
-
-                    $top_rank[$rank->rule][$rank->pokeform->form_id] = $rank->ranking;
+    
+                    $r = [
+                        'rank' => $top_rank,
+                        'team' => [
+                            // 同隊伍 pokemon 前十
+                            'pokemon' => $this->rankPokemonCollection(
+                                $pm->rankPokemon()
+                                    ->with('Pokeform')
+                                    ->with('PokeformTeam')
+                                    ->where('season_number', $season_number)
+                                    ->orderBy('sort')
+                                    ->get()
+                            ),
+                            // 最常用招式前十
+                            'move' => $this->idPercentageCollection(
+                                $pm->rankMove()
+                                    ->select(['pf_id', 'rule', 'move_id as id', 'percentage'])
+                                    ->with(['Pokeform:id,form_id'])
+                                    ->where('season_number', $season_number)
+                                    ->orderBy('sort')
+                                    ->get()
+                            ),
+                            // 最常用特性
+                            'ability' => $this->idPercentageCollection(
+                                $pm->rankAbility()
+                                    ->select(['pf_id', 'rule', 'ability_id as id', 'percentage'])
+                                    ->with(['Pokeform:id,form_id'])
+                                    ->where('season_number', $season_number)
+                                    ->orderBy('sort')
+                                    ->get()
+                            ),
+                            // 最常用性格
+                            'nature' => $this->idPercentageCollection(
+                                $pm->rankNature()
+                                    ->select(['pf_id', 'rule', 'nature_id as id', 'percentage'])
+                                    ->with(['Pokeform:id,form_id'])
+                                    ->where('season_number', $season_number)
+                                    ->orderBy('sort')
+                                    ->get()
+                            ),
+                            // 最常用道具前十
+                            'item' => $this->idPercentageCollection(
+                                $pm->rankItem()
+                                    ->select(['pf_id', 'rule', 'item_id as id', 'percentage'])
+                                    ->with(['Pokeform:id,form_id'])
+                                    ->where('season_number', $season_number)
+                                    ->orderBy('sort')
+                                    ->get()
+                            ),
+                        ],
+                        'win' => [
+                            // 最常打倒的 pokemon 前十
+                            'pokemon' => $this->rankPokemonCollection(
+                                $pm->rankWinPokemon()
+                                    ->with('Pokeform')
+                                    ->with('PokeformTeam')
+                                    ->where('season_number', $season_number)
+                                    ->orderBy('sort')
+                                    ->get()
+                            ),
+                            // 打贏對手時所使用的招式前十
+                            'move' => $this->idPercentageCollection(
+                                $pm->rankWinMove()
+                                    ->select(['pf_id', 'rule', 'move_id as id', 'percentage'])
+                                    ->with(['Pokeform:id,form_id'])
+                                    ->where('season_number', $season_number)
+                                    ->orderBy('sort')
+                                    ->get()
+                            ),
+                        ],
+                        'lose' => [
+                            // 被其他 pokemon 打倒前十
+                            'pokemon' => $this->rankPokemonCollection(
+                                $pm->rankLosePokemon()
+                                    ->with('Pokeform')
+                                    ->with('PokeformTeam')
+                                    ->where('season_number', $season_number)
+                                    ->orderBy('sort')
+                                    ->get()
+                            ),
+                            // 被打倒時所使用的招式前十
+                            'move' => $this->idPercentageCollection(
+                                $pm->rankLoseMove()
+                                    ->select(['pf_id', 'rule', 'move_id as id', 'percentage'])
+                                    ->with(['Pokeform:id,form_id'])
+                                    ->where('season_number', $season_number)
+                                    ->orderBy('sort')
+                                    ->get()
+                            ),
+                        ],
+                    ];
+    
+                    $content = json_encode($r);
+                    $fileSystem->ensureDirectoryExists(storage_path("app/{$tmp_path}/{$season_number}"), 0755, true);
+                    $fileSystem->put(storage_path("app/{$tmp_path}/{$season_number}/{$pm->id}.json"), $content);
+                    $S3->putObject([
+                        'Bucket' => $_ENV['AWS_BUCKET'],
+                        'Key'    => "rank_data/{$season_number}/{$pm->id}.json",
+                        'Body'   => $content,
+                        'ACL'    => 'public-read',
+                        'CacheControl' => 'max-age=86400',
+                    ]);
+    
+                    echo "{$season_number} {$pm->id}\n";
                 }
-
-                $r = [
-                    'rank' => $top_rank,
-                    'team' => [
-                        // 同隊伍 pokemon 前十
-                        'pokemon' => $this->rankPokemonCollection(
-                            $pm->rankPokemon()
-                                ->with('Pokeform')
-                                ->with('PokeformTeam')
-                                ->where('season_number', $season_number)
-                                ->orderBy('sort')
-                                ->get()
-                        ),
-                        // 最常用招式前十
-                        'move' => $this->idPercentageCollection(
-                            $pm->rankMove()
-                                ->select(['pf_id', 'rule', 'move_id as id', 'percentage'])
-                                ->with(['Pokeform:id,form_id'])
-                                ->where('season_number', $season_number)
-                                ->orderBy('sort')
-                                ->get()
-                        ),
-                        // 最常用特性
-                        'ability' => $this->idPercentageCollection(
-                            $pm->rankAbility()
-                                ->select(['pf_id', 'rule', 'ability_id as id', 'percentage'])
-                                ->with(['Pokeform:id,form_id'])
-                                ->where('season_number', $season_number)
-                                ->orderBy('sort')
-                                ->get()
-                        ),
-                        // 最常用性格
-                        'nature' => $this->idPercentageCollection(
-                            $pm->rankNature()
-                                ->select(['pf_id', 'rule', 'nature_id as id', 'percentage'])
-                                ->with(['Pokeform:id,form_id'])
-                                ->where('season_number', $season_number)
-                                ->orderBy('sort')
-                                ->get()
-                        ),
-                        // 最常用道具前十
-                        'item' => $this->idPercentageCollection(
-                            $pm->rankItem()
-                                ->select(['pf_id', 'rule', 'item_id as id', 'percentage'])
-                                ->with(['Pokeform:id,form_id'])
-                                ->where('season_number', $season_number)
-                                ->orderBy('sort')
-                                ->get()
-                        ),
-                    ],
-                    'win' => [
-                        // 最常打倒的 pokemon 前十
-                        'pokemon' => $this->rankPokemonCollection(
-                            $pm->rankWinPokemon()
-                                ->with('Pokeform')
-                                ->with('PokeformTeam')
-                                ->where('season_number', $season_number)
-                                ->orderBy('sort')
-                                ->get()
-                        ),
-                        // 打贏對手時所使用的招式前十
-                        'move' => $this->idPercentageCollection(
-                            $pm->rankWinMove()
-                                ->select(['pf_id', 'rule', 'move_id as id', 'percentage'])
-                                ->with(['Pokeform:id,form_id'])
-                                ->where('season_number', $season_number)
-                                ->orderBy('sort')
-                                ->get()
-                        ),
-                    ],
-                    'lose' => [
-                        // 被其他 pokemon 打倒前十
-                        'pokemon' => $this->rankPokemonCollection(
-                            $pm->rankLosePokemon()
-                                ->with('Pokeform')
-                                ->with('PokeformTeam')
-                                ->where('season_number', $season_number)
-                                ->orderBy('sort')
-                                ->get()
-                        ),
-                        // 被打倒時所使用的招式前十
-                        'move' => $this->idPercentageCollection(
-                            $pm->rankLoseMove()
-                                ->select(['pf_id', 'rule', 'move_id as id', 'percentage'])
-                                ->with(['Pokeform:id,form_id'])
-                                ->where('season_number', $season_number)
-                                ->orderBy('sort')
-                                ->get()
-                        ),
-                    ],
-                ];
-
-                $content = json_encode($r);
-                $fileSystem->ensureDirectoryExists(storage_path("app/{$tmp_path}/{$season_number}"), 0755, true);
-                $fileSystem->put(storage_path("app/{$tmp_path}/{$season_number}/{$pm->id}.json"), $content);
+    
+                $fileSystem->ensureDirectoryExists(storage_path("app/{$tmp_path}/{$season_number}/top_list"), 0755, true);
+    
+                $single_top_list = json_encode(
+                    $this->rankTopPokemonResource(
+                        RankTopPokemon::with('pokeform')
+                                    ->where('season_number', $season_number)
+                                    ->where('rule', 0)
+                                    ->orderBy('ranking')
+                                    ->get()
+                    )
+                );
+                
+                $fileSystem->put(storage_path("app/{$tmp_path}/{$season_number}/top_list/0.json"), $single_top_list);
                 $S3->putObject([
                     'Bucket' => $_ENV['AWS_BUCKET'],
-                    'Key'    => "rank_data/{$season_number}/{$pm->id}.json",
-                    'Body'   => $content,
+                    'Key'    => "rank_data/{$season_number}/top_list/0.json",
+                    'Body'   => $single_top_list,
                     'ACL'    => 'public-read',
                     'CacheControl' => 'max-age=86400',
                 ]);
-
-                echo "{$season_number} {$pm->id}\n";
+    
+                $doublie_top_list = json_encode(
+                    $this->rankTopPokemonResource(
+                        RankTopPokemon::with('pokeform')
+                                    ->where('season_number', $season_number)
+                                    ->where('rule', 1)
+                                    ->orderBy('ranking')
+                                    ->get()
+                    )
+                );
+                $fileSystem->put(storage_path("app/{$tmp_path}/{$season_number}/top_list/1.json"), $doublie_top_list);
+                $S3->putObject([
+                    'Bucket' => $_ENV['AWS_BUCKET'],
+                    'Key'    => "rank_data/{$season_number}/top_list/1.json",
+                    'Body'   => $doublie_top_list,
+                    'ACL'    => 'public-read',
+                    'CacheControl' => 'max-age=86400',
+                ]);
             }
-
-            $fileSystem->ensureDirectoryExists(storage_path("app/{$tmp_path}/{$season_number}/top_list"), 0755, true);
-
-            $single_top_list = json_encode(
-                $this->rankTopPokemonResource(
-                    RankTopPokemon::with('pokeform')
-                                ->where('season_number', $season_number)
-                                ->where('rule', 0)
-                                ->orderBy('ranking')
-                                ->get()
-                )
-            );
-            
-            $fileSystem->put(storage_path("app/{$tmp_path}/{$season_number}/top_list/0.json"), $single_top_list);
-            $S3->putObject([
-                'Bucket' => $_ENV['AWS_BUCKET'],
-                'Key'    => "rank_data/{$season_number}/top_list/0.json",
-                'Body'   => $single_top_list,
-                'ACL'    => 'public-read',
-                'CacheControl' => 'max-age=86400',
-            ]);
-
-            $doublie_top_list = json_encode(
-                $this->rankTopPokemonResource(
-                    RankTopPokemon::with('pokeform')
-                                ->where('season_number', $season_number)
-                                ->where('rule', 1)
-                                ->orderBy('ranking')
-                                ->get()
-                )
-            );
-            $fileSystem->put(storage_path("app/{$tmp_path}/{$season_number}/top_list/1.json"), $doublie_top_list);
-            $S3->putObject([
-                'Bucket' => $_ENV['AWS_BUCKET'],
-                'Key'    => "rank_data/{$season_number}/top_list/1.json",
-                'Body'   => $doublie_top_list,
-                'ACL'    => 'public-read',
-                'CacheControl' => 'max-age=86400',
-            ]);
+    
+            $this->log->info('pokemonHome:upload-rank-to-S3 命令已執行完畢');
+    
+            return Command::SUCCESS;
+        } catch (\Exception $e) {
+            $this->log->error($e->getMessage());
+            echo $e->getMessage()."\n";
+            return Command::FAILURE;
         }
-
-        $this->log->info('pokemonHome:upload-rank-to-S3 命令已執行完畢');
-
-        return Command::SUCCESS;
     }
 
     /**

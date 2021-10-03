@@ -38,91 +38,97 @@ class UploadPokemonDataToS3 extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $pr_data = [
-            // 賽季列表
-            'seasons' => RankSeasonList::all()->map(function ($item, $key) {
-                return [
-                    'value' => $item->season,
-                    'text' => '第 '.$item->season.' 季',
-                    'start' => $item->start,
-                    'end' => $item->end,
-                ];
-            }),
-
-            // 賽制
-            'rules' => [
-                ['value'=> 0, 'text' => '單打'],
-                ['value'=> 1, 'text' => '雙打'],
-            ],
-
-            // 道具
-            'items' => Item::all()->mapWithKeys(function ($item, $key) {
-                return [$item['id'] => $item['name_zh_tw']];
-            }),
-
-            // 特性
-            'abilities' => Ability::all()->mapWithKeys(function ($item, $key) {
-                return [$item['id'] => $item['name_zh_tw']];
-            }),
-
-            // 屬性
-            'types' => Type::all()->mapWithKeys(function ($item, $key) {
-                return [$item['id'] => $item['name_zh_tw']];
-            }),
-
-            // 招式
-            'moves' => Move::all()->mapWithKeys(function ($item, $key) {
-                return [
-                    $item['id'] => [
-                        'id' => $item['id'],
-                        'name' => $item['name_zh_tw'],
-                        'type_id' => $item['type_id'],
-                    ],
-                ];
-            }),
-
-            // 性格
-            'natures' => Nature::all()->mapWithKeys(function ($item, $key) {
-                return [$item['id'] => $item['name_zh_tw']];
-            }),
-
-            // pokemon 圖鑑名稱
-            'pokemon' => Pokemon::all()->mapWithKeys(function ($item, $key) {
-                return [$item['id'] => $item['name_zh_tw']];
-            }),
-
-            // pokemon 個型態的屬性
-            'pokemon_types' => Poketype::all()->mapToGroups(function ($item, $key) {
-                return [
-                    $item['pokeform']['pm_id'] => [
-                        'form_id' => $item['pokeform']['form_id'],
-                        'type_id' => $item['type_id'],
-                    ],
-                ];
-            })->map(function ($item, $key) {
-                return $item->mapToGroups(function ($item, $key) {
-                    return [$item['form_id'] => $item['type_id']];
-                });
-            }),
-
-            // 各屬性之間的傷害倍率
-            'type_weakness' => $this->pm->type_weakness(),
-        ];
-
-        $file_name = 'pokemon_data_'.date('Ymd').'.json';
-
-        $this->fileSystem->put(storage_path("app/{$file_name}"), json_encode($pr_data));
-
-        $this->S3->putObject([
-            'Bucket' => $_ENV['AWS_BUCKET'],
-            'Key'    => 'pr_data.json',
-            'SourceFile'   => storage_path("app/{$file_name}"),
-            'ACL'    => 'public-read',
-            'CacheControl' => 'max-age=86400',
-        ]);
-
-        $this->log->info('pokemonHome:upload-data-to-S3 命令已執行完畢');
-
-        return Command::SUCCESS;
+        try {
+            $pr_data = [
+                // 賽季列表
+                'seasons' => RankSeasonList::all()->map(function ($item, $key) {
+                    return [
+                        'value' => $item->season,
+                        'text' => '第 '.$item->season.' 季',
+                        'start' => $item->start,
+                        'end' => $item->end,
+                    ];
+                }),
+    
+                // 賽制
+                'rules' => [
+                    ['value'=> 0, 'text' => '單打'],
+                    ['value'=> 1, 'text' => '雙打'],
+                ],
+    
+                // 道具
+                'items' => Item::all()->mapWithKeys(function ($item, $key) {
+                    return [$item['id'] => $item['name_zh_tw']];
+                }),
+    
+                // 特性
+                'abilities' => Ability::all()->mapWithKeys(function ($item, $key) {
+                    return [$item['id'] => $item['name_zh_tw']];
+                }),
+    
+                // 屬性
+                'types' => Type::all()->mapWithKeys(function ($item, $key) {
+                    return [$item['id'] => $item['name_zh_tw']];
+                }),
+    
+                // 招式
+                'moves' => Move::all()->mapWithKeys(function ($item, $key) {
+                    return [
+                        $item['id'] => [
+                            'id' => $item['id'],
+                            'name' => $item['name_zh_tw'],
+                            'type_id' => $item['type_id'],
+                        ],
+                    ];
+                }),
+    
+                // 性格
+                'natures' => Nature::all()->mapWithKeys(function ($item, $key) {
+                    return [$item['id'] => $item['name_zh_tw']];
+                }),
+    
+                // pokemon 圖鑑名稱
+                'pokemon' => Pokemon::all()->mapWithKeys(function ($item, $key) {
+                    return [$item['id'] => $item['name_zh_tw']];
+                }),
+    
+                // pokemon 個型態的屬性
+                'pokemon_types' => Poketype::all()->mapToGroups(function ($item, $key) {
+                    return [
+                        $item['pokeform']['pm_id'] => [
+                            'form_id' => $item['pokeform']['form_id'],
+                            'type_id' => $item['type_id'],
+                        ],
+                    ];
+                })->map(function ($item, $key) {
+                    return $item->mapToGroups(function ($item, $key) {
+                        return [$item['form_id'] => $item['type_id']];
+                    });
+                }),
+    
+                // 各屬性之間的傷害倍率
+                'type_weakness' => $this->pm->type_weakness(),
+            ];
+    
+            $file_name = 'pokemon_data_'.date('Ymd').'.json';
+    
+            $this->fileSystem->put(storage_path("app/{$file_name}"), json_encode($pr_data));
+    
+            $this->S3->putObject([
+                'Bucket' => $_ENV['AWS_BUCKET'],
+                'Key'    => 'pr_data.json',
+                'SourceFile'   => storage_path("app/{$file_name}"),
+                'ACL'    => 'public-read',
+                'CacheControl' => 'max-age=86400',
+            ]);
+    
+            $this->log->info('pokemonHome:upload-data-to-S3 命令已執行完畢');
+    
+            return Command::SUCCESS;
+        } catch (\Exception $e) {
+            $this->log->error($e->getMessage());
+            echo $e->getMessage()."\n";
+            return Command::FAILURE;
+        }
     }
 }

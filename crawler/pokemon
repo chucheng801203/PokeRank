@@ -17,7 +17,8 @@ $stream->setFormatter($formatter);
 $log = new Logger('local');
 $log->pushHandler($stream);
 
-System\Application::getInstance()
+try {
+    System\Application::getInstance()
     // 設定根目錄
     ->setBasePath(__DIR__)
     // 載入環境變數
@@ -44,3 +45,7 @@ System\Application::getInstance()
     ->addAppCommands('Database\Commands\\', 'database/Commands')
     ->addAppCommands('App\Commands\\', 'app/Commands')
     ->run();
+} catch (\Exception $e) {
+    $log->error($e->getMessage());
+    echo $e->getMessage()."\n";
+}
