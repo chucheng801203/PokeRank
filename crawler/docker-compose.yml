@@ -1,0 +1,63 @@
+version: "3.9"
+services:
+  app:
+    container_name: phpcli
+    build:
+      context: .
+      dockerfile: ./docker/phpcli/Dockerfile
+    tty: true
+    stdin_open: true
+    command:
+      - bash
+      - "-c"
+      - |
+        composer install
+
+        [[ ! -f /var/www/PokeRank/cronjob ]] && cat <<EOF > /var/www/PokeRank/cronjob
+        # Example of job definition:
+        # .---------------- minute (0 - 59)
+        # |  .------------- hour (0 - 23)
+        # |  |  .---------- day of month (1 - 31)
+        # |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+        # |  |  |  |
+        # |  |  |  |
+        # *  *  *  *
+        0 5 2 * * /usr/local/bin/php /var/www/PokeRank/pokemon pokemonHome:update-data >> /dev/null 2>&1
+        15 5 2 * * /usr/local/bin/php /var/www/PokeRank/pokemon pokemonHome:download-images >> /dev/null 2>&1
+        5 5 * * * /usr/local/bin/php /var/www/PokeRank/pokemon pokemonHome:update-rank --season latest >> /dev/null 2>&1
+        EOF
+        crontab /var/www/PokeRank/cronjob
+        cron -f
+    restart: always
+    volumes:
+      - .:/var/www/PokeRank
+    environment:
+      MYSQL_HOSTNAME: ${DB_HOST}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+    networks:
+      - app-network
+  db:
+    container_name: ${DB_HOST}
+    image: mysql:8.0.19
+    command: |
+      --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./database/mysql:/var/lib/mysql
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: yes
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver: bridge
+      
