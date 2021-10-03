@@ -1,0 +1,46 @@
+<?php
+
+require __DIR__.'/vendor/autoload.php';
+
+use Illuminate\Filesystem\Filesystem;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+use Monolog\Formatter\LineFormatter;
+use Aws\S3\S3Client;
+
+/** 設定 Log */
+$dateFormat = "Y-m-d H:i:s";
+$output = "[%datetime%] %channel%.%level_name%: %message%\n";
+$formatter = new LineFormatter($output, $dateFormat);
+$stream = new StreamHandler(__DIR__.'/storage/logs/poke-rank.log', Logger::INFO);
+$stream->setFormatter($formatter);
+$log = new Logger('local');
+$log->pushHandler($stream);
+
+System\Application::getInstance()
+    // 設定根目錄
+    ->setBasePath(__DIR__)
+    // 載入環境變數
+    ->loadEnv(__DIR__.'/.env')
+    // 連接資料庫
+    ->initDataBase([
+        'driver' => isset($_ENV['DB_CONNECTION']) ? $_ENV['DB_CONNECTION'] : 'mysql',
+        'host' => isset($_ENV['DB_HOST']) ? $_ENV['DB_HOST'] : '127.0.0.1',
+        'port' => isset($_ENV['DB_PORT']) ? $_ENV['DB_PORT'] : '3306',
+        'database' => isset($_ENV['DB_DATABASE']) ? $_ENV['DB_DATABASE'] : '',
+        'username' => isset($_ENV['DB_USERNAME']) ? $_ENV['DB_USERNAME'] : '',
+        'password' => isset($_ENV['DB_PASSWORD']) ? $_ENV['DB_PASSWORD'] : '',
+        'charset' => 'utf8mb4',
+        'collation' => 'utf8mb4_unicode_ci',
+    ])
+    // 載入依賴套件
+    ->addServices('fileSystem', new Filesystem())
+    ->addServices('log', $log)
+    ->addServices('S3', new S3Client([
+        'version' => 'latest',
+        'region'  => isset($_ENV['AWS_DEFAULT_REGION']) ? $_ENV['AWS_DEFAULT_REGION'] : '',
+    ]))
+    // 載入 command
+    ->addAppCommands('Database\Commands\\', 'database/Commands')
+    ->addAppCommands('App\Commands\\', 'app/Commands')
+    ->run();
