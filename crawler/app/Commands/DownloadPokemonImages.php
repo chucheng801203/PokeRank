@@ -4,14 +4,14 @@ namespace App\Commands;
 
 require __DIR__.'/../../vendor/autoload.php';
 
+use App\Libraries\Pokemon\PokemonHome;
+use App\Models\Pokeform;
+use Aws\S3\S3Client;
+use Illuminate\Filesystem\Filesystem;
+use Monolog\Logger;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Illuminate\Filesystem\Filesystem;
-use Monolog\Logger;
-use Aws\S3\S3Client;
-use App\Libraries\Pokemon\PokemonHome;
-use App\Models\Pokeform;
 
 class DownloadPokemonImages extends Command
 {
@@ -34,12 +34,12 @@ class DownloadPokemonImages extends Command
         try {
             $fileSystem = $this->fileSystem;
             $S3 = $this->S3;
-            $pm  = $this->pm;
-    
+            $pm = $this->pm;
+
             $tmp_path = 'pokemon_image_'.date('Ymd');
-    
+
             $fileSystem->ensureDirectoryExists(storage_path("app/{$tmp_path}"), 0755, true);
-    
+
             foreach (Pokeform::all() as $pf) {
                 $pm->download_pokemon_image(
                     storage_path("app/{$tmp_path}"),
@@ -47,24 +47,25 @@ class DownloadPokemonImages extends Command
                     $pf->form_id
                 );
             }
-    
+
             $files = $fileSystem->files(storage_path("app/{$tmp_path}"));
             foreach ($files as $file) {
                 $S3->putObject([
-                    'Bucket' => $_ENV['AWS_BUCKET'],
-                    'Key'    => 'images/'.basename($file),
+                    'Bucket'       => $_ENV['AWS_BUCKET'],
+                    'Key'          => 'images/'.basename($file),
                     'SourceFile'   => $file,
-                    'ACL'    => 'public-read',
+                    'ACL'          => 'public-read',
                     'CacheControl' => 'max-age=86400',
                 ]);
             }
-    
+
             $this->log->info('pokemonHome:download-images 命令已執行完畢');
-    
+
             return Command::SUCCESS;
         } catch (\Exception $e) {
             $this->log->error($e->getMessage());
             echo $e->getMessage()."\n";
+
             return Command::FAILURE;
         }
     }
