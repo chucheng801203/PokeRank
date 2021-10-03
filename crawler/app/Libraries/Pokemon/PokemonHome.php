@@ -21,6 +21,7 @@ class PokemonHome
      * 取得 pokemon 名稱、屬性、招式、特性...等資料.
      *
      * @param string pokemon(名稱) | type(屬性)| move(招式) | ability(特性) | item(道具) | nature(性格) | moveType(招式屬性)
+     *
      * @return array
      */
     public function get_pokemon_data($name = '')
@@ -38,6 +39,7 @@ class PokemonHome
      * 切換本地資料命名與 pokemon home js 檔的資料命名.
      *
      * @param string
+     *
      * @return string
      */
     public function switch_name($name)
@@ -77,9 +79,10 @@ class PokemonHome
     /**
      * 下載 pokemon home 的 pokemon 圖片.
      *
-     * @param  string  $directory  要把檔案存到哪個目錄
-     * @param  string  $poke_id  pokemon 圖鑑編號
-     * @param  string  $form_id  pokemon 型態編號
+     * @param string $directory 要把檔案存到哪個目錄
+     * @param string $poke_id   pokemon 圖鑑編號
+     * @param string $form_id   pokemon 型態編號
+     *
      * @return void
      */
     public function download_pokemon_image($directory, $poke_id, $form_id)
@@ -107,7 +110,7 @@ class PokemonHome
     {
         static $season_list = null;
 
-        if (! empty($season_list)) {
+        if (!empty($season_list)) {
             return $season_list;
         }
 
@@ -119,7 +122,7 @@ class PokemonHome
 
         $result = json_decode((string) $result->getBody(), true);
 
-        if (empty($result['list']) || ! is_array($result['list'])) {
+        if (empty($result['list']) || !is_array($result['list'])) {
             throw new PokemonFormatException();
         }
 
@@ -132,6 +135,7 @@ class PokemonHome
      * 檢查數字是否是有效的賽季.
      *
      * @param mixed string | int
+     *
      * @return bool
      */
     public function is_valid_season_num($num)
@@ -139,7 +143,7 @@ class PokemonHome
         $season_list = $this->get_season_list();
 
         if (is_string($num)) {
-            if (! preg_match('/^\d+$/', $num)) {
+            if (!preg_match('/^\d+$/', $num)) {
                 return false;
             }
 
@@ -156,7 +160,8 @@ class PokemonHome
     /**
      * 下載指定賽季 pokemon 對戰資料.
      *
-     * @param  int  $season_number  指定賽季資料
+     * @param int $season_number 指定賽季資料
+     *
      * @return array
      */
     public function get_rank_data($season_number)
@@ -170,7 +175,7 @@ class PokemonHome
         $client = new \GuzzleHttp\Client();
 
         foreach ($season as $cid => $v) {
-            if (! isset($pm_data[$v['rule']])) {
+            if (!isset($pm_data[$v['rule']])) {
                 $pm_data[$v['rule']] = [];
             }
 
@@ -181,6 +186,7 @@ class PokemonHome
                 $pdetail_url = self::RANK_DATA_URL.'/'.$cid.'/'.$v['rst'].'/'.$v['ts2'].'/pdetail-'.$i;
 
                 $result = null;
+
                 try {
                     $result = $client->request('GET', $pdetail_url);
                 } catch (\Throwable $th) {
@@ -193,7 +199,7 @@ class PokemonHome
 
                 $result = json_decode((string) $result->getBody(), true);
 
-                if (empty($result) || ! is_array($result)) {
+                if (empty($result) || !is_array($result)) {
                     throw new PokemonFormatException();
                 }
 
@@ -208,7 +214,8 @@ class PokemonHome
     /**
      * 下載指定賽季 pokemon 使用率前 150 名.
      *
-     * @param  int  $season_number  指定賽季資料
+     * @param int $season_number 指定賽季資料
+     *
      * @return array
      */
     public function get_top_pokemon($season_number)
@@ -225,6 +232,7 @@ class PokemonHome
             $ranking_url = self::RANK_DATA_URL.'/'.$cid.'/'.$v['rst'].'/'.$v['ts2'].'/pokemon';
 
             $result = null;
+
             try {
                 $result = $client->request('GET', $ranking_url);
             } catch (\Throwable $th) {
@@ -238,7 +246,7 @@ class PokemonHome
 
             $result = json_decode((string) $result->getBody(), true);
 
-            if (empty($result) || ! is_array($result)) {
+            if (empty($result) || !is_array($result)) {
                 throw new PokemonFormatException();
             }
 
@@ -259,16 +267,16 @@ class PokemonHome
         // $cols = ['一般', '格鬥', '飛行', '毒', '地面', '岩石', '蟲', '幽靈', '鋼', '火', '水', '草', '電', '超能力', '冰', '龍', '惡', '妖精'];
 
         return  [
-            0 => [1, 2, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-            1 => [1, 1, 2, 1, 1, 0.5, 0.5, 1, 1, 1, 1, 1, 1, 2, 1, 1, 0.5, 2],
-            2 => [1, 0.5, 1, 1, 0, 2, 0.5, 1, 1, 1, 1, 0.5, 2, 1, 2, 1, 1, 1],
-            3 => [1, 0.5, 1, 0.5, 2, 1, 0.5, 1, 1, 1, 1, 0.5, 1, 2, 1, 1, 1, 0.5],
-            4 => [1, 1, 1, 0.5, 1, 0.5, 1, 1, 1, 1, 2, 2, 0, 1, 2, 1, 1, 1],
-            5 => [0.5, 2, 0.5, 0.5, 2, 1, 1, 1, 2, 0.5, 2, 2, 1, 1, 1, 1, 1, 1],
-            6 => [1, 0.5, 2, 1, 0.5, 2, 1, 1, 1, 2, 1, 0.5, 1, 1, 1, 1, 1, 1],
-            7 => [0, 0, 1, 0.5, 1, 1, 0.5, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1],
-            8 => [0.5, 2, 0.5, 0, 2, 0.5, 0.5, 1, 0.5, 2, 1, 0.5, 1, 0.5, 0.5, 0.5, 1, 0.5],
-            9 => [1, 1, 1, 1, 2, 2, 0.5, 1, 0.5, 0.5, 2, 0.5, 1, 1, 0.5, 1, 1, 0.5],
+            0  => [1, 2, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            1  => [1, 1, 2, 1, 1, 0.5, 0.5, 1, 1, 1, 1, 1, 1, 2, 1, 1, 0.5, 2],
+            2  => [1, 0.5, 1, 1, 0, 2, 0.5, 1, 1, 1, 1, 0.5, 2, 1, 2, 1, 1, 1],
+            3  => [1, 0.5, 1, 0.5, 2, 1, 0.5, 1, 1, 1, 1, 0.5, 1, 2, 1, 1, 1, 0.5],
+            4  => [1, 1, 1, 0.5, 1, 0.5, 1, 1, 1, 1, 2, 2, 0, 1, 2, 1, 1, 1],
+            5  => [0.5, 2, 0.5, 0.5, 2, 1, 1, 1, 2, 0.5, 2, 2, 1, 1, 1, 1, 1, 1],
+            6  => [1, 0.5, 2, 1, 0.5, 2, 1, 1, 1, 2, 1, 0.5, 1, 1, 1, 1, 1, 1],
+            7  => [0, 0, 1, 0.5, 1, 1, 0.5, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1],
+            8  => [0.5, 2, 0.5, 0, 2, 0.5, 0.5, 1, 0.5, 2, 1, 0.5, 1, 0.5, 0.5, 0.5, 1, 0.5],
+            9  => [1, 1, 1, 1, 2, 2, 0.5, 1, 0.5, 0.5, 2, 0.5, 1, 1, 0.5, 1, 1, 0.5],
             10 => [1, 1, 1, 1, 1, 1, 1, 1, 0.5, 0.5, 0.5, 2, 2, 1, 0.5, 1, 1, 1],
             11 => [1, 1, 2, 2, 0.5, 1, 2, 1, 1, 2, 0.5, 0.5, 0.5, 1, 2, 1, 1, 1],
             12 => [1, 1, 0.5, 1, 2, 1, 1, 1, 0.5, 1, 1, 1, 0.5, 1, 1, 1, 1, 1],

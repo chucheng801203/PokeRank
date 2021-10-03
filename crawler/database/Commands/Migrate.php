@@ -4,16 +4,15 @@ namespace Database\Commands;
 
 require __DIR__.'/../../vendor/autoload.php';
 
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\ConnectionResolver;
-use Illuminate\Database\Connection;
-use Illuminate\Database\Migrations\Migrator;
 use Illuminate\Database\Migrations\DatabaseMigrationRepository;
+use Illuminate\Database\Migrations\Migrator;
 use Illuminate\Filesystem\Filesystem;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class Migrate extends Command
 {
@@ -41,10 +40,10 @@ class Migrate extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $resolver = new ConnectionResolver(["" => Capsule::connection()]);
+        $resolver = new ConnectionResolver(['' => Capsule::connection()]);
         $repository = new DatabaseMigrationRepository($resolver, 'migrations');
 
-        if (! $repository->repositoryExists()) {
+        if (!$repository->repositoryExists()) {
             $repository->createRepository();
         }
 

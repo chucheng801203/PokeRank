@@ -26,6 +26,7 @@ class PokemonHomeJsParser
      * 解析 pokemon home 的 js 檔，裡面有 pokemon 名稱、屬性、招式、特性...等資料.
      *
      * @param string 資料名稱
+     *
      * @return array
      */
     public function data($name = '')
@@ -69,6 +70,7 @@ class PokemonHomeJsParser
      * 把不同語系同一種資料放到同陣列.
      *
      * @param array
+     *
      * @return array
      */
     public function array_cols($data)
@@ -77,9 +79,9 @@ class PokemonHomeJsParser
 
         foreach ($data['jp'] as $i => $v) {
             $d[$i] = [
-                'jp' => isset($v) ? $v : null,
+                'jp'    => isset($v) ? $v : null,
                 'zh_tw' => isset($data['zh_tw'][$i]) ? $data['zh_tw'][$i] : null,
-                'en' => isset($data['en'][$i]) ? $data['en'][$i] : null,
+                'en'    => isset($data['en'][$i]) ? $data['en'][$i] : null,
             ];
         }
 
@@ -90,13 +92,14 @@ class PokemonHomeJsParser
      * 解析 pokemon home 的 js 檔 pokemon 名稱和屬性種類的資料.
      *
      * @param string poke(名稱) | pokeType(屬性)
+     *
      * @return array
      */
     public function parse1($name)
     {
         $source_data = $this->get_source();
 
-        if (! preg_match_all("/{$name}:(\[.*\])/U", $source_data, $match)) {
+        if (!preg_match_all("/{$name}:(\[.*\])/U", $source_data, $match)) {
             throw new PokemonFormatException();
         }
 
@@ -109,8 +112,8 @@ class PokemonHomeJsParser
         }
 
         return $this->array_cols([
-            'jp' => $jp,
-            'en' => $en,
+            'jp'    => $jp,
+            'en'    => $en,
             'zh_tw' => $zh_tw,
         ]);
     }
@@ -119,13 +122,14 @@ class PokemonHomeJsParser
      * 解析 pokemon home 的 js 檔 pokemon 招式、道具、性格和特性的資料.
      *
      * @param string waza(招式) | tokusei(特性) | item(道具) | seikaku(性格) | wazaType(招式屬性)
+     *
      * @return array
      */
     public function parse2($name)
     {
         $source_data = $this->get_source();
 
-        if (! preg_match_all("/{$name}:\{(.*)\}/U", $source_data, $match)) {
+        if (!preg_match_all("/{$name}:\{(.*)\}/U", $source_data, $match)) {
             throw new PokemonFormatException();
         }
 
@@ -173,24 +177,24 @@ class PokemonHomeJsParser
     {
         $source_data = $this->get_source();
 
-        if (! preg_match_all("/pokeType:\{(.*\})\}/U", $source_data, $match)) {
+        if (!preg_match_all("/pokeType:\{(.*\})\}/U", $source_data, $match)) {
             throw new PokemonFormatException();
         }
 
-        if (! preg_match_all('/[^,]+:\{.*\}/U', $match[1][0], $match)) {
+        if (!preg_match_all('/[^,]+:\{.*\}/U', $match[1][0], $match)) {
             throw new PokemonFormatException();
         }
 
         $pokeform = [];
 
         foreach ($match[0] as $v) {
-            if (! preg_match('/(.+):\{(.+)\}/U', $v, $m)) {
+            if (!preg_match('/(.+):\{(.+)\}/U', $v, $m)) {
                 throw new PokemonFormatException();
             }
 
             $pokeform[$m[1]] = [];
 
-            if (! preg_match_all('/([^,]+):(\[.+])/U', $m[2], $m2)) {
+            if (!preg_match_all('/([^,]+):(\[.+])/U', $m[2], $m2)) {
                 throw new PokemonFormatException();
             }
 
@@ -211,7 +215,7 @@ class PokemonHomeJsParser
     {
         static $source = null;
 
-        if (! empty($source)) {
+        if (!empty($source)) {
             return $source;
         }
 

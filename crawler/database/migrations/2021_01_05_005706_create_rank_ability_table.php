@@ -1,8 +1,8 @@
 <?php
 
+use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Capsule\Manager as Capsule;
 
 class CreateRankAbilityTable extends Migration
 {

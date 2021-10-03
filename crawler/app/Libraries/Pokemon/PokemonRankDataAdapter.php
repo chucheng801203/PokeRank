@@ -6,6 +6,7 @@
 namespace App\Libraries\Pokemon;
 
 use App\Models\Pokeform;
+
 // use Illuminate\Support\Facades\Log;
 
 class PokemonRankDataAdapter
@@ -29,7 +30,7 @@ class PokemonRankDataAdapter
                     $tables = [];
 
                     $pf = Pokeform::where([
-                        'pm_id' => $pm_id,
+                        'pm_id'   => $pm_id,
                         'form_id' => $form_id,
                     ])->first();
 
@@ -65,6 +66,7 @@ class PokemonRankDataAdapter
      * @param int
      * @param int 0 (單打) | 1 (雙打)
      * @param array
+     *
      * @return array
      */
     public function waza_adapter($pf_id, $rule, $data)
@@ -73,14 +75,14 @@ class PokemonRankDataAdapter
 
         foreach ($data as $sort => $move) {
             $table[] = [
-                'pf_id' => $pf_id,
+                'pf_id'         => $pf_id,
                 'season_number' => $this->season_num,
-                'rule' => $rule,
-                'move_id' => $move['id'],
-                'percentage' => $move['val'],
-                'sort' => $sort,
-                'created_at' => $this->now,
-                'updated_at' => $this->now,
+                'rule'          => $rule,
+                'move_id'       => $move['id'],
+                'percentage'    => $move['val'],
+                'sort'          => $sort,
+                'created_at'    => $this->now,
+                'updated_at'    => $this->now,
             ];
         }
 
@@ -93,6 +95,7 @@ class PokemonRankDataAdapter
      * @param int
      * @param int 0 (單打) | 1 (雙打)
      * @param array
+     *
      * @return array
      */
     public function pokemon_adapter($pf_id, $rule, $data)
@@ -101,7 +104,7 @@ class PokemonRankDataAdapter
 
         foreach ($data as $sort => $pokemon) {
             $team_pf = Pokeform::where([
-                'pm_id' => $pokemon['id'],
+                'pm_id'   => $pokemon['id'],
                 'form_id' => $pokemon['form'],
             ])->first();
 
@@ -111,13 +114,13 @@ class PokemonRankDataAdapter
             }
 
             $table[] = [
-                'pf_id' => $pf_id,
+                'pf_id'         => $pf_id,
                 'season_number' => $this->season_num,
-                'rule' => $rule,
-                'team_pf_id' => $team_pf->id,
-                'sort' => $sort,
-                'created_at' => $this->now,
-                'updated_at' => $this->now,
+                'rule'          => $rule,
+                'team_pf_id'    => $team_pf->id,
+                'sort'          => $sort,
+                'created_at'    => $this->now,
+                'updated_at'    => $this->now,
             ];
         }
 
@@ -131,6 +134,7 @@ class PokemonRankDataAdapter
      * @param int 0 (單打) | 1 (雙打)
      * @param array
      * @param string 'ability' | 'nature' | 'item'
+     *
      * @return array
      */
     public function other_adapter($pf_id, $rule, $data, $type)
@@ -139,14 +143,14 @@ class PokemonRankDataAdapter
 
         foreach ($data as $sort => $item) {
             $table[] = [
-                'pf_id' => $pf_id,
+                'pf_id'         => $pf_id,
                 'season_number' => $this->season_num,
-                'rule' => $rule,
-                $type.'_id' => $item['id'],
-                'percentage' => $item['val'],
-                'sort' => $sort,
-                'created_at' => $this->now,
-                'updated_at' => $this->now,
+                'rule'          => $rule,
+                $type.'_id'     => $item['id'],
+                'percentage'    => $item['val'],
+                'sort'          => $sort,
+                'created_at'    => $this->now,
+                'updated_at'    => $this->now,
             ];
         }
 
