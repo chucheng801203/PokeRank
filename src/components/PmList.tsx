@@ -13,7 +13,7 @@ const PmList: React.FC<{
             {...otherProps}
         >
             {listTitle && (
-                <h1 className={styles["pm-list-title"]}>{listTitle}</h1>
+                <h3 className={styles["pm-list-title"]}>{listTitle}</h3>
             )}
             <ul>{children}</ul>
         </section>
