@@ -36,6 +36,8 @@ const RankTopList: React.FC<{
         window.scroll(0, 0);
     });
 
+    document.title = "PokéRank";
+
     return (
         <PmList className={className}>
             {shouldLoading
