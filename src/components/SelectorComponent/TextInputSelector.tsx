@@ -41,6 +41,7 @@ const TextInputSelector: React.FC<TextInputSelectorProps> = ({
 
     useEffect(() => {
         if (value !== undefined) setCurrentValue(value);
+        if (!value) setOptionListValueIndex(undefined);
     }, [value]);
 
     const onInputChangeHandler = (v: string) => {
