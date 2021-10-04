@@ -40,6 +40,10 @@ try {
     ->addServices('S3', new S3Client([
         'version' => 'latest',
         'region'  => isset($_ENV['AWS_DEFAULT_REGION']) ? $_ENV['AWS_DEFAULT_REGION'] : '',
+        'credentials' =>  [
+            'key'    => $_ENV['AWS_ACCESS_KEY_ID'],
+            'secret' => $_ENV['AWS_SECRET_ACCESS_KEY'],
+        ],
     ]))
     // 載入 command
     ->addAppCommands('Database\Commands\\', 'database/Commands')
