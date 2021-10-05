@@ -13,6 +13,7 @@ import {
 } from "../redux/selectors";
 import PageDataContext from "../PageDataContext";
 import { getDefaultState } from "../util";
+import styles from "../components/index.module.scss";
 
 const GetRankData: React.FC = () => {
     const { pmId, formId } = useParams<{
@@ -93,6 +94,7 @@ const GetRankData: React.FC = () => {
                     return (
                         <PmRow
                             key={i}
+                            className={styles["rank-data-page-sm-pmrow"]}
                             pmRank={i}
                             pmAvatar={`https://pokerank.s3.ap-northeast-1.amazonaws.com/images/cap${v.id}_f${v.form_id}_s0.png`}
                             pmId={v.id}
@@ -208,6 +210,7 @@ const GetRankData: React.FC = () => {
                 return (
                     <PmRow
                         key={i}
+                        className={styles["rank-data-page-pmrow"]}
                         pmRank={i}
                         pmAvatar={`https://pokerank.s3.ap-northeast-1.amazonaws.com/images/cap${v.id}_f${v.form_id}_s0.png`}
                         pmId={v.id}
@@ -260,6 +263,7 @@ const GetRankData: React.FC = () => {
                     return (
                         <PmRow
                             key={i}
+                            className={styles["rank-data-page-pmrow"]}
                             pmRank={i}
                             pmAvatar={`https://pokerank.s3.ap-northeast-1.amazonaws.com/images/cap${v.id}_f${v.form_id}_s0.png`}
                             pmId={v.id}

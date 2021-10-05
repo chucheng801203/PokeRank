@@ -3,6 +3,7 @@ import PmList from "./PmList";
 import PmInfoBlock from "./PmInfoBlock";
 import PmRowLoading from "./PmRowLoading";
 import PercentageRow from "./PercentageRow";
+import styles from "./index.module.scss";
 
 const RankDataPage: React.FC<{
     isLoading?: boolean;
@@ -38,7 +39,7 @@ const RankDataPage: React.FC<{
                     <PmList listTitle="一起加入對戰隊伍的寶可夢TOP10">
                         {isLoading
                             ? Array.apply(null, Array(10)).map((v, i) => (
-                                <PmRowLoading key={i} />
+                                <PmRowLoading className={styles["rank-data-page-sm-pmrow"]} key={i} />
                             ))
                             : teamPokemons}
                     </PmList>
@@ -171,7 +172,7 @@ const RankDataPage: React.FC<{
                     <PmList listTitle="這隻寶可夢打倒的寶可夢TOP10">
                         {isLoading
                             ? Array.apply(null, Array(10)).map((v, i) => (
-                                <PmRowLoading key={i} />
+                                <PmRowLoading className={styles["rank-data-page-pmrow"]} key={i} />
                             ))
                             : winPokemons}
                     </PmList>
@@ -201,7 +202,7 @@ const RankDataPage: React.FC<{
                     <PmList listTitle="打倒這隻寶可夢的寶可夢TOP10">
                         {isLoading
                             ? Array.apply(null, Array(10)).map((v, i) => (
-                                <PmRowLoading key={i} />
+                                <PmRowLoading className={styles["rank-data-page-pmrow"]} key={i} />
                             ))
                             : losePokemons}
                     </PmList>
