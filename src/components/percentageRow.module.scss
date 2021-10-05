@@ -26,6 +26,10 @@
         height: 28px;
         line-height: 28px;
         margin-right: auto;
+        max-width: 45%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
     }
 
     .row-loading-name {
@@ -41,7 +45,22 @@
     .row-loading-percentage {
         width: 60px;
     }
+
+    .row-type {
+        color: #fff;
+        width: 48px;
+        height: 28px;
+        line-height: 28px;
+        border-radius: 4px;
+        text-align: center;
+    }
 }
 
-@media (min-width: 768px) {
+@media (max-width: 346px) {
+    .pr-percentage-row {
+        .row-loading-rank,
+        .row-rank {
+            display: none;
+        }
+    }
 }

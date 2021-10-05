@@ -125,7 +125,12 @@ const GetRankData: React.FC = () => {
                         name={
                             pageData.moves[v.id]
                                 ? pageData.moves[v.id].name
-                                : ""
+                                : undefined
+                        }
+                        typeId={
+                            pageData.moves[v.id]
+                            ? pageData.moves[v.id].type_id
+                            : undefined
                         }
                         percentage={v.percentage}
                     />
@@ -242,6 +247,11 @@ const GetRankData: React.FC = () => {
                                 ? pageData.moves[v.id].name
                                 : ""
                         }
+                        typeId={
+                            pageData.moves[v.id]
+                            ? pageData.moves[v.id].type_id
+                            : undefined
+                        }
                         percentage={v.percentage}
                     />
                 );
@@ -295,6 +305,11 @@ const GetRankData: React.FC = () => {
                             pageData.moves[v.id]
                                 ? pageData.moves[v.id].name
                                 : ""
+                        }
+                        typeId={
+                            pageData.moves[v.id]
+                            ? pageData.moves[v.id].type_id
+                            : undefined
                         }
                         percentage={v.percentage}
                     />

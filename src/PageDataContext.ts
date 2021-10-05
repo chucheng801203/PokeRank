@@ -11,7 +11,7 @@ export type PageDataType = {
     }>;
     items: Array<string>;
     abilities: Array<string>;
-    moves: Array<{ name: string; type_id: number }>;
+    moves: Array<{ name: string; type_id: number | null }>;
     natures: Array<string>;
     types: Array<string>;
     pokemon: { [id: number]: string };
