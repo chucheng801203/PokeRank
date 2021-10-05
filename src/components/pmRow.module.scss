@@ -83,6 +83,17 @@
     }
 }
 
+@media (max-width: 321px) {
+    .pr-pm-row {
+        .pm-row-loading-rank,
+        .pm-row-rank,
+        .pm-row-loading-img,
+        .pm-row-img {
+            margin-right: 6px;
+        }
+    }
+}
+
 @media (min-width: 464px) {
     .pr-pm-row {
         .pm-row-loading-rank,
