@@ -47,6 +47,8 @@ const HomePageLink: React.FC<{
                     season: season[0],
                 });
             }
+
+            window.scroll(0, 0);
         }
 
         dispatch(searchTextAction(""));
