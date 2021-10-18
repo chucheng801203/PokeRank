@@ -39,6 +39,8 @@ const SeasonSelector: React.FC<{
                 rule: rule[0],
                 season: s,
             });
+            
+            window.scroll(0, 0);
         }
     };
 

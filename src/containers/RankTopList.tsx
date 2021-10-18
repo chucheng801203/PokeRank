@@ -33,7 +33,6 @@ const RankTopList: React.FC<{
         if (!page_loading && shouldLoading) {
             dispatch(topListAction);
         }
-        window.scroll(0, 0);
     });
 
     document.title = "PokéRank";
