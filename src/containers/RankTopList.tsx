@@ -10,6 +10,7 @@ import {
     getTopListState,
 } from "../redux/selectors";
 import PageDataContext from "../PageDataContext";
+import styles from "../components/index.module.scss";
 
 const RankTopList: React.FC<{
     className?: string;
@@ -38,25 +39,28 @@ const RankTopList: React.FC<{
     document.title = "PokéRank";
 
     return (
-        <PmList className={className}>
-            {shouldLoading
-                ? [...new Array(10)].map((v, i) => <PmRowLoading key={i} />)
-                : currentList.topList.map((rank, i) => (
-                      <PmRow
-                          key={i}
-                          pmRank={rank.ranking}
-                          pmAvatar={`https://pokerank.s3.ap-northeast-1.amazonaws.com/images/cap${rank.pokemon.id}_f${rank.pokemon.form_id}_s0.png`}
-                          pmId={rank.pokemon.id}
-                          pmFormId={rank.pokemon.form_id}
-                          pmName={pokemon[rank.pokemon.id]}
-                          pmType={
-                              pokemon_types[rank.pokemon.id][
-                                  rank.pokemon.form_id
-                              ]
-                          }
-                      />
-                  ))}
-        </PmList>
+        <>
+            <h2 className={styles["text-center"]}>寶可夢排行榜</h2>
+            <PmList className={className}>
+                {shouldLoading
+                    ? [...new Array(10)].map((v, i) => <PmRowLoading key={i} />)
+                    : currentList.topList.map((rank, i) => (
+                          <PmRow
+                              key={i}
+                              pmRank={rank.ranking}
+                              pmAvatar={`https://pokerank.s3.ap-northeast-1.amazonaws.com/images/cap${rank.pokemon.id}_f${rank.pokemon.form_id}_s0.png`}
+                              pmId={rank.pokemon.id}
+                              pmFormId={rank.pokemon.form_id}
+                              pmName={pokemon[rank.pokemon.id]}
+                              pmType={
+                                  pokemon_types[rank.pokemon.id][
+                                      rank.pokemon.form_id
+                                  ]
+                              }
+                          />
+                      ))}
+            </PmList>
+        </>
     );
 };
 

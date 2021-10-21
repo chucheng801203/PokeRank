@@ -39,8 +39,13 @@ const RankDataPage: React.FC<{
                     <PmList listTitle="一起加入對戰隊伍的寶可夢TOP10">
                         {isLoading
                             ? Array.apply(null, Array(10)).map((v, i) => (
-                                <PmRowLoading className={styles["rank-data-page-sm-pmrow"]} key={i} />
-                            ))
+                                  <PmRowLoading
+                                      className={
+                                          styles["rank-data-page-sm-pmrow"]
+                                      }
+                                      key={i}
+                                  />
+                              ))
                             : teamPokemons}
                     </PmList>
                 </div>
@@ -52,10 +57,7 @@ const RankDataPage: React.FC<{
                         <div className="col-12 col-xl-6">
                             {isLoading ? (
                                 <>
-                                    <PmList
-                                        className="mb-3"
-                                        listTitle="招式"
-                                    >
+                                    <PmList className="mb-3" listTitle="招式">
                                         {Array.apply(null, Array(10)).map(
                                             (v, i) => (
                                                 <PercentageRow
@@ -66,10 +68,7 @@ const RankDataPage: React.FC<{
                                         )}
                                     </PmList>
 
-                                    <PmList
-                                        className="mb-3"
-                                        listTitle="性格"
-                                    >
+                                    <PmList className="mb-3" listTitle="性格">
                                         {Array.apply(null, Array(8)).map(
                                             (v, i) => (
                                                 <PercentageRow
@@ -108,10 +107,7 @@ const RankDataPage: React.FC<{
                         <div className="col-12 col-xl-6">
                             {isLoading ? (
                                 <>
-                                    <PmList
-                                        className="mb-3"
-                                        listTitle="特性"
-                                    >
+                                    <PmList className="mb-3" listTitle="特性">
                                         {Array.apply(null, Array(2)).map(
                                             (v, i) => (
                                                 <PercentageRow
@@ -121,10 +117,7 @@ const RankDataPage: React.FC<{
                                             )
                                         )}
                                     </PmList>
-                                    <PmList
-                                        className="mb-3"
-                                        listTitle="道具"
-                                    >
+                                    <PmList className="mb-3" listTitle="道具">
                                         {Array.apply(null, Array(10)).map(
                                             (v, i) => (
                                                 <PercentageRow
@@ -172,8 +165,11 @@ const RankDataPage: React.FC<{
                     <PmList listTitle="這隻寶可夢打倒的寶可夢TOP10">
                         {isLoading
                             ? Array.apply(null, Array(10)).map((v, i) => (
-                                <PmRowLoading className={styles["rank-data-page-pmrow"]} key={i} />
-                            ))
+                                  <PmRowLoading
+                                      className={styles["rank-data-page-pmrow"]}
+                                      key={i}
+                                  />
+                              ))
                             : winPokemons}
                     </PmList>
                 </div>
@@ -184,8 +180,8 @@ const RankDataPage: React.FC<{
                     <PmList listTitle="這隻寶可夢打倒對手時使用的招式TOP10">
                         {isLoading
                             ? Array.apply(null, Array(10)).map((v, i) => (
-                                <PercentageRow key={i} isLoading={true} />
-                            ))
+                                  <PercentageRow key={i} isLoading={true} />
+                              ))
                             : winMove}
                     </PmList>
                 </div>
@@ -202,8 +198,11 @@ const RankDataPage: React.FC<{
                     <PmList listTitle="打倒這隻寶可夢的寶可夢TOP10">
                         {isLoading
                             ? Array.apply(null, Array(10)).map((v, i) => (
-                                <PmRowLoading className={styles["rank-data-page-pmrow"]} key={i} />
-                            ))
+                                  <PmRowLoading
+                                      className={styles["rank-data-page-pmrow"]}
+                                      key={i}
+                                  />
+                              ))
                             : losePokemons}
                     </PmList>
                 </div>
@@ -214,8 +213,8 @@ const RankDataPage: React.FC<{
                     <PmList listTitle="對手打倒這隻寶可夢時使用的招式TOP10">
                         {isLoading
                             ? Array.apply(null, Array(10)).map((v, i) => (
-                                <PercentageRow key={i} isLoading={true} />
-                            ))
+                                  <PercentageRow key={i} isLoading={true} />
+                              ))
                             : loseMove}
                     </PmList>
                 </div>

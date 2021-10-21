@@ -27,10 +27,12 @@ const Portal: React.FC = () => {
                         if (rule) {
                             for (let i = 0; i < data.rules.length; i++) {
                                 if (data.rules[i].value === parseInt(rule)) {
-                                    defaultState.rule = [{
-                                        index: i,
-                                        value: data.rules[i].value,
-                                    }];
+                                    defaultState.rule = [
+                                        {
+                                            index: i,
+                                            value: data.rules[i].value,
+                                        },
+                                    ];
                                     break;
                                 }
                             }
@@ -39,11 +41,15 @@ const Portal: React.FC = () => {
                         const season = getParameterByName("season");
                         if (season) {
                             for (let i = 0; i < data.seasons.length; i++) {
-                                if (data.seasons[i].value === parseInt(season)) {
-                                    defaultState.season = [{
-                                        index: i,
-                                        value: data.seasons[i].value,
-                                    }];
+                                if (
+                                    data.seasons[i].value === parseInt(season)
+                                ) {
+                                    defaultState.season = [
+                                        {
+                                            index: i,
+                                            value: data.seasons[i].value,
+                                        },
+                                    ];
                                     break;
                                 }
                             }
