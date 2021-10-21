@@ -25,9 +25,19 @@ const PercentageRow: React.FC<{
                     <>
                         <div className={styles["row-rank"]}>{rank}</div>
                         <div className={styles["row-name"]}>{name}</div>
-                        <div className="d-flex justify-content-end" style={{width: '112px'}}>
-                            { typeof typeId === "number" && <PmTypeBlock className={`${styles["row-type"]}`} pmType={typeId} />}
-                            <div className={`${styles["row-percentage"]} ml-auto`}>
+                        <div
+                            className="d-flex justify-content-end"
+                            style={{ width: "112px" }}
+                        >
+                            {typeof typeId === "number" && (
+                                <PmTypeBlock
+                                    className={`${styles["row-type"]}`}
+                                    pmType={typeId}
+                                />
+                            )}
+                            <div
+                                className={`${styles["row-percentage"]} ml-auto`}
+                            >
                                 {`${percentage}%`}
                             </div>
                         </div>
