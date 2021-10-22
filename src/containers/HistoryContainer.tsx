@@ -31,7 +31,7 @@ const HistoryContainer: React.FC = () => {
                 (state.season.index !== season[0].index && search === "")
             ) {
                 historyState.replace(
-                    window.location.pathname + location.search,
+                    window.location.pathname + search,
                     {
                         rule: rule[0],
                         season: season[0],
