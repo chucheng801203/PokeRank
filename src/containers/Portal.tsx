@@ -5,6 +5,7 @@ import toggleRule from "../redux/actions/rule";
 import toggleSeason from "../redux/actions/season";
 import PageDataContext, { PageDataType } from "../PageDataContext";
 import { getDefaultState, getParameterByName } from "../util";
+import 'whatwg-fetch'
 
 const getValue = (value: number, data: Array<{ value: number }>) => {
     for (let i = 0; i < data.length; i++) {
@@ -28,46 +29,44 @@ const Portal: React.FC = () => {
 
     useEffect(() => {
         if (!pageData) {
-            import("axios").then((axios) => {
-                axios.default
-                    .get<PageDataType>(url)
-                    .then(function (response) {
-                        const { data } = response;
+            window.fetch(url)
+            .then(function(response) {
+              return response.json();
+            })
+            .then(function(data) {
+                let defaultState = getDefaultState(data);
+    
+                const rule = getParameterByName("rule");
+                if (rule) {
+                    const ruleValue = getValue(
+                        parseInt(rule),
+                        data.rules
+                    );
+                    if (ruleValue) {
+                        defaultState.rule = ruleValue;
+                    }
+                }
 
-                        let defaultState = getDefaultState(data);
+                const season = getParameterByName("season");
+                if (season) {
+                    const seasonValue = getValue(
+                        parseInt(season),
+                        data.seasons
+                    );
+                    if (seasonValue) {
+                        defaultState.season = seasonValue;
+                    }
+                }
 
-                        const rule = getParameterByName("rule");
-                        if (rule) {
-                            const ruleValue = getValue(
-                                parseInt(rule),
-                                data.rules
-                            );
-                            if (ruleValue) {
-                                defaultState.rule = ruleValue;
-                            }
-                        }
+                dispatch(toggleRule(defaultState.rule[0]));
+                dispatch(toggleSeason(defaultState.season[0]));
 
-                        const season = getParameterByName("season");
-                        if (season) {
-                            const seasonValue = getValue(
-                                parseInt(season),
-                                data.seasons
-                            );
-                            if (seasonValue) {
-                                defaultState.season = seasonValue;
-                            }
-                        }
-
-                        dispatch(toggleRule(defaultState.rule[0]));
-                        dispatch(toggleSeason(defaultState.season[0]));
-
-                        data.page_loading = false;
-                        setPageData(data);
-                    })
-                    .catch((e) => {
-                        alert("與伺服器連接失敗，請稍後在試。");
-                        console.log(e);
-                    });
+                data.page_loading = false;
+                setPageData(data);
+            })
+            .catch((e) => {
+                alert("與伺服器連接失敗，請稍後在試。");
+                console.log(e);
             });
         }
     });
