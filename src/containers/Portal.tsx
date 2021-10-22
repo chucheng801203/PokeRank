@@ -6,6 +6,19 @@ import toggleSeason from "../redux/actions/season";
 import PageDataContext, { PageDataType } from "../PageDataContext";
 import { getDefaultState, getParameterByName } from "../util";
 
+const getValue = (value: number, data: Array<{ value: number }>) => {
+    for (let i = 0; i < data.length; i++) {
+        if (data[i].value === value) {
+            return [
+                {
+                    index: i,
+                    value: data[i].value,
+                },
+            ];
+        }
+    }
+};
+
 const Portal: React.FC = () => {
     const url = "https://pokerank.s3.ap-northeast-1.amazonaws.com/pr_data.json";
 
@@ -25,33 +38,23 @@ const Portal: React.FC = () => {
 
                         const rule = getParameterByName("rule");
                         if (rule) {
-                            for (let i = 0; i < data.rules.length; i++) {
-                                if (data.rules[i].value === parseInt(rule)) {
-                                    defaultState.rule = [
-                                        {
-                                            index: i,
-                                            value: data.rules[i].value,
-                                        },
-                                    ];
-                                    break;
-                                }
+                            const ruleValue = getValue(
+                                parseInt(rule),
+                                data.rules
+                            );
+                            if (ruleValue) {
+                                defaultState.rule = ruleValue;
                             }
                         }
 
                         const season = getParameterByName("season");
                         if (season) {
-                            for (let i = 0; i < data.seasons.length; i++) {
-                                if (
-                                    data.seasons[i].value === parseInt(season)
-                                ) {
-                                    defaultState.season = [
-                                        {
-                                            index: i,
-                                            value: data.seasons[i].value,
-                                        },
-                                    ];
-                                    break;
-                                }
+                            const seasonValue = getValue(
+                                parseInt(season),
+                                data.seasons
+                            );
+                            if (seasonValue) {
+                                defaultState.season = seasonValue;
                             }
                         }
 

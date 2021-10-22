@@ -30,14 +30,11 @@ const HistoryContainer: React.FC = () => {
                 !state ||
                 (state.season.index !== season[0].index && search === "")
             ) {
-                historyState.replace(
-                    window.location.pathname + search,
-                    {
-                        rule: rule[0],
-                        season: season[0],
-                        searchText: "",
-                    }
-                );
+                historyState.replace(window.location.pathname + search, {
+                    rule: rule[0],
+                    season: season[0],
+                    searchText: "",
+                });
             } else {
                 if (state.rule.index !== rule[0].index)
                     dispatch(toggleRule(state.rule));
