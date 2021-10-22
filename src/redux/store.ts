@@ -23,4 +23,4 @@ export const defaultState: RootState = {
     searchText: "",
 };
 
-export default createStore(reducer, undefined, applyMiddleware(thunk));
+export default createStore(reducer, defaultState, applyMiddleware(thunk));

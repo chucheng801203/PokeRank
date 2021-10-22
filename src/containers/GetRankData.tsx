@@ -48,7 +48,7 @@ const GetRankData: React.FC = () => {
         window.scroll(0, 0);
     });
 
-    let pmInfo: React.ReactNode;
+    let pmInfo: React.ReactNode = <PmInfoBlock isLoading={true} />;
     let teamPokemons: React.ReactNode;
     let move: React.ReactNode;
     let ability: React.ReactNode;
@@ -333,7 +333,7 @@ const GetRankData: React.FC = () => {
 
     return (
         <>
-            {pageData.page_loading || !isValidPmId ? (
+            {!isValidPmId ? (
                 <>{unMatch}</>
             ) : (
                 <>
