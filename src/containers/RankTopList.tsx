@@ -43,7 +43,7 @@ const RankTopList: React.FC<{
             <h2 className={styles["text-center"]}>寶可夢排行榜</h2>
             <PmList className={className}>
                 {shouldLoading
-                    ? [...new Array(10)].map((v, i) => <PmRowLoading key={i} />)
+                    ? [...new Array(150)].map((v, i) => <PmRowLoading key={i} />)
                     : currentList.topList.map((rank, i) => (
                           <PmRow
                               key={i}
