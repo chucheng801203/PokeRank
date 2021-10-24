@@ -153,7 +153,11 @@ const GetRankData: React.FC = () => {
                     <PercentageRow
                         key={i}
                         rank={i + 1}
-                        name={pageData.abilities[v.id] ? pageData.abilities[v.id].name : ""}
+                        name={
+                            pageData.abilities[v.id]
+                                ? pageData.abilities[v.id].name
+                                : ""
+                        }
                         percentage={v.percentage}
                     />
                 );
@@ -175,7 +179,11 @@ const GetRankData: React.FC = () => {
                     <PercentageRow
                         key={i}
                         rank={i + 1}
-                        name={pageData.natures[v.id] ? pageData.natures[v.id].name : ""}
+                        name={
+                            pageData.natures[v.id]
+                                ? pageData.natures[v.id].name
+                                : ""
+                        }
                         percentage={v.percentage}
                     />
                 );
@@ -197,7 +205,11 @@ const GetRankData: React.FC = () => {
                     <PercentageRow
                         key={i}
                         rank={i + 1}
-                        name={pageData.items[v.id] ? pageData.items[v.id].name : ""}
+                        name={
+                            pageData.items[v.id]
+                                ? pageData.items[v.id].name
+                                : ""
+                        }
                         percentage={v.percentage}
                     />
                 );

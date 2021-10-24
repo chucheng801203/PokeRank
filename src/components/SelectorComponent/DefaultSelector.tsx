@@ -66,8 +66,10 @@ const DefaultSelector: React.FC<DefaultSelectorProps> = ({
 
     useEffect(() => {
         if (
-            nextValue.length > 0 &&
-            nextValue[0].index !== currentValue[0].index
+            (nextValue.length > 0 && currentValue.length === 0) ||
+            (currentValue[0] &&
+                nextValue.length > 0 &&
+                nextValue[0].index !== currentValue[0].index)
         )
             setCurrentValue(nextValue);
     }, [nextValue, currentValue]);
