@@ -58,12 +58,20 @@ class UploadPokemonDataToS3 extends Command
 
                 // 道具
                 'items' => Item::all()->mapWithKeys(function ($item, $key) {
-                    return [$item['id'] => $item['name_zh_tw']];
+                    return [
+                        $item['id'] => [
+                            "name" => $item['name_zh_tw']
+                        ],
+                    ];
                 }),
 
                 // 特性
                 'abilities' => Ability::all()->mapWithKeys(function ($item, $key) {
-                    return [$item['id'] => $item['name_zh_tw']];
+                    return [
+                        $item['id'] => [
+                            "name" => $item['name_zh_tw']
+                        ],
+                    ];
                 }),
 
                 // 屬性
@@ -84,7 +92,11 @@ class UploadPokemonDataToS3 extends Command
 
                 // 性格
                 'natures' => Nature::all()->mapWithKeys(function ($item, $key) {
-                    return [$item['id'] => $item['name_zh_tw']];
+                    return [
+                        $item['id'] => [
+                            "name" => $item['name_zh_tw']
+                        ],
+                    ];
                 }),
 
                 // pokemon 圖鑑名稱
