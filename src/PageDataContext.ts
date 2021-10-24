@@ -9,10 +9,19 @@ export type PageDataType = {
         start: string;
         end: string;
     }>;
-    items: Array<{ name: string; }>;
-    abilities: Array<{ name: string; }>;
-    moves: Array<{ name: string; type_id: number | null; }>;
-    natures: Array<{ name: string; }>;
+    items: Array<{
+        name: string;
+    }>;
+    abilities: Array<{
+        name: string;
+    }>;
+    moves: Array<{
+        name: string;
+        type_id: number | null;
+    }>;
+    natures: Array<{
+        name: string;
+    }>;
     types: Array<string>;
     pokemon: { [id: number]: string };
     pokemon_types: Array<Array<Array<number>>>;
