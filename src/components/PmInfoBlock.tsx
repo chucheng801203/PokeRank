@@ -5,47 +5,54 @@ import LoadingBlock from "./LoadingBlock";
 import PageDataContext, { PageDataType } from "../PageDataContext";
 import styles from "./index.module.scss";
 
-const LoadingMode = (pageData: PageDataType) => (
-    <div className={styles["pr-info-block"]}>
-        <div className="d-sm-flex mb-3">
-            <div className="d-flex align-items-center mr-sm-auto mb-2 mb-sm-0">
-                <LoadingBlock
-                    className={`${styles["info-loading-name"]} mr-2`}
-                />
-                <LoadingBlock
-                    className={`${styles["info-loading-rank"]} mr-auto`}
-                />
-            </div>
-            <div className="d-flex align-items-center">
-                <LoadingBlock className={styles["info-type"]} />
-                <LoadingBlock className={styles["info-type"]} />
-            </div>
-        </div>
-        <div className="d-flex flex-wrap mb-3">
-            <LoadingBlock className={styles["info-img"]} />
-        </div>
-        <div style={{ overflowX: "auto" }}>
-            <div className={styles["info-weakness-table"]}>
-                <div className={styles["info-table-tr"]}>
-                    {pageData.types.map((v, i) => (
-                        <div key={i} className={styles["info-table-td"]}>
-                            <LoadingBlock
-                                style={{ width: "100%", height: "100%" }}
-                            />
-                        </div>
-                    ))}
+const LoadingMode = (pageData: PageDataType) => {
+    const types =
+        pageData && pageData.types && pageData.types.length > 0
+            ? pageData.types
+            : Array.apply(null, Array(18));
+
+    return (
+        <div className={styles["pr-info-block"]}>
+            <div className="d-sm-flex mb-3">
+                <div className="d-flex align-items-center mr-sm-auto mb-2 mb-sm-0">
+                    <LoadingBlock
+                        className={`${styles["info-loading-name"]} mr-2`}
+                    />
+                    <LoadingBlock
+                        className={`${styles["info-loading-rank"]} mr-auto`}
+                    />
                 </div>
-                <div className={styles["info-table-tr"]}>
-                    {pageData.types.map((v, i) => (
-                        <div key={i} className={styles["info-table-td"]}>
-                            --
-                        </div>
-                    ))}
+                <div className="d-flex align-items-center">
+                    <LoadingBlock className={styles["info-type"]} />
+                    <LoadingBlock className={styles["info-type"]} />
                 </div>
             </div>
+            <div className="d-flex flex-wrap mb-3">
+                <LoadingBlock className={styles["info-img"]} />
+            </div>
+            <div style={{ overflowX: "auto" }}>
+                <div className={styles["info-weakness-table"]}>
+                    <div className={styles["info-table-tr"]}>
+                        {types.map((v, i) => (
+                            <div key={i} className={styles["info-table-td"]}>
+                                <LoadingBlock
+                                    style={{ width: "100%", height: "100%" }}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                    <div className={styles["info-table-tr"]}>
+                        {types.map((v, i) => (
+                            <div key={i} className={styles["info-table-td"]}>
+                                --
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-);
+    );
+};
 
 const PmInfoBlock: React.FC<{
     pmId?: number;
