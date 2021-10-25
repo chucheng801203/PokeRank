@@ -16,6 +16,7 @@ export type WikiDataType = {
         [name: string]: {
             PP: string;
             class: string;
+            type: string;
             damage: string;
             hitRate: string;
             description: string;

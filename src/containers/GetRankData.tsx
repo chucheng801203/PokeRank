@@ -14,6 +14,7 @@ import {
 import PageDataContext from "../PageDataContext";
 import { getDefaultState } from "../util";
 import styles from "../components/index.module.scss";
+import ShowWikiModal from "../components/ShowWikiModal";
 
 const GetRankData: React.FC = () => {
     const { pmId, formId } = useParams<{
@@ -118,22 +119,23 @@ const GetRankData: React.FC = () => {
                 )
                     return null;
 
+                let name = undefined;
+                let typeId = undefined;
+
+                if (pageData.moves[v.id]) {
+                    name = pageData.moves[v.id].name;
+                    typeId = pageData.moves[v.id].type_id;
+                }
+
                 return (
-                    <PercentageRow
-                        key={i}
-                        rank={i + 1}
-                        name={
-                            pageData.moves[v.id]
-                                ? pageData.moves[v.id].name
-                                : undefined
-                        }
-                        typeId={
-                            pageData.moves[v.id]
-                                ? pageData.moves[v.id].type_id
-                                : undefined
-                        }
-                        percentage={v.percentage}
-                    />
+                    <ShowWikiModal type="moves" name={name} key={i}>
+                        <PercentageRow
+                            rank={i + 1}
+                            name={name}
+                            typeId={typeId}
+                            percentage={v.percentage}
+                        />
+                    </ShowWikiModal>
                 );
             });
         }
@@ -149,17 +151,23 @@ const GetRankData: React.FC = () => {
                 )
                     return null;
 
+                let name = undefined;
+
+                if (pageData.abilities[v.id]) {
+                    name = pageData.abilities[v.id]
+                        ? pageData.abilities[v.id].name
+                        : "";
+                }
+
                 return (
-                    <PercentageRow
-                        key={i}
-                        rank={i + 1}
-                        name={
-                            pageData.abilities[v.id]
-                                ? pageData.abilities[v.id].name
-                                : ""
-                        }
-                        percentage={v.percentage}
-                    />
+                    <ShowWikiModal type="abilities" name={name} key={i}>
+                        <PercentageRow
+                            key={i}
+                            rank={i + 1}
+                            name={name}
+                            percentage={v.percentage}
+                        />
+                    </ShowWikiModal>
                 );
             });
         }
@@ -175,17 +183,23 @@ const GetRankData: React.FC = () => {
                 )
                     return null;
 
+                let name = undefined;
+
+                if (pageData.abilities[v.id]) {
+                    name = pageData.natures[v.id]
+                        ? pageData.natures[v.id].name
+                        : "";
+                }
+
                 return (
-                    <PercentageRow
-                        key={i}
-                        rank={i + 1}
-                        name={
-                            pageData.natures[v.id]
-                                ? pageData.natures[v.id].name
-                                : ""
-                        }
-                        percentage={v.percentage}
-                    />
+                    <ShowWikiModal type="natures" name={name} key={i}>
+                        <PercentageRow
+                            key={i}
+                            rank={i + 1}
+                            name={name}
+                            percentage={v.percentage}
+                        />
+                    </ShowWikiModal>
                 );
             });
         }
@@ -201,17 +215,23 @@ const GetRankData: React.FC = () => {
                 )
                     return null;
 
+                let name = undefined;
+
+                if (pageData.items[v.id]) {
+                    name = pageData.items[v.id]
+                        ? pageData.items[v.id].name
+                        : "";
+                }
+
                 return (
-                    <PercentageRow
-                        key={i}
-                        rank={i + 1}
-                        name={
-                            pageData.items[v.id]
-                                ? pageData.items[v.id].name
-                                : ""
-                        }
-                        percentage={v.percentage}
-                    />
+                    <ShowWikiModal type="items" name={name} key={i}>
+                        <PercentageRow
+                            key={i}
+                            rank={i + 1}
+                            name={name}
+                            percentage={v.percentage}
+                        />
+                    </ShowWikiModal>
                 );
             });
         }
@@ -250,22 +270,24 @@ const GetRankData: React.FC = () => {
                 )
                     return null;
 
+                let name = undefined;
+                let typeId = undefined;
+
+                if (pageData.moves[v.id]) {
+                    name = pageData.moves[v.id].name;
+                    typeId = pageData.moves[v.id].type_id;
+                }
+
                 return (
-                    <PercentageRow
-                        key={i}
-                        rank={i + 1}
-                        name={
-                            pageData.moves[v.id]
-                                ? pageData.moves[v.id].name
-                                : ""
-                        }
-                        typeId={
-                            pageData.moves[v.id]
-                                ? pageData.moves[v.id].type_id
-                                : undefined
-                        }
-                        percentage={v.percentage}
-                    />
+                    <ShowWikiModal type="moves" name={name} key={i}>
+                        <PercentageRow
+                            key={i}
+                            rank={i + 1}
+                            name={name}
+                            typeId={typeId}
+                            percentage={v.percentage}
+                        />
+                    </ShowWikiModal>
                 );
             });
         }
@@ -309,22 +331,24 @@ const GetRankData: React.FC = () => {
                 )
                     return null;
 
+                let name = undefined;
+                let typeId = undefined;
+
+                if (pageData.moves[v.id]) {
+                    name = pageData.moves[v.id].name;
+                    typeId = pageData.moves[v.id].type_id;
+                }
+
                 return (
-                    <PercentageRow
-                        key={i}
-                        rank={i + 1}
-                        name={
-                            pageData.moves[v.id]
-                                ? pageData.moves[v.id].name
-                                : ""
-                        }
-                        typeId={
-                            pageData.moves[v.id]
-                                ? pageData.moves[v.id].type_id
-                                : undefined
-                        }
-                        percentage={v.percentage}
-                    />
+                    <ShowWikiModal type="moves" name={name} key={i}>
+                        <PercentageRow
+                            key={i}
+                            rank={i + 1}
+                            name={name}
+                            typeId={typeId}
+                            percentage={v.percentage}
+                        />
+                    </ShowWikiModal>
                 );
             });
         }

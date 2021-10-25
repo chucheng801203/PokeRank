@@ -1,0 +1,11 @@
+.pr-show-wiki-modal-table {
+    th:first-child,
+    td:first-child {
+        width: 60px;
+        vertical-align: top;
+    }
+    th,
+    td {
+        text-align: left;
+    }
+}

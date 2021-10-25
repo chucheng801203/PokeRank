@@ -13,6 +13,10 @@ use App\Models\Pokemon;
 use App\Models\Poketype;
 use App\Models\RankSeasonList;
 use App\Models\Type;
+use App\Models\WikiItemData;
+use App\Models\WikiAbilityData;
+use App\Models\WikiMoveData;
+use App\Models\WikiNatureData;
 use Aws\S3\S3Client;
 use Illuminate\Filesystem\Filesystem;
 use Monolog\Logger;
@@ -60,7 +64,9 @@ class UploadPokemonDataToS3 extends Command
                 'items' => Item::all()->mapWithKeys(function ($item, $key) {
                     return [
                         $item['id'] => [
-                            "name" => $item['name_zh_tw']
+                            'id'   => $item['id'],
+                            "name" => $item['name_zh_tw'],
+                            // "description" => WikiItemData::select(['description'])->where('name_zh_tw', $item['name_zh_tw'])->get()
                         ],
                     ];
                 }),
@@ -69,7 +75,9 @@ class UploadPokemonDataToS3 extends Command
                 'abilities' => Ability::all()->mapWithKeys(function ($item, $key) {
                     return [
                         $item['id'] => [
-                            "name" => $item['name_zh_tw']
+                            'id'   => $item['id'],
+                            "name" => $item['name_zh_tw'],
+                            // "description" => WikiAbilityData::select(['description'])->where('name_zh_tw', $item['name_zh_tw'])->get()
                         ],
                     ];
                 }),
@@ -86,6 +94,7 @@ class UploadPokemonDataToS3 extends Command
                             'id'      => $item['id'],
                             'name'    => $item['name_zh_tw'],
                             'type_id' => $item['type_id'],
+                            // "description" => WikiMoveData::select(['class', 'damage', 'hitRate', 'PP', 'description'])->where('name_zh_tw', $item['name_zh_tw'])->get()
                         ],
                     ];
                 }),
@@ -94,7 +103,9 @@ class UploadPokemonDataToS3 extends Command
                 'natures' => Nature::all()->mapWithKeys(function ($item, $key) {
                     return [
                         $item['id'] => [
-                            "name" => $item['name_zh_tw']
+                            'id'   => $item['id'],
+                            "name" => $item['name_zh_tw'],
+                            // "description" => WikiNatureData::select(['advantage', 'weakness', 'like', 'notlike'])->where('name_zh_tw', $item['name_zh_tw'])->get()
                         ],
                     ];
                 }),
