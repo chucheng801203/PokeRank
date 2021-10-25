@@ -9,7 +9,7 @@ const PercentageRow: React.FC<{
     typeId?: number | null;
     percentage?: number | string;
     isLoading?: boolean;
-    onClick?: () => void
+    onClick?: () => void;
 }> = ({ rank, name, typeId, percentage, isLoading, onClick }) => {
     let className = styles["pr-percentage-row"];
     if (onClick) {

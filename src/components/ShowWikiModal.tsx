@@ -7,11 +7,7 @@ const ShowWikiModal: React.FC<{
     children: React.ReactNode;
     type: string;
     name?: string;
-}> = ({
-    children,
-    type,
-    name,
-}) => {
+}> = ({ children, type, name }) => {
     const { abilities, items, moves, natures } = useContext(WikiDataContext);
 
     let title: React.ReactNode = "";
@@ -138,7 +134,7 @@ const ShowWikiModal: React.FC<{
                                 <td>{natures[name].like}</td>
                             </tr>
                             <tr>
-                                <td style={{width: "80px"}}>不喜歡：</td>
+                                <td style={{ width: "80px" }}>不喜歡：</td>
                                 <td>{natures[name].notlike}</td>
                             </tr>
                         </tbody>
@@ -158,12 +154,12 @@ const ShowWikiModal: React.FC<{
         setIsModalVisible(false);
     };
 
-    const childrenWithProps = React.Children.map(children, child => {
+    const childrenWithProps = React.Children.map(children, (child) => {
         if (React.isValidElement(child)) {
             return React.cloneElement(child, {
                 onClick: () => {
                     showModal();
-                }
+                },
             });
         }
         return child;
@@ -173,7 +169,9 @@ const ShowWikiModal: React.FC<{
         <>
             {childrenWithProps}
 
-            {isModalVisible && <PmModal onCancel={hideModal} title={title} content={content} />}
+            {isModalVisible && (
+                <PmModal onCancel={hideModal} title={title} content={content} />
+            )}
         </>
     );
 };
