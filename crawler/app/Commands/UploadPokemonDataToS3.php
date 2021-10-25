@@ -13,8 +13,8 @@ use App\Models\Pokemon;
 use App\Models\Poketype;
 use App\Models\RankSeasonList;
 use App\Models\Type;
-use App\Models\WikiItemData;
 use App\Models\WikiAbilityData;
+use App\Models\WikiItemData;
 use App\Models\WikiMoveData;
 use App\Models\WikiNatureData;
 use Aws\S3\S3Client;
@@ -65,7 +65,7 @@ class UploadPokemonDataToS3 extends Command
                     return [
                         $item['id'] => [
                             'id'   => $item['id'],
-                            "name" => $item['name_zh_tw'],
+                            'name' => $item['name_zh_tw'],
                             // "description" => WikiItemData::select(['description'])->where('name_zh_tw', $item['name_zh_tw'])->get()
                         ],
                     ];
@@ -76,7 +76,7 @@ class UploadPokemonDataToS3 extends Command
                     return [
                         $item['id'] => [
                             'id'   => $item['id'],
-                            "name" => $item['name_zh_tw'],
+                            'name' => $item['name_zh_tw'],
                             // "description" => WikiAbilityData::select(['description'])->where('name_zh_tw', $item['name_zh_tw'])->get()
                         ],
                     ];
@@ -104,7 +104,7 @@ class UploadPokemonDataToS3 extends Command
                     return [
                         $item['id'] => [
                             'id'   => $item['id'],
-                            "name" => $item['name_zh_tw'],
+                            'name' => $item['name_zh_tw'],
                             // "description" => WikiNatureData::select(['advantage', 'weakness', 'like', 'notlike'])->where('name_zh_tw', $item['name_zh_tw'])->get()
                         ],
                     ];

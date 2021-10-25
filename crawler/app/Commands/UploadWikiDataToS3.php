@@ -4,8 +4,8 @@ namespace App\Commands;
 
 require __DIR__.'/../../vendor/autoload.php';
 
-use App\Models\WikiItemData;
 use App\Models\WikiAbilityData;
+use App\Models\WikiItemData;
 use App\Models\WikiMoveData;
 use App\Models\WikiNatureData;
 use Aws\S3\S3Client;
@@ -38,7 +38,7 @@ class UploadWikiDataToS3 extends Command
                 'items' => WikiItemData::all()->mapWithKeys(function ($item, $key) {
                     return [
                         $item['name_zh_tw'] => [
-                            "description" => $item['description'],
+                            'description' => $item['description'],
                         ],
                     ];
                 }),
@@ -47,7 +47,7 @@ class UploadWikiDataToS3 extends Command
                 'abilities' => WikiAbilityData::all()->mapWithKeys(function ($item, $key) {
                     return [
                         $item['name_zh_tw'] => [
-                            "description" => $item['description'],
+                            'description' => $item['description'],
                         ],
                     ];
                 }),
@@ -55,11 +55,11 @@ class UploadWikiDataToS3 extends Command
                 'moves' => WikiMoveData::all()->mapWithKeys(function ($item, $key) {
                     return [
                         $item['name_zh_tw'] => [
-                            'class'      => $item['class'],
-                            'type'      => $item['type'],
-                            'damage'    => $item['damage'],
-                            'hitRate' => $item['hitRate'],
-                            'PP' => $item['PP'],
+                            'class'       => $item['class'],
+                            'type'        => $item['type'],
+                            'damage'      => $item['damage'],
+                            'hitRate'     => $item['hitRate'],
+                            'PP'          => $item['PP'],
                             'description' => $item['description'],
                         ],
                     ];
@@ -70,9 +70,9 @@ class UploadWikiDataToS3 extends Command
                     return [
                         $item['name_zh_tw'] => [
                             'advantage'   => $item['advantage'],
-                            "weakness" => $item['weakness'],
-                            'like'   => $item['like'],
-                            "notlike" => $item['notlike'],
+                            'weakness'    => $item['weakness'],
+                            'like'        => $item['like'],
+                            'notlike'     => $item['notlike'],
                         ],
                     ];
                 }),

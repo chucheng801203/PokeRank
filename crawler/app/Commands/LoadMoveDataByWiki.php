@@ -30,12 +30,12 @@ class LoadMoveDataByWiki extends Command
             Capsule::transaction(function () {
                 $doc = new \DOMDocument();
                 libxml_use_internal_errors(true);
-                $doc->loadHTMLFile("https://wiki.52poke.com/zh-hant/%E6%8B%9B%E5%BC%8F%E5%88%97%E8%A1%A8");
+                $doc->loadHTMLFile('https://wiki.52poke.com/zh-hant/%E6%8B%9B%E5%BC%8F%E5%88%97%E8%A1%A8');
                 libxml_clear_errors();
-    
+
                 $finder = new \DomXPath($doc);
                 $nodes = $finder->query("//table[contains(@class,'hvlist')]/tbody");
-    
+
                 for ($i = 0; $i < $nodes->length; $i++) {
                     for ($j = 1; $j < $nodes[$i]->childNodes->length; $j++) {
                         if ($nodes[$i]->childNodes[$j]->nodeName === 'tr' && $nodes[$i]->childNodes[$j]->childNodes->length === 20) {
