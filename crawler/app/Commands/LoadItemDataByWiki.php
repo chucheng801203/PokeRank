@@ -30,13 +30,12 @@ class LoadItemDataByWiki extends Command
             Capsule::transaction(function () {
                 $doc = new \DOMDocument();
                 libxml_use_internal_errors(true);
-                $doc->loadHTMLFile("https://wiki.52poke.com/zh-hant/%E9%81%93%E5%85%B7%E5%88%97%E8%A1%A8");
+                $doc->loadHTMLFile('https://wiki.52poke.com/zh-hant/%E9%81%93%E5%85%B7%E5%88%97%E8%A1%A8');
                 libxml_clear_errors();
-    
+
                 $finder = new \DomXPath($doc);
                 $nodes = $finder->query("//table[contains(@class,'hvlist')]/tbody");
 
-                
                 for ($i = 0; $i < $nodes->length; $i++) {
                     $index = null;
                     for ($j = 1; $j < $nodes[$i]->childNodes->length; $j++) {
@@ -49,7 +48,7 @@ class LoadItemDataByWiki extends Command
                                 $row['name_jp'] = trim($nodes[$i]->childNodes[$j]->childNodes[5]->textContent);
                                 $row['description'] = trim($nodes[$i]->childNodes[$j]->childNodes[9]->textContent);
                                 WikiItemData::updateOrCreate(['name_zh_tw' => $row['name_zh_tw']], $row);
-                            } else if ($nodes[$i]->childNodes[$j]->childNodes->length === 8 && $index !== null) {
+                            } elseif ($nodes[$i]->childNodes[$j]->childNodes->length === 8 && $index !== null) {
                                 $row = [];
                                 $row['name_zh_tw'] = trim($nodes[$i]->childNodes[$j]->childNodes[3]->textContent);
                                 $row['name_en'] = trim($nodes[$i]->childNodes[$j]->childNodes[5]->textContent);

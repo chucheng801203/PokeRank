@@ -30,9 +30,9 @@ class LoadNatureDataByWiki extends Command
             Capsule::transaction(function () {
                 $doc = new \DOMDocument();
                 libxml_use_internal_errors(true);
-                $doc->loadHTMLFile("https://wiki.52poke.com/zh-hant/%E6%80%A7%E6%A0%BC");
+                $doc->loadHTMLFile('https://wiki.52poke.com/zh-hant/%E6%80%A7%E6%A0%BC');
                 libxml_clear_errors();
-    
+
                 $finder = new \DomXPath($doc);
                 $nodes = $finder->query("//table[contains(@class,'at-c a-c')]/tbody");
 
