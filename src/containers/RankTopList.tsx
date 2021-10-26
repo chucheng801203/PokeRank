@@ -10,7 +10,6 @@ import {
     getTopListState,
 } from "../redux/selectors";
 import PageDataContext from "../PageDataContext";
-import styles from "../components/index.module.scss";
 
 const RankTopList: React.FC<{
     className?: string;
@@ -40,7 +39,7 @@ const RankTopList: React.FC<{
 
     return (
         <>
-            <h2 className={styles["text-center"]}>寶可夢排行榜</h2>
+            <h2 className="text-center">寶可夢排行榜</h2>
             <PmList className={className}>
                 {shouldLoading
                     ? Array.apply(null, Array(20)).map((v, i) => (

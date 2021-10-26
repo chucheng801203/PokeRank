@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import PmTypeBlock from "./PmTypeBlock";
 import LoadingBlock from "./LoadingBlock";
 import PageDataContext, { PageDataType } from "../PageDataContext";
-import styles from "./index.module.scss";
+import styles from "./pmInfoBlock.module.scss";
 
 const LoadingMode = (pageData: PageDataType) => {
     const types =

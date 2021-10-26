@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./index.module.scss";
+import styles from "./loadingBlock.module.scss";
 
 const LoadingBlock: React.FC<{
     className?: string;

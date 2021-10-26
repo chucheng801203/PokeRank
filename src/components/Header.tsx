@@ -5,7 +5,7 @@ import PokemonSelector from "../containers/PokemonSelector";
 import SearchIconBtn from "./SearchIconBtn";
 import RuleSelector from "../containers/RuleSelector";
 import SeasonSelector from "../containers/SeasonSelector";
-import styles from "./index.module.scss";
+import styles from "./header.module.scss";
 
 const Header: React.FC = () => (
     <nav

@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./index.module.scss";
+import styles from "./searchIconBtn.module.scss";
 import searchIcon from "../images/search_black_24dp.svg";
 
 const SearchIconBtn: React.FC<{
