@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import toggleRule from "../redux/actions/rule";
@@ -7,45 +7,51 @@ import searchTextAction from "../redux/actions/searchText";
 import { RuleState } from "../redux/reducers/rule";
 import { SeasonState } from "../redux/reducers/season";
 import { getSeasonState, getRuleState } from "../redux/selectors";
-import PageDataContext from "../PageDataContext";
+
+export type HistoryStateType = {
+    rule: RuleState;
+    season: SeasonState;
+    searchText: string;
+};
 
 const HistoryContainer: React.FC = () => {
-    const { page_loading } = useContext(PageDataContext);
     const dispatch = useDispatch();
     const season = useSelector(getSeasonState);
     const rule = useSelector(getRuleState);
 
     const historyState = useHistory();
-    const location = useLocation<{
-        rule: RuleState;
-        season: SeasonState;
-        searchText: string;
-    }>();
+    const { state, search } = useLocation<HistoryStateType>();
+
+    const popStateHandler = () => {
+        if (state.rule.index !== rule[0].index)
+            dispatch(toggleRule(state.rule));
+
+        if (state.season.index !== season[0].index)
+            dispatch(toggleSeason(state.season));
+    };
 
     useEffect(() => {
-        const { state, search } = location;
+        window.addEventListener("popstate", popStateHandler);
 
-        if (!page_loading) {
-            if (
-                !state ||
-                (state.season.index !== season[0].index && search === "")
-            ) {
-                historyState.replace(window.location.pathname + search, {
-                    rule: rule[0],
-                    season: season[0],
-                    searchText: "",
-                });
-            } else {
-                if (state.rule.index !== rule[0].index)
-                    dispatch(toggleRule(state.rule));
+        return () => {
+            window.removeEventListener("popstate", popStateHandler);
+        };
+    });
 
-                if (state.season.index !== season[0].index)
-                    dispatch(toggleSeason(state.season));
-
-                dispatch(
-                    searchTextAction(state.searchText ? state.searchText : "")
-                );
-            }
+    useEffect(() => {
+        if (
+            !state ||
+            (state.season.index !== season[0].index && search === "")
+        ) {
+            historyState.replace(window.location.pathname + search, {
+                rule: rule[0],
+                season: season[0],
+                searchText: "",
+            });
+        } else {
+            dispatch(
+                searchTextAction(state.searchText ? state.searchText : "")
+            );
         }
     });
 

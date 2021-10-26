@@ -1,11 +1,12 @@
 import React, { useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import Selector from "../components/Selector";
 import { SelectValue } from "../components/SelectorComponent/DefaultSelector";
 import toggleRule from "../redux/actions/rule";
-import { getSeasonState, getRuleState } from "../redux/selectors";
+import { getRuleState } from "../redux/selectors";
 import PageDataContext from "../PageDataContext";
+import { HistoryStateType } from "./HistoryContainer";
 import { getParameterByName } from "../util";
 
 const RuleSelector: React.FC<{
@@ -13,11 +14,11 @@ const RuleSelector: React.FC<{
     style?: React.CSSProperties;
 }> = ({ className, style }) => {
     const pageData = useContext(PageDataContext);
-    const season = useSelector(getSeasonState);
     const rule = useSelector(getRuleState);
 
     const dispatch = useDispatch();
     const history = useHistory();
+    const { state } = useLocation<HistoryStateType>();
 
     const onChange = (v: SelectValue) => {
         if (v.length > 0) {
@@ -38,7 +39,7 @@ const RuleSelector: React.FC<{
             }
 
             history.push(pathName, {
-                season: season[0],
+                season: state.season,
                 rule: r,
             });
 
