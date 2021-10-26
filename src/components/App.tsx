@@ -44,7 +44,7 @@ const App: React.FC = () => {
 
     return (
         <div className={styles["pr-app"]}>
-            <HistoryContainer />
+            {!pageData.page_loading && <HistoryContainer />}
             <Header />
             <div className="container">
                 <div className={styles["pr-app-season-selector"]}>
