@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import styles from "./index.module.scss";
+import styles from "./pmModal.module.scss";
 import closeIcon from "../images/close_white_24dp.svg";
 
 const PmModal: React.FC<{

@@ -13,7 +13,7 @@ import {
 } from "../redux/selectors";
 import PageDataContext from "../PageDataContext";
 import { getDefaultState } from "../util";
-import styles from "../components/index.module.scss";
+import styles from "../components/pmRow.module.scss";
 import ShowWikiModal from "../components/ShowWikiModal";
 
 const GetRankData: React.FC = () => {

@@ -87,7 +87,7 @@ class UploadWikiDataToS3 extends Command
                 'Key'          => 'wiki_data.json',
                 'SourceFile'   => storage_path("app/{$file_name}"),
                 'ACL'          => 'public-read',
-                'CacheControl' => 'max-age=86400',
+                'CacheControl' => 'max-age=10800',
             ]);
 
             $this->log->info('pokemonWiki:upload-wiki-to-S3 命令已執行完畢');

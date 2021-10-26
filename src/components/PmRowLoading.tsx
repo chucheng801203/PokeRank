@@ -1,6 +1,6 @@
 import React from "react";
 import LoadingBlock from "./LoadingBlock";
-import styles from "./index.module.scss";
+import styles from "./pmRow.module.scss";
 
 const PmRowLoading: React.FC<{
     className?: string;

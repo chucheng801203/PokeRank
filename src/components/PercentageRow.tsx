@@ -1,7 +1,7 @@
 import React from "react";
 import LoadingBlock from "./LoadingBlock";
 import PmTypeBlock from "./PmTypeBlock";
-import styles from "./index.module.scss";
+import styles from "./percentageRow.module.scss";
 
 const PercentageRow: React.FC<{
     rank?: number;

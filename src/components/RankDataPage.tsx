@@ -3,7 +3,7 @@ import PmList from "./PmList";
 import PmInfoBlock from "./PmInfoBlock";
 import PmRowLoading from "./PmRowLoading";
 import PercentageRow from "./PercentageRow";
-import styles from "./index.module.scss";
+import styles from "./pmRow.module.scss";
 
 const RankDataPage: React.FC<{
     isLoading?: boolean;

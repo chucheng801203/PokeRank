@@ -13,7 +13,6 @@
         padding: 0.4em 2em 0.4em 0.6em;
         line-height: inherit;
         cursor: pointer;
-        -webkit-user-select: none;
         user-select: none;
         overflow: hidden;
         background-color: #1b1b1b;
@@ -84,7 +83,6 @@
 
 .pr-select-popup-listItem {
     line-height: inherit;
-    -webkit-user-select: none;
     user-select: none;
     transition: background-color 0.15s;
     cursor: pointer;

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import PmModal from "./PmModal";
 import WikiDataContext from "../WikiDataContext";
-import styles from "./index.module.scss";
+import styles from "./showWikiModal.module.scss";
 
 const ShowWikiModal: React.FC<{
     children: React.ReactNode;

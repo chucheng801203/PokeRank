@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import PmTypeBlock from "./PmTypeBlock";
 import { getSeasonState, getRuleState } from "../redux/selectors";
-import styles from "./index.module.scss";
+import styles from "./pmRow.module.scss";
 
 const PmRow: React.FC<{
     className?: string;
