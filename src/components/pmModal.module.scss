@@ -6,7 +6,7 @@
     width: 100%;
     min-width: 300px;
     height: 100%;
-    background-color: rgba(160, 160, 160, 0.3);
+    background-color: rgba(0, 0, 0, .8);
     z-index: 1040;
     animation: modal-mask-fade-in 0.2s linear;
 }
@@ -20,8 +20,8 @@
     max-width: calc(100% - 30px);
     min-height: 60px;
     border-radius: 4px;
-    background-color: black;
-    box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.5);
+    background-color: #1b1b1b;
+    box-shadow: 0 0 0 3px rgb(125, 125, 125);
     animation: modal-top-fade-in 0.3s linear;
 
     .header {
