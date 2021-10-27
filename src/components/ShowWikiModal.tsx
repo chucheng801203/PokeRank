@@ -20,7 +20,7 @@ const ShowWikiModal: React.FC<{
                     <table className={styles["pr-show-wiki-modal-table"]}>
                         <thead>
                             <tr>
-                                <th>招式：</th>
+                                <th>特性：</th>
                                 <th>{name}</th>
                             </tr>
                         </thead>
