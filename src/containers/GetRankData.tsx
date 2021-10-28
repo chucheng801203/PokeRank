@@ -11,7 +11,7 @@ import {
     getSeasonState,
     getRankDataState,
 } from "../redux/selectors";
-import PageDataContext from "../PageDataContext";
+import PageDataContext, { BaseStatType } from "../PageDataContext";
 import { getDefaultState } from "../util";
 import styles from "../components/pmRow.module.scss";
 import ShowWikiModal from "../components/ShowWikiModal";
@@ -59,6 +59,7 @@ const GetRankData: React.FC = () => {
     let winMove: React.ReactNode;
     let losePokemons: React.ReactNode;
     let loseMove: React.ReactNode;
+    let baseStat: BaseStatType | undefined;
 
     let unMatch: React.ReactNode;
 
@@ -78,6 +79,13 @@ const GetRankData: React.FC = () => {
                 }
             />
         );
+
+        if (
+            pageData.base_stats[pmIdNum] &&
+            pageData.base_stats[pmIdNum][formIdNum]
+        ) {
+            baseStat = pageData.base_stats[pmIdNum][formIdNum];
+        }
 
         const { team, win, lose } = currentRankData[pmIdNum].rank;
         if (
@@ -389,6 +397,7 @@ const GetRankData: React.FC = () => {
                         winMove={winMove}
                         losePokemons={losePokemons}
                         loseMove={loseMove}
+                        baseStat={baseStat}
                     />
                 </>
             )}

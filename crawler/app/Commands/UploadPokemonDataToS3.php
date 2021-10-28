@@ -17,6 +17,7 @@ use App\Models\WikiAbilityData;
 use App\Models\WikiItemData;
 use App\Models\WikiMoveData;
 use App\Models\WikiNatureData;
+use App\Models\SdBaseStat;
 use Aws\S3\S3Client;
 use Illuminate\Filesystem\Filesystem;
 use Monolog\Logger;
@@ -66,7 +67,6 @@ class UploadPokemonDataToS3 extends Command
                         $item['id'] => [
                             'id'   => $item['id'],
                             'name' => $item['name_zh_tw'],
-                            // "description" => WikiItemData::select(['description'])->where('name_zh_tw', $item['name_zh_tw'])->get()
                         ],
                     ];
                 }),
@@ -77,7 +77,6 @@ class UploadPokemonDataToS3 extends Command
                         $item['id'] => [
                             'id'   => $item['id'],
                             'name' => $item['name_zh_tw'],
-                            // "description" => WikiAbilityData::select(['description'])->where('name_zh_tw', $item['name_zh_tw'])->get()
                         ],
                     ];
                 }),
@@ -94,7 +93,6 @@ class UploadPokemonDataToS3 extends Command
                             'id'      => $item['id'],
                             'name'    => $item['name_zh_tw'],
                             'type_id' => $item['type_id'],
-                            // "description" => WikiMoveData::select(['class', 'damage', 'hitRate', 'PP', 'description'])->where('name_zh_tw', $item['name_zh_tw'])->get()
                         ],
                     ];
                 }),
@@ -105,7 +103,6 @@ class UploadPokemonDataToS3 extends Command
                         $item['id'] => [
                             'id'   => $item['id'],
                             'name' => $item['name_zh_tw'],
-                            // "description" => WikiNatureData::select(['advantage', 'weakness', 'like', 'notlike'])->where('name_zh_tw', $item['name_zh_tw'])->get()
                         ],
                     ];
                 }),
@@ -126,6 +123,27 @@ class UploadPokemonDataToS3 extends Command
                 })->map(function ($item, $key) {
                     return $item->mapToGroups(function ($item, $key) {
                         return [$item['form_id'] => $item['type_id']];
+                    });
+                }),
+
+                // pokemon 種族值
+                'base_stats' => SdBaseStat::all()->mapToGroups(function ($item, $key) {
+                    return [
+                        $item['pokeform']['pm_id'] => [
+                            'form_id' => $item['pokeform']['form_id'],
+                            'baseStats' => [
+                                'hp' => $item['hp'],
+                                'atk' => $item['atk'],
+                                'def' => $item['def'],
+                                'spa' => $item['spa'],
+                                'spd' => $item['spd'],
+                                'spe' => $item['spe'],
+                            ],
+                        ],
+                    ];
+                })->map(function ($item, $key) {
+                    return $item->mapWithKeys(function ($item, $key) {
+                        return [$item['form_id'] => $item['baseStats']];
                     });
                 }),
 

@@ -87,4 +87,9 @@ class Pokeform extends Model
     {
         return $this->hasMany(RankNature::class, 'pf_id', 'id');
     }
+
+    public function sdBaseStat()
+    {
+        return $this->hasOne(SdBaseStat::class, 'pf_id', 'id');
+    }
 }
