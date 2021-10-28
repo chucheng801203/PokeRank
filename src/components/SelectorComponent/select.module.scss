@@ -79,6 +79,7 @@
     max-height: 16em;
     overflow: auto;
     animation: show-pr-select-popup-list 0.15s linear;
+    animation-iteration-count: 1;
 }
 
 .pr-select-popup-listItem {
