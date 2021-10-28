@@ -1,5 +1,18 @@
 import React from "react";
 
+export type BaseStatType = {
+    hp: number;
+    atk: number;
+    def: number;
+    spa: number;
+    spd: number;
+    spe: number;
+};
+
+export type BaseStatsType = {
+    [pm_id: number]: Array<BaseStatType>;
+};
+
 export type PageDataType = {
     page_loading: boolean;
     rules: Array<{ value: number; text: string }>;
@@ -26,6 +39,7 @@ export type PageDataType = {
     pokemon: { [id: number]: string };
     pokemon_types: Array<Array<Array<number>>>;
     type_weakness: Array<Array<number>>;
+    base_stats: BaseStatsType;
 };
 
 export const defaultPageData: PageDataType = {
@@ -40,6 +54,7 @@ export const defaultPageData: PageDataType = {
     pokemon: {},
     pokemon_types: [],
     type_weakness: [],
+    base_stats: {},
 };
 
 export default React.createContext(defaultPageData);

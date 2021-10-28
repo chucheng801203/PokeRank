@@ -56,8 +56,6 @@
     }
 }
 
-
-
 @media (max-width: 346px) {
     .pr-percentage-row {
         .row-loading-rank,
@@ -70,7 +68,7 @@
 @media (min-width: 768px) {
     .pr-percentage-row-hover {
         cursor: pointer;
-    
+
         &:hover {
             background-color: #363636;
         }

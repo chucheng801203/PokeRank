@@ -113,9 +113,42 @@ class UpdatePokemonData extends Command
                         }
                     }
                 }
+
+                // 裝備劍的蒼響屬性少一個
+                Poketype::updateOrCreate([
+                    'pf_id' => 1235,
+                    'type_id' => 8,
+                ]);
+
+                // 招式有些會缺少屬性
+                $move_type = [
+                    '165' => 0,
+                    '617' => 17,
+                    '826' => 13,
+                    '825' => 7,
+                    '824' => 14,
+                    '823' => 1,
+                    '822' => 16,
+                    '821' => 13,
+                    '820' => 15,
+                    '819' => 12,
+                    '782' => 8,
+                    '781' => 8,
+                ];
+
+                foreach ($move_type as $id => $type_id) {
+                    Move::where('id', $id)
+                        ->update([
+                            'type_id' => $type_id,
+                        ]);
+                }
             });
 
             $this->log->info('pokemonHome:update-data 命令已執行完畢');
+
+            $command = $this->getApplication()->find('pokemonShowDown:load-baseStat-data');
+
+            $command->run(new ArrayInput([]), $output);
 
             $command = $this->getApplication()->find('pokemonHome:upload-data-to-S3');
 

@@ -50,6 +50,11 @@ class LoadAbilityDataByWiki extends Command
                 }
             });
 
+            WikiAbilityData::where('name_zh_tw', '人馬一體')
+                            ->update([
+                                'description' => '兼具蕾冠王的緊張感和雪暴馬的蒼白嘶鳴這２種特性。兼具蕾冠王的緊張感和靈幽馬的漆黑嘶鳴這２種特性。'
+                            ]);
+
             $this->log->info('pokemonWiki:load-ability-data 命令已執行完畢');
 
             return Command::SUCCESS;

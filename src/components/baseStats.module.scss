@@ -1,0 +1,41 @@
+.pr-baseStat-row {
+    width: 100%;
+    padding: 0 19.2px;
+
+    .row-content {
+        display: flex;
+        align-items: center;
+        padding: 8px 0;
+    }
+
+    .row-name {
+        width: 50px;
+    }
+
+    .row-value,
+    .row-loading-value {
+        width: 52px;
+        height: 28px;
+        line-height: 28px;
+        padding: 0 4px;
+        margin-right: 16px;
+        text-align: right;
+    }
+
+    .row-loading-value-rect,
+    .row-value-rect {
+        width: calc(100% - 118px);
+        height: 28px;
+        line-height: 28px;
+    }
+
+    .row-loading-value-rect {
+        width: calc((100% - 118px) / 2);
+    }
+
+    .row-value-rect-content {
+        height: 100%;
+        border-radius: 4px;
+        background-color: #272727;
+    }
+}
