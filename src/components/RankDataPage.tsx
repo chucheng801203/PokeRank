@@ -40,35 +40,25 @@ const RankDataPage: React.FC<{
         <div className="row">
             <div className="col-12 col-md-6 col-xl-8">
                 <div className="row">
-                    {(isLoading || (!isLoading && (ability || item))) && (
+                    {(isLoading ||
+                        (!isLoading && (ability || item || baseStat))) && (
                         <div className="col-12 col-xl-6">
                             {isLoading ? (
                                 <>
                                     <PmList className="mb-3" listTitle="種族值">
-                                        <BaseStatRow
-                                            isLoading={true}
-                                            name="ＨＰ"
-                                        />
-                                        <BaseStatRow
-                                            isLoading={true}
-                                            name="攻擊"
-                                        />
-                                        <BaseStatRow
-                                            isLoading={true}
-                                            name="防禦"
-                                        />
-                                        <BaseStatRow
-                                            isLoading={true}
-                                            name="特功"
-                                        />
-                                        <BaseStatRow
-                                            isLoading={true}
-                                            name="特防"
-                                        />
-                                        <BaseStatRow
-                                            isLoading={true}
-                                            name="速度"
-                                        />
+                                        {[
+                                            "ＨＰ",
+                                            "攻擊",
+                                            "防禦",
+                                            "特功",
+                                            "特防",
+                                            "速度",
+                                        ].map((v, i) => (
+                                            <BaseStatRow
+                                                isLoading={true}
+                                                name={v}
+                                            />
+                                        ))}
                                     </PmList>
                                     <PmList className="mb-3" listTitle="特性">
                                         {Array.apply(null, Array(2)).map(
