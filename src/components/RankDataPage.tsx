@@ -55,6 +55,7 @@ const RankDataPage: React.FC<{
                                             "速度",
                                         ].map((v, i) => (
                                             <BaseStatRow
+                                                key={i}
                                                 isLoading={true}
                                                 name={v}
                                             />
