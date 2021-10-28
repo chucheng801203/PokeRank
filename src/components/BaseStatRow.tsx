@@ -1,6 +1,6 @@
 import React from "react";
 import LoadingBlock from "./LoadingBlock";
-import styles from "./baseStats.module.scss";
+import styles from "./baseStat.module.scss";
 
 const BaseStats: React.FC<{
     isLoading?: boolean;
