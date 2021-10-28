@@ -6,6 +6,11 @@
         display: flex;
         align-items: center;
         padding: 8px 0;
+        border-bottom: 1px solid #4b4b4b;
+    }
+
+    &:last-child .row-content {
+        border-bottom: none;
     }
 
     .row-name {
@@ -14,7 +19,7 @@
 
     .row-value,
     .row-loading-value {
-        width: 52px;
+        width: 44px;
         height: 28px;
         line-height: 28px;
         padding: 0 4px;
@@ -24,7 +29,7 @@
 
     .row-loading-value-rect,
     .row-value-rect {
-        width: calc(100% - 118px);
+        width: calc(100% - 110px);
         height: 28px;
         line-height: 28px;
     }
