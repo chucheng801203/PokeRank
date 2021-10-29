@@ -66,7 +66,7 @@ const PokemonInputSelector: React.FC<{
                             }}
                         >
                             <PmSelectListItem
-                                pmAvatar={`https://pokerank.s3.ap-northeast-1.amazonaws.com/images/cap${i}_f0_s0.png`}
+                                pmAvatar={`${process.env.REACT_APP_IMAGE_PATH}/cap${i}_f0_s0.png`}
                                 pmId={index}
                                 pmName={pageData.pokemon[index]}
                             />

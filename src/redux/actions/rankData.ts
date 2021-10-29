@@ -130,7 +130,7 @@ const getRankData: (
 ) => ThunkAction<void, RootState, unknown, RankDataAction> =
     (pmId) => (dispatch, getState) => {
         const state = getState();
-        const url = `https://pokerank.s3.ap-northeast-1.amazonaws.com/rank_data/${state.season[0].value}/${pmId}.json`;
+        const url = `${process.env.REACT_APP_RANK_DATA_PATH}/${state.season[0].value}/${pmId}.json`;
 
         import("axios").then((axios) => {
             axios.default

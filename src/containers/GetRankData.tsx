@@ -154,7 +154,7 @@ const GetRankData: React.FC = () => {
                                 key={i}
                                 className={styles["rank-data-page-pmrow"]}
                                 pmRank={i}
-                                pmAvatar={`https://pokerank.s3.ap-northeast-1.amazonaws.com/images/cap${v.id}_f${v.form_id}_s0.png`}
+                                pmAvatar={`${process.env.REACT_APP_IMAGE_PATH}/cap${v.id}_f${v.form_id}_s0.png`}
                                 pmId={v.id}
                                 pmFormId={v.form_id}
                                 pmName={pageData.pokemon[v.id]}

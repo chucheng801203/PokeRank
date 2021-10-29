@@ -30,7 +30,7 @@ const Portal: React.FC<{
     children: React.ReactNode;
 }> = ({ children }) => {
     const pr_url =
-        "https://pokerank.s3.ap-northeast-1.amazonaws.com/pr_data.json";
+        `${process.env.REACT_APP_S3_HOST}/pr_data.json`;
 
     const dispatch = useDispatch();
 
@@ -79,7 +79,7 @@ const Portal: React.FC<{
     });
 
     const wiki_url =
-        "https://pokerank.s3.ap-northeast-1.amazonaws.com/wiki_data.json";
+        `${process.env.REACT_APP_S3_HOST}/wiki_data.json`;
 
     const [wikiData, setWikiData] = useState<WikiDataType>();
 
