@@ -88,278 +88,123 @@ const GetRankData: React.FC = () => {
         }
 
         const { team, win, lose } = currentRankData[pmIdNum].rank;
-        if (
-            team.pokemon[rule[0].value] &&
-            Array.isArray(team.pokemon[rule[0].value][formIdNum])
-        ) {
-            teamPokemons = team.pokemon[rule[0].value][formIdNum].map(
-                (v, i) => {
+
+        [ability, nature, item] = ["ability", "nature", "item"].map((p) => {
+            let key: "abilities" | "natures" | "items";
+            
+            if (p === "ability") {
+                key = "abilities";
+            } else if (p === "nature") {
+                key = "natures";
+            } else if (p === "item") {
+                key = "items";
+            } else {
+                return null;
+            }
+
+            if (
+                team[p][rule[0].value] &&
+                Array.isArray(team[p][rule[0].value][formIdNum])
+            ) {
+                return team[p][rule[0].value][formIdNum].map((v, i) => {
                     if (
                         typeof v.id !== "number" ||
-                        typeof v.form_id !== "number"
+                        typeof v.percentage !== "string"
                     )
                         return null;
 
+                    let name = undefined;
+
+                    if (pageData[key][v.id]) {
+                        name = pageData[key][v.id]
+                            ? pageData[key][v.id].name
+                            : "";
+                    }
+
                     return (
-                        <PmRow
-                            key={i}
-                            className={styles["rank-data-page-sm-pmrow"]}
-                            pmRank={i}
-                            pmAvatar={`https://pokerank.s3.ap-northeast-1.amazonaws.com/images/cap${v.id}_f${v.form_id}_s0.png`}
-                            pmId={v.id}
-                            pmFormId={v.form_id}
-                            pmName={pageData.pokemon[v.id]}
-                            pmType={pageData.pokemon_types[v.id][v.form_id]}
-                        />
+                        <ShowWikiModal type={key} name={name} key={i}>
+                            <PercentageRow
+                                key={i}
+                                rank={i + 1}
+                                name={name}
+                                percentage={v.percentage}
+                            />
+                        </ShowWikiModal>
                     );
-                }
-            );
-        }
+                });
+            }
 
-        if (
-            team.move[rule[0].value] &&
-            Array.isArray(team.move[rule[0].value][formIdNum])
-        ) {
-            move = team.move[rule[0].value][formIdNum].map((v, i) => {
+            return null;
+        });
+
+        [teamPokemons, winPokemons, losePokemons] = [team, win, lose].map(
+            (p) => {
                 if (
-                    typeof v.id !== "number" ||
-                    typeof v.percentage !== "string"
-                )
-                    return null;
+                    p.pokemon[rule[0].value] &&
+                    Array.isArray(p.pokemon[rule[0].value][formIdNum])
+                ) {
+                    return p.pokemon[rule[0].value][formIdNum].map((v, i) => {
+                        if (
+                            typeof v.id !== "number" ||
+                            typeof v.form_id !== "number"
+                        )
+                            return null;
 
-                let name = undefined;
-                let typeId = undefined;
-
-                if (pageData.moves[v.id]) {
-                    name = pageData.moves[v.id].name;
-                    typeId = pageData.moves[v.id].type_id;
+                        return (
+                            <PmRow
+                                key={i}
+                                className={styles["rank-data-page-pmrow"]}
+                                pmRank={i}
+                                pmAvatar={`https://pokerank.s3.ap-northeast-1.amazonaws.com/images/cap${v.id}_f${v.form_id}_s0.png`}
+                                pmId={v.id}
+                                pmFormId={v.form_id}
+                                pmName={pageData.pokemon[v.id]}
+                                pmType={pageData.pokemon_types[v.id][v.form_id]}
+                            />
+                        );
+                    });
                 }
 
-                return (
-                    <ShowWikiModal type="moves" name={name} key={i}>
-                        <PercentageRow
-                            rank={i + 1}
-                            name={name}
-                            typeId={typeId}
-                            percentage={v.percentage}
-                        />
-                    </ShowWikiModal>
-                );
-            });
-        }
+                return null;
+            }
+        );
 
-        if (
-            team.ability[rule[0].value] &&
-            Array.isArray(team.ability[rule[0].value][formIdNum])
-        ) {
-            ability = team.ability[rule[0].value][formIdNum].map((v, i) => {
-                if (
-                    typeof v.id !== "number" ||
-                    typeof v.percentage !== "string"
-                )
-                    return null;
-
-                let name = undefined;
-
-                if (pageData.abilities[v.id]) {
-                    name = pageData.abilities[v.id]
-                        ? pageData.abilities[v.id].name
-                        : "";
-                }
-
-                return (
-                    <ShowWikiModal type="abilities" name={name} key={i}>
-                        <PercentageRow
-                            key={i}
-                            rank={i + 1}
-                            name={name}
-                            percentage={v.percentage}
-                        />
-                    </ShowWikiModal>
-                );
-            });
-        }
-
-        if (
-            team.nature[rule[0].value] &&
-            Array.isArray(team.nature[rule[0].value][formIdNum])
-        ) {
-            nature = team.nature[rule[0].value][formIdNum].map((v, i) => {
-                if (
-                    typeof v.id !== "number" ||
-                    typeof v.percentage !== "string"
-                )
-                    return null;
-
-                let name = undefined;
-
-                if (pageData.abilities[v.id]) {
-                    name = pageData.natures[v.id]
-                        ? pageData.natures[v.id].name
-                        : "";
-                }
-
-                return (
-                    <ShowWikiModal type="natures" name={name} key={i}>
-                        <PercentageRow
-                            key={i}
-                            rank={i + 1}
-                            name={name}
-                            percentage={v.percentage}
-                        />
-                    </ShowWikiModal>
-                );
-            });
-        }
-
-        if (
-            team.item[rule[0].value] &&
-            Array.isArray(team.item[rule[0].value][formIdNum])
-        ) {
-            item = team.item[rule[0].value][formIdNum].map((v, i) => {
-                if (
-                    typeof v.id !== "number" ||
-                    typeof v.percentage !== "string"
-                )
-                    return null;
-
-                let name = undefined;
-
-                if (pageData.items[v.id]) {
-                    name = pageData.items[v.id]
-                        ? pageData.items[v.id].name
-                        : "";
-                }
-
-                return (
-                    <ShowWikiModal type="items" name={name} key={i}>
-                        <PercentageRow
-                            key={i}
-                            rank={i + 1}
-                            name={name}
-                            percentage={v.percentage}
-                        />
-                    </ShowWikiModal>
-                );
-            });
-        }
-
-        if (
-            win.pokemon[rule[0].value] &&
-            Array.isArray(win.pokemon[rule[0].value][formIdNum])
-        ) {
-            winPokemons = win.pokemon[rule[0].value][formIdNum].map((v, i) => {
-                if (typeof v.id !== "number" || typeof v.form_id !== "number")
-                    return null;
-
-                return (
-                    <PmRow
-                        key={i}
-                        className={styles["rank-data-page-pmrow"]}
-                        pmRank={i}
-                        pmAvatar={`https://pokerank.s3.ap-northeast-1.amazonaws.com/images/cap${v.id}_f${v.form_id}_s0.png`}
-                        pmId={v.id}
-                        pmFormId={v.form_id}
-                        pmName={pageData.pokemon[v.id]}
-                        pmType={pageData.pokemon_types[v.id][v.form_id]}
-                    />
-                );
-            });
-        }
-
-        if (
-            win.move[rule[0].value] &&
-            Array.isArray(win.move[rule[0].value][formIdNum])
-        ) {
-            winMove = win.move[rule[0].value][formIdNum].map((v, i) => {
-                if (
-                    typeof v.id !== "number" ||
-                    typeof v.percentage !== "string"
-                )
-                    return null;
-
-                let name = undefined;
-                let typeId = undefined;
-
-                if (pageData.moves[v.id]) {
-                    name = pageData.moves[v.id].name;
-                    typeId = pageData.moves[v.id].type_id;
-                }
-
-                return (
-                    <ShowWikiModal type="moves" name={name} key={i}>
-                        <PercentageRow
-                            key={i}
-                            rank={i + 1}
-                            name={name}
-                            typeId={typeId}
-                            percentage={v.percentage}
-                        />
-                    </ShowWikiModal>
-                );
-            });
-        }
-
-        if (
-            lose.pokemon[rule[0].value] &&
-            Array.isArray(lose.pokemon[rule[0].value][formIdNum])
-        ) {
-            losePokemons = lose.pokemon[rule[0].value][formIdNum].map(
-                (v, i) => {
+        [move, winMove, loseMove] = [team, win, lose].map((p) => {
+            if (
+                p.move[rule[0].value] &&
+                Array.isArray(p.move[rule[0].value][formIdNum])
+            ) {
+                return p.move[rule[0].value][formIdNum].map((v, i) => {
                     if (
                         typeof v.id !== "number" ||
-                        typeof v.form_id !== "number"
+                        typeof v.percentage !== "string"
                     )
                         return null;
 
+                    let name = undefined;
+                    let typeId = undefined;
+
+                    if (pageData.moves[v.id]) {
+                        name = pageData.moves[v.id].name;
+                        typeId = pageData.moves[v.id].type_id;
+                    }
+
                     return (
-                        <PmRow
-                            key={i}
-                            className={styles["rank-data-page-pmrow"]}
-                            pmRank={i}
-                            pmAvatar={`https://pokerank.s3.ap-northeast-1.amazonaws.com/images/cap${v.id}_f${v.form_id}_s0.png`}
-                            pmId={v.id}
-                            pmFormId={v.form_id}
-                            pmName={pageData.pokemon[v.id]}
-                            pmType={pageData.pokemon_types[v.id][v.form_id]}
-                        />
+                        <ShowWikiModal type="moves" name={name} key={i}>
+                            <PercentageRow
+                                key={i}
+                                rank={i + 1}
+                                name={name}
+                                typeId={typeId}
+                                percentage={v.percentage}
+                            />
+                        </ShowWikiModal>
                     );
-                }
-            );
-        }
+                });
+            }
 
-        if (
-            lose.move[rule[0].value] &&
-            Array.isArray(lose.move[rule[0].value][formIdNum])
-        ) {
-            loseMove = lose.move[rule[0].value][formIdNum].map((v, i) => {
-                if (
-                    typeof v.id !== "number" ||
-                    typeof v.percentage !== "string"
-                )
-                    return null;
-
-                let name = undefined;
-                let typeId = undefined;
-
-                if (pageData.moves[v.id]) {
-                    name = pageData.moves[v.id].name;
-                    typeId = pageData.moves[v.id].type_id;
-                }
-
-                return (
-                    <ShowWikiModal type="moves" name={name} key={i}>
-                        <PercentageRow
-                            key={i}
-                            rank={i + 1}
-                            name={name}
-                            typeId={typeId}
-                            percentage={v.percentage}
-                        />
-                    </ShowWikiModal>
-                );
-            });
-        }
+            return null;
+        });
     } else if (!pageData.page_loading && !isValidPmId) {
         const defaultState = getDefaultState(pageData);
         unMatch = (
