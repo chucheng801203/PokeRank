@@ -22,9 +22,7 @@ export default (
                 ...state,
                 [`${action.season}_${action.rule}`]: {
                     topList: action.topList,
-                    expires:
-                        new Date(new Date().toDateString()).getTime() +
-                        86400000,
+                    expires: Date.now() + 10800000,
                 },
             };
         default:

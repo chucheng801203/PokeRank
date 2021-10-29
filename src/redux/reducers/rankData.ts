@@ -18,7 +18,7 @@ const storeRankData = (
     state: RankDataState = {},
     action: RankDataAction
 ): RankDataState => {
-    const time = new Date(new Date().toDateString()).getTime() + 86400000;
+    const time = Date.now() + 10800000;
 
     if (!state.hasOwnProperty(action.season)) {
         return {
