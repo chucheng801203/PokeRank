@@ -49,7 +49,7 @@ const getTopList: ThunkAction<void, RootState, unknown, TopListAction> = (
     getState
 ) => {
     const state = getState();
-    const url = `https://pokerank.s3.ap-northeast-1.amazonaws.com/rank_data/${state.season[0].value}/top_list/${state.rule[0].value}.json`;
+    const url = `${process.env.REACT_APP_RANK_DATA_PATH}/${state.season[0].value}/top_list/${state.rule[0].value}.json`;
 
     import("axios").then((axios) => {
         axios.default

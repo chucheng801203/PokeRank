@@ -117,7 +117,7 @@ const PmInfoBlock: React.FC<{
                             }`}
                         >
                             <img
-                                src={`https://pokerank.s3.ap-northeast-1.amazonaws.com/images/cap${pmId}_f${i}_s0.png`}
+                                src={`${process.env.REACT_APP_IMAGE_PATH}/cap${pmId}_f${i}_s0.png`}
                                 alt="pokemon"
                             />
                         </figure>

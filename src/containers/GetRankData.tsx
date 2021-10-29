@@ -46,6 +46,7 @@ const GetRankData: React.FC = () => {
         if (!pageData.page_loading && shouldLoading && isValidPmId)
             dispatch(rankDataAction(pmIdNum));
 
+        document.title = `No. ${pmIdNum} ${pageData.pokemon[pmIdNum]} - PokéRank`;
         window.scroll(0, 0);
     });
 
@@ -64,8 +65,6 @@ const GetRankData: React.FC = () => {
     let unMatch: React.ReactNode;
 
     if (!pageData.page_loading && !shouldLoading) {
-        document.title = `No. ${pmIdNum} ${pageData.pokemon[pmIdNum]} - PokéRank`;
-
         pmInfo = (
             <PmInfoBlock
                 pmId={pmIdNum}
@@ -155,7 +154,7 @@ const GetRankData: React.FC = () => {
                                 key={i}
                                 className={styles["rank-data-page-pmrow"]}
                                 pmRank={i}
-                                pmAvatar={`https://pokerank.s3.ap-northeast-1.amazonaws.com/images/cap${v.id}_f${v.form_id}_s0.png`}
+                                pmAvatar={`${process.env.REACT_APP_IMAGE_PATH}/cap${v.id}_f${v.form_id}_s0.png`}
                                 pmId={v.id}
                                 pmFormId={v.form_id}
                                 pmName={pageData.pokemon[v.id]}
