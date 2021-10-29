@@ -30,12 +30,11 @@ const RankTopList: React.FC<{
     const shouldLoading = !currentList || now > currentList.expires;
 
     useEffect(() => {
-        if (!page_loading && shouldLoading) {
+        if (!page_loading && shouldLoading)
             dispatch(topListAction);
-        }
-    });
 
-    document.title = "PokéRank";
+        document.title = "PokéRank";
+    });
 
     return (
         <>

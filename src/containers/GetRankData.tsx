@@ -46,6 +46,7 @@ const GetRankData: React.FC = () => {
         if (!pageData.page_loading && shouldLoading && isValidPmId)
             dispatch(rankDataAction(pmIdNum));
 
+        document.title = `No. ${pmIdNum} ${pageData.pokemon[pmIdNum]} - PokéRank`;
         window.scroll(0, 0);
     });
 
@@ -64,8 +65,6 @@ const GetRankData: React.FC = () => {
     let unMatch: React.ReactNode;
 
     if (!pageData.page_loading && !shouldLoading) {
-        document.title = `No. ${pmIdNum} ${pageData.pokemon[pmIdNum]} - PokéRank`;
-
         pmInfo = (
             <PmInfoBlock
                 pmId={pmIdNum}
