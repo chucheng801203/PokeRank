@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import Image from "./Image";
 import loadingBlockGray from "../images/loadingBlockGray.png";
 
 const LazyLoadImage: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = (
@@ -36,12 +35,13 @@ const LazyLoadImage: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = (
         }
     });
 
-    const { src, ...otherProps } = props;
+    const { src, alt, ...otherProps } = props;
 
     return (
-        <Image
+        <img
             {...otherProps}
             src={isLoaded ? src : loadingBlockGray}
+            alt={alt}
             ref={ref}
         />
     );
