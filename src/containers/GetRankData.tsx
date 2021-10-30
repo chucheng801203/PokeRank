@@ -90,7 +90,7 @@ const GetRankData: React.FC = () => {
 
         [ability, nature, item] = ["ability", "nature", "item"].map((p) => {
             let key: "abilities" | "natures" | "items";
-            
+
             if (p === "ability") {
                 key = "abilities";
             } else if (p === "nature") {
