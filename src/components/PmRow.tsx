@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import PmTypeBlock from "./PmTypeBlock";
+import LazyLoadImage from "./LazyLoadImage";
 import { getSeasonState, getRuleState } from "../redux/selectors";
 import styles from "./pmRow.module.scss";
 
@@ -47,7 +48,7 @@ const PmRow: React.FC<{
                             {pmRank + 1}
                         </div>
                         <figure className={`${styles["pm-row-img"]}`}>
-                            <img src={pmAvatar} alt="pokemon" />
+                            <LazyLoadImage src={pmAvatar} alt="pokemon" />
                         </figure>
                         <div className={`${styles["pm-row-info"]}`}>
                             <div>{`No. ${pmId}`}</div>

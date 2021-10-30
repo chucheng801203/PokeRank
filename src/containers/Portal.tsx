@@ -29,8 +29,7 @@ const getValue = (value: number, data: Array<{ value: number }>) => {
 const Portal: React.FC<{
     children: React.ReactNode;
 }> = ({ children }) => {
-    const pr_url =
-        `${process.env.REACT_APP_S3_HOST}/pr_data.json`;
+    const pr_url = `${process.env.REACT_APP_S3_HOST}/pr_data.json`;
 
     const dispatch = useDispatch();
 
@@ -78,8 +77,7 @@ const Portal: React.FC<{
         }
     });
 
-    const wiki_url =
-        `${process.env.REACT_APP_S3_HOST}/wiki_data.json`;
+    const wiki_url = `${process.env.REACT_APP_S3_HOST}/wiki_data.json`;
 
     const [wikiData, setWikiData] = useState<WikiDataType>();
 

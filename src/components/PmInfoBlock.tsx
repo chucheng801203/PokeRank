@@ -4,6 +4,7 @@ import PmTypeBlock from "./PmTypeBlock";
 import LoadingBlock from "./LoadingBlock";
 import PageDataContext, { PageDataType } from "../PageDataContext";
 import styles from "./pmInfoBlock.module.scss";
+import LazyLoadImage from "./LazyLoadImage";
 
 const LoadingMode = (pageData: PageDataType) => {
     const types =
@@ -116,7 +117,7 @@ const PmInfoBlock: React.FC<{
                                 i === formId ? styles["info-img-focus"] : ""
                             }`}
                         >
-                            <img
+                            <LazyLoadImage
                                 src={`${process.env.REACT_APP_IMAGE_PATH}/cap${pmId}_f${i}_s0.png`}
                                 alt="pokemon"
                             />
