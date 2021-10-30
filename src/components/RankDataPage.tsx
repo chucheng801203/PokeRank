@@ -215,7 +215,7 @@ const RankDataPage: React.FC<{
         </div>
 
         {(isLoading || winPokemons || winMove) && (
-            <div className="mb-4" style={{ border: "1px solid #5e5e5e" }} />
+            <div className="mb-3" style={{ border: "1px solid #5e5e5e" }} />
         )}
 
         <div className="row">
@@ -248,7 +248,7 @@ const RankDataPage: React.FC<{
         </div>
 
         {(isLoading || losePokemons || loseMove) && (
-            <div className="mb-4" style={{ border: "1px solid #5e5e5e" }} />
+            <div className="mb-3" style={{ border: "1px solid #5e5e5e" }} />
         )}
 
         <div className="row">
