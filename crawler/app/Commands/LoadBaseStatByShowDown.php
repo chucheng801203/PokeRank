@@ -2,8 +2,6 @@
 
 namespace App\Commands;
 
-require __DIR__.'/../../vendor/autoload.php';
-
 use App\Libraries\Pokemon\SdPokeDex;
 use App\Models\Pokeform;
 use App\Models\SdBaseStat;

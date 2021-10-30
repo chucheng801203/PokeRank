@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Commands;
-
-require __DIR__.'/../../vendor/autoload.php';
+namespace App\Commands\Wiki;
 
 use App\Models\WikiAbilityData;
 use Illuminate\Database\Capsule\Manager as Capsule;
