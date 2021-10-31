@@ -11,11 +11,13 @@ body {
 }
 
 body {
+    min-width: 300px;
     margin: 0;
-    background-color: black;
     line-height: 1.5;
     vertical-align: middle;
-    min-width: 300px;
+    background-color: #000;
+    background-image: linear-gradient(to bottom right, #000, #464646);
+    background-attachment: fixed;
 }
 
 input[type="text"] {
@@ -26,7 +28,7 @@ input[type="text"] {
     border: none;
     border-radius: 4px;
     outline: none;
-    background-color: #1b1b1b;
+    background-color: #3b3b3b;
     color: #d6d6d6;
     box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
     transition: 0.15s;
@@ -47,6 +49,7 @@ input[type="text"] {
     &:focus,
     &:active {
         box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+        background-color: #1b1b1b;
     }
 }
 
