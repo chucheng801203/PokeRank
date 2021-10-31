@@ -10,12 +10,8 @@ use App\Models\Nature;
 use App\Models\Pokemon;
 use App\Models\Poketype;
 use App\Models\RankSeasonList;
-use App\Models\Type;
-use App\Models\WikiAbilityData;
-use App\Models\WikiItemData;
-use App\Models\WikiMoveData;
-use App\Models\WikiNatureData;
 use App\Models\SdBaseStat;
+use App\Models\Type;
 use Aws\S3\S3Client;
 use Illuminate\Filesystem\Filesystem;
 use Monolog\Logger;
@@ -128,9 +124,9 @@ class UploadPokemonDataToS3 extends Command
                 'base_stats' => SdBaseStat::all()->mapToGroups(function ($item, $key) {
                     return [
                         $item['pokeform']['pm_id'] => [
-                            'form_id' => $item['pokeform']['form_id'],
+                            'form_id'   => $item['pokeform']['form_id'],
                             'baseStats' => [
-                                'hp' => $item['hp'],
+                                'hp'  => $item['hp'],
                                 'atk' => $item['atk'],
                                 'def' => $item['def'],
                                 'spa' => $item['spa'],

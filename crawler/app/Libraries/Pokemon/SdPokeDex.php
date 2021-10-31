@@ -1,6 +1,6 @@
 <?php
 /**
- * pokemon 圖鑑資料，裡面有寶可夢資料包含種族值的資料，但是只有英文
+ * pokemon 圖鑑資料，裡面有寶可夢資料包含種族值的資料，但是只有英文.
  */
 
 namespace App\Libraries\Pokemon;
@@ -22,12 +22,14 @@ class SdPokeDex
         $this->data = json_decode($data, true);
     }
 
-    public function all() {
+    public function all()
+    {
         return $this->data;
     }
 
-    public function getById(int $id) {
-        $dex = array_filter($this->data, function($pm) use($id) {
+    public function getById(int $id)
+    {
+        $dex = array_filter($this->data, function ($pm) use ($id) {
             return $pm['num'] === $id;
         });
 
@@ -45,7 +47,7 @@ class SdPokeDex
             return [$dex_values[0]];
         }
 
-        return array_map(function($formeName) use ($dex) {
+        return array_map(function ($formeName) use ($dex) {
             $formeName = strtolower(str_replace('-', '', $formeName));
             if (!isset($dex[$formeName])) {
                 return null;

@@ -45,7 +45,7 @@ class LoadBaseStatByShowDown extends Command
                     }
 
                     $updates = [
-                        'hp' => $pms[$pf->form_id]['baseStats']['hp'],
+                        'hp'  => $pms[$pf->form_id]['baseStats']['hp'],
                         'atk' => $pms[$pf->form_id]['baseStats']['atk'],
                         'def' => $pms[$pf->form_id]['baseStats']['def'],
                         'spa' => $pms[$pf->form_id]['baseStats']['spa'],

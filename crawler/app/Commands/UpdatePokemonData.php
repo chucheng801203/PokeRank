@@ -114,7 +114,7 @@ class UpdatePokemonData extends Command
 
                 // 裝備劍的蒼響屬性少一個
                 Poketype::updateOrCreate([
-                    'pf_id' => 1235,
+                    'pf_id'   => 1235,
                     'type_id' => 8,
                 ]);
 
