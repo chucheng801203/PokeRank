@@ -48,6 +48,7 @@ try {
     // 載入 command
     ->addAppCommands('Database\Commands\\', 'database/Commands')
     ->addAppCommands('App\Commands\\', 'app/Commands')
+    ->addAppCommands('App\Commands\Wiki\\', 'app/Commands/Wiki')
     ->run();
 } catch (\Exception $e) {
     $log->error($e->getMessage());

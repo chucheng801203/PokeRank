@@ -2,8 +2,6 @@
 
 namespace App\Commands;
 
-require __DIR__.'/../../vendor/autoload.php';
-
 use App\Libraries\Pokemon\PokemonHome;
 use App\Models\Ability;
 use App\Models\Item;

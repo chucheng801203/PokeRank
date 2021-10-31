@@ -2,8 +2,6 @@
 
 namespace App\Commands;
 
-require __DIR__.'/../../vendor/autoload.php';
-
 use App\Libraries\Pokemon\PokemonHome;
 use App\Libraries\Pokemon\PokemonRankDataAdapter;
 use App\Models\Pokeform;
