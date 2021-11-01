@@ -8,7 +8,7 @@ const PmList: React.FC<{
     [otherProps: string]: any;
 }> = ({ className = "", children, listTitle, ...otherProps }) => {
     return (
-        <section
+        <main
             className={`${styles["pr-pm-list"]} ${className}`}
             {...otherProps}
         >
@@ -16,7 +16,7 @@ const PmList: React.FC<{
                 <h3 className={styles["pm-list-title"]}>{listTitle}</h3>
             )}
             <ul>{children}</ul>
-        </section>
+        </main>
     );
 };
 
