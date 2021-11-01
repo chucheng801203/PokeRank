@@ -1,0 +1,11 @@
+.pr-background-wrap {
+    position: fixed;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #000;
+    background-image: linear-gradient(to bottom right, #000, #464646);
+    background-attachment: fixed;
+}

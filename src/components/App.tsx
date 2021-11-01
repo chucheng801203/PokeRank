@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
+import BackgroundWrap from "./BackgroundWrap";
 import Header from "./Header";
 import Footer from "./Footer";
 import SeasonSelector from "../containers/SeasonSelector";
@@ -45,6 +46,7 @@ const App: React.FC = () => {
     return (
         <div className={styles["pr-app"]}>
             {!pageData.page_loading && <HistoryContainer />}
+            <BackgroundWrap />
             <Header />
             <div className="container">
                 <div className={styles["pr-app-season-selector"]}>

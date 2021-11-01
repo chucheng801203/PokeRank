@@ -185,7 +185,7 @@ const TextInputSelector: React.FC<TextInputSelectorProps> = ({
                             onSufixIconBtnClick(value);
                         }
                     }}
-                    style={{background: 'transparent'}}
+                    style={{ background: "transparent" }}
                 />
             )}
 
