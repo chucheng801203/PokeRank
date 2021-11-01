@@ -17,6 +17,7 @@ use Monolog\Logger;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class UpdatePokemonData extends Command
@@ -31,6 +32,16 @@ class UpdatePokemonData extends Command
         $this->pm = $pm;
 
         parent::__construct();
+    }
+
+    protected function configure(): void
+    {
+        $this->addOption(
+            'upload',
+            null,
+            InputOption::VALUE_NONE,
+            '是否要上傳到 S3'
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -142,15 +153,18 @@ class UpdatePokemonData extends Command
                 }
             });
 
+            // 載入種族值資料
+            $command = $this->getApplication()->find('pokemonShowDown:load-baseStat-data');
+            $command->run(new ArrayInput([]), $output);
+
             $this->log->info('pokemonHome:update-data 命令已執行完畢');
 
-            $command = $this->getApplication()->find('pokemonShowDown:load-baseStat-data');
-
-            $command->run(new ArrayInput([]), $output);
-
-            $command = $this->getApplication()->find('pokemonHome:upload-data-to-S3');
-
-            $command->run(new ArrayInput([]), $output);
+            $upload = $input->getOption('upload');
+            if ($upload) {
+                $command = $this->getApplication()->find('pokemonHome:upload-data-to-S3');
+    
+                return $command->run(new ArrayInput([]), $output);
+            }
 
             return Command::SUCCESS;
         } catch (\Exception $e) {

@@ -47,6 +47,13 @@ class UpdatePokemonRankData extends Command
             '需要更新的賽季： all 更新所有賽季, latest 更新最新賽季, int $number 更新指定賽季',
             'all'
         );
+
+        $this->addOption(
+            'upload',
+            null,
+            InputOption::VALUE_NONE,
+            '是否要上傳到 S3'
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -140,13 +147,16 @@ class UpdatePokemonRankData extends Command
 
             $this->log->info('pokemonHome:update-rank 命令已執行完畢');
 
-            $command = $this->getApplication()->find('pokemonHome:upload-rank-to-S3');
+            $upload = $input->getOption('upload');
+            if ($upload) {
+                $command = $this->getApplication()->find('pokemonHome:upload-rank-to-S3');
 
-            $arguments = [
-                '--season'  => $season_input,
-            ];
-
-            $command->run(new ArrayInput($arguments), $output);
+                $arguments = [
+                    '--season'  => $season_input,
+                ];
+    
+                return $command->run(new ArrayInput($arguments), $output);
+            }
 
             return Command::SUCCESS;
         } catch (\Exception $e) {
