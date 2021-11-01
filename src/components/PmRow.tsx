@@ -31,8 +31,7 @@ const PmRow: React.FC<{
     return (
         <li className={`${styles["pr-pm-row"]} ${className}`} {...otherProps}>
             <Link
-                className={`${styles["pm-row-link"]}`}
-                style={{ display: "block" }}
+                className={`${styles["pm-row-link"]} ${styles["pm-row-container"]}`}
                 to={{
                     pathname: `/${pmId}/${pmFormId}`,
                     search: `?season=${season[0].value}&rule=${rule[0].value}`,
@@ -42,27 +41,25 @@ const PmRow: React.FC<{
                     },
                 }}
             >
-                <div className={`${styles["pm-row-container"]}`}>
-                    <div className={`${styles["pm-row-content"]}`}>
-                        <div className={`${styles["pm-row-rank"]}`}>
-                            {pmRank + 1}
-                        </div>
-                        <figure className={`${styles["pm-row-img"]}`}>
-                            <LazyLoadImage src={pmAvatar} alt="pokemon" />
-                        </figure>
-                        <div className={`${styles["pm-row-info"]}`}>
-                            <div>{`No. ${pmId}`}</div>
-                            <div>{pmName}</div>
-                        </div>
-                        <div>
-                            {pmType?.map((type_id, i) => (
-                                <PmTypeBlock
-                                    key={i}
-                                    className={`${styles["pm-row-type"]}`}
-                                    pmType={type_id}
-                                />
-                            ))}
-                        </div>
+                <div className={`${styles["pm-row-content"]}`}>
+                    <div className={`${styles["pm-row-rank"]}`}>
+                        {pmRank + 1}
+                    </div>
+                    <figure className={`${styles["pm-row-img"]}`}>
+                        <LazyLoadImage src={pmAvatar} alt="pokemon" />
+                    </figure>
+                    <div className={`${styles["pm-row-info"]}`}>
+                        <div>{`No. ${pmId}`}</div>
+                        <div>{pmName}</div>
+                    </div>
+                    <div>
+                        {pmType?.map((type_id, i) => (
+                            <PmTypeBlock
+                                key={i}
+                                className={`${styles["pm-row-type"]}`}
+                                pmType={type_id}
+                            />
+                        ))}
                     </div>
                 </div>
             </Link>
