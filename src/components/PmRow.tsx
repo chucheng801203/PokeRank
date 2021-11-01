@@ -49,8 +49,8 @@ const PmRow: React.FC<{
                         <LazyLoadImage src={pmAvatar} alt="pokemon" />
                     </figure>
                     <div className={`${styles["pm-row-info"]}`}>
-                        <div>{`No. ${pmId}`}</div>
-                        <div>{pmName}</div>
+                        {`No. ${pmId}`}<br />
+                        {pmName}
                     </div>
                     <div>
                         {pmType?.map((type_id, i) => (
