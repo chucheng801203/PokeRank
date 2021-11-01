@@ -22,37 +22,31 @@ const HistoryContainer: React.FC = () => {
     const historyState = useHistory();
     const { state, search } = useLocation<HistoryStateType>();
 
-    const popStateHandler = () => {
-        if (state.rule.index !== rule[0].index)
-            dispatch(toggleRule(state.rule));
-
-        if (state.season.index !== season[0].index)
-            dispatch(toggleSeason(state.season));
-    };
-
     useEffect(() => {
-        window.addEventListener("popstate", popStateHandler);
-
-        return () => {
-            window.removeEventListener("popstate", popStateHandler);
-        };
-    });
-
-    useEffect(() => {
-        if (
-            !state ||
-            (state.season.index !== season[0].index && search === "")
-        ) {
+        if (!state) {
             historyState.replace(window.location.pathname + search, {
                 rule: rule[0],
                 season: season[0],
                 searchText: "",
             });
-        } else {
+        } else if (historyState.action === "POP") {
+            if (state.rule.index !== rule[0].index)
+                dispatch(toggleRule(state.rule));
+
+            if (state.season.index !== season[0].index)
+                dispatch(toggleSeason(state.season));
+
             dispatch(
                 searchTextAction(state.searchText ? state.searchText : "")
             );
-        }
+        } 
+        // else if (state.season.index !== season[0].index && search === "") {
+        //     historyState.replace(window.location.pathname + search, {
+        //         rule: rule[0],
+        //         season: season[0],
+        //         searchText: "",
+        //     });
+        // }
     });
 
     return null;
