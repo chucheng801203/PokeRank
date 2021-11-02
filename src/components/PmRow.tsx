@@ -45,11 +45,14 @@ const PmRow: React.FC<{
                     <div className={`${styles["pm-row-rank"]}`}>
                         {pmRank + 1}
                     </div>
-                    <figure className={`${styles["pm-row-img"]}`}>
-                        <LazyLoadImage src={pmAvatar} alt="pokemon" />
-                    </figure>
+                    <LazyLoadImage
+                        className={`${styles["pm-row-img"]}`}
+                        src={pmAvatar}
+                        alt="pokemon"
+                    />
                     <div className={`${styles["pm-row-info"]}`}>
-                        {`No. ${pmId}`}<br />
+                        {`No. ${pmId}`}
+                        <br />
                         {pmName}
                     </div>
                     <div>
