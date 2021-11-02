@@ -21,31 +21,32 @@ const SeasonSelector: React.FC<{
 
     const dispatch = useDispatch();
     const history = useHistory();
-    const { state } = useLocation<HistoryStateType>();
+    const { state, pathname } = useLocation<HistoryStateType>();
 
     const onChange = (v: SelectValue) => {
-        if (v.length > 0) {
-            const s = {
-                index: v[0].index,
-                value: v[0].value as number,
-            };
+        if (v.length <= 0) return;
 
-            dispatch(toggleSeason(s));
+        const s = {
+            index: v[0].index,
+            value: v[0].value as number,
+        };
 
-            let pathName = `${window.location.pathname}?season=${v[0].value}`;
+        dispatch(toggleSeason(s));
 
-            const ruleParam = getParameterByName("rule");
-            if (ruleParam) {
-                pathName = `${pathName}&rule=${ruleParam}`;
-            }
+        const ruleParam = getParameterByName("rule");
 
-            history.push(pathName, {
-                ...state,
-                season: s,
-            });
+        let pathName = `${pathname}?season=${v[0].value}`;
 
-            window.scroll(0, 0);
+        if (ruleParam) {
+            pathName += `&rule=${ruleParam}`;
         }
+
+        history.push(pathName, {
+            ...state,
+            season: s,
+        });
+
+        window.scroll(0, 0);
     };
 
     return (

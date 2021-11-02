@@ -1,0 +1,9 @@
+// 修改 bootstrap row 欄位間距
+.row-custom{
+    margin-left: -8px;
+    margin-right: -8px;
+    [class^=col] {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+}

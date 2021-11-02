@@ -5,7 +5,8 @@ import PmRowLoading from "./PmRowLoading";
 import PercentageRow from "./PercentageRow";
 import BaseStatRow from "./BaseStatRow";
 import { BaseStatType } from "../PageDataContext";
-import styles from "./pmRow.module.scss";
+import styles from "./rankDataPage.module.scss";
+import pageRowStyles from "./pmRow.module.scss";
 
 const RankDataPage: React.FC<{
     isLoading?: boolean;
@@ -37,9 +38,9 @@ const RankDataPage: React.FC<{
     <>
         {isLoading ? <PmInfoBlock isLoading={true} /> : pmInfo}
 
-        <div className="row">
+        <div className={`row ${styles["row-custom"]}`}>
             <div className="col-12 col-md-6 col-xl-8">
-                <div className="row">
+                <div className={`row ${styles["row-custom"]}`}>
                     {(isLoading ||
                         (!isLoading && (ability || item || baseStat))) && (
                         <div className="col-12 col-xl-6">
@@ -203,7 +204,7 @@ const RankDataPage: React.FC<{
                             ? Array.apply(null, Array(10)).map((v, i) => (
                                   <PmRowLoading
                                       className={
-                                          styles["rank-data-page-sm-pmrow"]
+                                        pageRowStyles["rank-data-page-sm-pmrow"]
                                       }
                                       key={i}
                                   />
@@ -218,14 +219,14 @@ const RankDataPage: React.FC<{
             <div className="mb-3" style={{ border: "1px solid #5e5e5e" }} />
         )}
 
-        <div className="row">
+        <div className={`row ${styles["row-custom"]}`}>
             {(isLoading || winPokemons) && (
                 <div className="col-12 col-md-6 mb-3">
                     <PmList listTitle="這隻寶可夢打倒的寶可夢TOP10">
                         {isLoading
                             ? Array.apply(null, Array(10)).map((v, i) => (
                                   <PmRowLoading
-                                      className={styles["rank-data-page-pmrow"]}
+                                      className={pageRowStyles["rank-data-page-pmrow"]}
                                       key={i}
                                   />
                               ))
@@ -251,14 +252,14 @@ const RankDataPage: React.FC<{
             <div className="mb-3" style={{ border: "1px solid #5e5e5e" }} />
         )}
 
-        <div className="row">
+        <div className={`row ${styles["row-custom"]}`}>
             {(isLoading || losePokemons) && (
                 <div className="col-12 col-md-6 mb-3">
                     <PmList listTitle="打倒這隻寶可夢的寶可夢TOP10">
                         {isLoading
                             ? Array.apply(null, Array(10)).map((v, i) => (
                                   <PmRowLoading
-                                      className={styles["rank-data-page-pmrow"]}
+                                      className={pageRowStyles["rank-data-page-pmrow"]}
                                       key={i}
                                   />
                               ))

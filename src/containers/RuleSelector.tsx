@@ -21,33 +21,34 @@ const RuleSelector: React.FC<{
 
     const dispatch = useDispatch();
     const history = useHistory();
-    const { state } = useLocation<HistoryStateType>();
+    const { state, pathname } = useLocation<HistoryStateType>();
 
     const onChange = (v: SelectValue) => {
-        if (v.length > 0) {
-            const r = {
-                index: v[0].index,
-                value: v[0].value as number,
-            };
+        if (v.length <= 0) return;
 
-            dispatch(toggleRule(r));
+        const r = {
+            index: v[0].index,
+            value: v[0].value as number,
+        };
 
-            let pathName = window.location.pathname;
+        dispatch(toggleRule(r));
 
-            const seasonParam = getParameterByName("season");
-            if (seasonParam) {
-                pathName = `${pathName}?season=${seasonParam}&rule=${v[0].value}`;
-            } else {
-                pathName = `${pathName}?rule=${v[0].value}`;
-            }
+        const seasonParam = getParameterByName("season");
 
-            history.push(pathName, {
-                ...state,
-                rule: r,
-            });
+        let pathName = pathname;
 
-            window.scroll(0, 0);
+        if (seasonParam) {
+            pathName += `?season=${seasonParam}&rule=${v[0].value}`;
+        } else {
+            pathName += `?rule=${v[0].value}`;
         }
+
+        history.push(pathName, {
+            ...state,
+            rule: r,
+        });
+
+        window.scroll(0, 0);
     };
 
     return (
