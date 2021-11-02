@@ -1,9 +1,9 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { Location } from "history";
 import { Link } from "react-router-dom";
 import PmTypeBlock from "./PmTypeBlock";
 import LazyLoadImage from "./LazyLoadImage";
-import { getSeasonState, getRuleState } from "../redux/selectors";
+import { HistoryStateType } from "../containers/HistoryContainer";
 import styles from "./pmRow.module.scss";
 
 const PmRow: React.FC<{
@@ -24,50 +24,40 @@ const PmRow: React.FC<{
     pmName = "",
     pmType = [],
     ...otherProps
-}) => {
-    const season = useSelector(getSeasonState);
-    const rule = useSelector(getRuleState);
-
-    return (
-        <li className={`${styles["pr-pm-row"]} ${className}`} {...otherProps}>
-            <Link
-                className={`${styles["pm-row-link"]} ${styles["pm-row-container"]}`}
-                to={{
-                    pathname: `/${pmId}/${pmFormId}`,
-                    search: `?season=${season[0].value}&rule=${rule[0].value}`,
-                    state: {
-                        rule: rule[0],
-                        season: season[0],
-                    },
-                }}
-            >
-                <div className={`${styles["pm-row-content"]}`}>
-                    <div className={`${styles["pm-row-rank"]}`}>
-                        {pmRank + 1}
-                    </div>
-                    <LazyLoadImage
-                        className={`${styles["pm-row-img"]}`}
-                        src={pmAvatar}
-                        alt="pokemon"
-                    />
-                    <div className={`${styles["pm-row-info"]}`}>
-                        {`No. ${pmId}`}
-                        <br />
-                        {pmName}
-                    </div>
-                    <div>
-                        {pmType?.map((type_id, i) => (
-                            <PmTypeBlock
-                                key={i}
-                                className={`${styles["pm-row-type"]}`}
-                                pmType={type_id}
-                            />
-                        ))}
-                    </div>
+}) => (
+    <li className={`${styles["pr-pm-row"]} ${className}`} {...otherProps}>
+        <Link
+            className={`${styles["pm-row-link"]} ${styles["pm-row-container"]}`}
+            to={({ state }: Location<HistoryStateType>) => ({
+                pathname: `/${pmId}/${pmFormId}`,
+                search: `?season=${state.season.value}&rule=${state.rule.value}`,
+                state: state,
+            })}
+        >
+            <div className={`${styles["pm-row-content"]}`}>
+                <div className={`${styles["pm-row-rank"]}`}>{pmRank + 1}</div>
+                <LazyLoadImage
+                    className={`${styles["pm-row-img"]}`}
+                    src={pmAvatar}
+                    alt="pokemon"
+                />
+                <div className={`${styles["pm-row-info"]}`}>
+                    {`No. ${pmId}`}
+                    <br />
+                    {pmName}
                 </div>
-            </Link>
-        </li>
-    );
-};
+                <div>
+                    {pmType?.map((type_id, i) => (
+                        <PmTypeBlock
+                            key={i}
+                            className={`${styles["pm-row-type"]}`}
+                            pmType={type_id}
+                        />
+                    ))}
+                </div>
+            </div>
+        </Link>
+    </li>
+);
 
 export default PmRow;
