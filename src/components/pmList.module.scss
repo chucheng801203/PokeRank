@@ -14,3 +14,12 @@
         padding: 0;
     }
 }
+
+@media (min-width: 768px) {
+    .rank-data-page-pmList {
+        ul {
+            height: 270px;
+            overflow-y: auto;
+        }
+    }
+}

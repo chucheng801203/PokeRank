@@ -144,28 +144,27 @@
     }
 
     .rank-data-page-pmrow {
+        .pm-row-content {
+            padding: 6px 0;
+        }
+
         .pm-row-loading-rank,
         .pm-row-rank {
+            height: 40px;
+            width: 34px;
+            line-height: 40px;
             margin-right: 6px !important;
         }
 
         .pm-row-loading-img,
         .pm-row-img {
-            margin-right: 6px !important;
-        }
-    }
-}
-
-@media (min-width: 1200px), (min-width: 768px) and (max-width: 991px) {
-    .rank-data-page-sm-pmrow {
-        .pm-row-loading-rank,
-        .pm-row-rank {
+            width: 40px;
+            height: 40px;
             margin-right: 6px !important;
         }
 
-        .pm-row-loading-img,
-        .pm-row-img {
-            margin-right: 6px !important;
+        .pm-row-loading-id {
+            margin-bottom: 4px;
         }
     }
 }
