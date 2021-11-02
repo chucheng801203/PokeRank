@@ -1,8 +1,10 @@
 import React, { useContext } from "react";
+import { Location } from "history";
 import { Link, useLocation } from "react-router-dom";
 import PmTypeBlock from "./PmTypeBlock";
 import LoadingBlock from "./LoadingBlock";
 import PageDataContext, { PageDataType } from "../PageDataContext";
+import { HistoryStateType } from "../containers/HistoryContainer";
 import styles from "./pmInfoBlock.module.scss";
 import LazyLoadImage from "./LazyLoadImage";
 
@@ -111,7 +113,13 @@ const PmInfoBlock: React.FC<{
             </div>
             <div className="d-flex flex-wrap mb-3">
                 {pageData.pokemon_types[pmId].map((v, i) => (
-                    <Link key={i} to={`/${pmId}/${i}${location.search}`}>
+                    <Link key={i} 
+                        to={({ state, search }: Location<HistoryStateType>) => ({
+                            pathname: `/${pmId}/${i}`,
+                            search: search,
+                            state: state,
+                        })}
+                    >
                         <figure
                             className={`${styles["info-img"]} ${
                                 i === formId ? styles["info-img-focus"] : ""
