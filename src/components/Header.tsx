@@ -1,10 +1,12 @@
 import React from "react";
+import { Location } from "history";
 import { Link } from "react-router-dom";
 import HomePageLink from "../containers/HomePageLink";
 import PokemonSelector from "../containers/PokemonSelector";
 import SearchIconBtn from "./SearchIconBtn";
 import RuleSelector from "../containers/RuleSelector";
 import SeasonSelector from "../containers/SeasonSelector";
+import { HistoryStateType } from "../containers/HistoryContainer";
 import styles from "./header.module.scss";
 
 const Header: React.FC = () => (
@@ -28,7 +30,12 @@ const Header: React.FC = () => (
             <div
                 className={`${styles["pr-header-nav-btn"]} ${styles["pr-header-mobile-search-btn"]}`}
             >
-                <Link to="/mobile/search/">
+                <Link
+                    to={({ state }: Location<HistoryStateType>) => ({
+                        pathname: "/mobile/search/",
+                        state: state,
+                    })}
+                >
                     <SearchIconBtn style={{ fontSize: "1.3rem" }} />
                 </Link>
             </div>
