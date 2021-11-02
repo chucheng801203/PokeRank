@@ -78,8 +78,8 @@ export const getNodeText = (node: any): string => {
 
 export const getDefaultState = (pageData: PageDataType): RootState => {
     const defaultRule = {
-        index: 0,
-        value: pageData.rules[0].value,
+        index: pageData.rules.length - 1,
+        value: pageData.rules[pageData.rules.length - 1].value,
     };
 
     const defaultSeason = {
