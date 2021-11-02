@@ -1,7 +1,10 @@
 import React, { useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
-import Selector from "../components/Selector";
+import {
+    DefaultSelector as Selector,
+    Option,
+} from "../components/SelectorComponent";
 import { SelectValue } from "../components/SelectorComponent/DefaultSelector";
 import toggleRule from "../redux/actions/rule";
 import { getRuleState } from "../redux/selectors";
@@ -12,7 +15,7 @@ import { getParameterByName } from "../util";
 const RuleSelector: React.FC<{
     className?: string;
     style?: React.CSSProperties;
-}> = ({ className, style }) => {
+}> = (props) => {
     const pageData = useContext(PageDataContext);
     const rule = useSelector(getRuleState);
 
@@ -39,7 +42,7 @@ const RuleSelector: React.FC<{
             }
 
             history.push(pathName, {
-                season: state.season,
+                ...state,
                 rule: r,
             });
 
@@ -48,13 +51,13 @@ const RuleSelector: React.FC<{
     };
 
     return (
-        <Selector
-            value={rule}
-            onChange={onChange}
-            optionData={pageData.rules}
-            className={className}
-            style={style}
-        />
+        <Selector value={rule} onChange={onChange} {...props}>
+            {pageData.rules.map((option, i) => (
+                <Option key={i} value={option.value}>
+                    {option.text}
+                </Option>
+            ))}
+        </Selector>
     );
 };
 

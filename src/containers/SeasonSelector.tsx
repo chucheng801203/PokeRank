@@ -1,7 +1,10 @@
 import React, { useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
-import Selector from "../components/Selector";
+import {
+    DefaultSelector as Selector,
+    Option,
+} from "../components/SelectorComponent";
 import { SelectValue } from "../components/SelectorComponent/DefaultSelector";
 import toggleSeason from "../redux/actions/season";
 import { getSeasonState } from "../redux/selectors";
@@ -12,7 +15,7 @@ import { getParameterByName } from "../util";
 const SeasonSelector: React.FC<{
     className?: string;
     style?: React.CSSProperties;
-}> = ({ className, style }) => {
+}> = (props) => {
     const pageData = useContext(PageDataContext);
     const season = useSelector(getSeasonState);
 
@@ -37,7 +40,7 @@ const SeasonSelector: React.FC<{
             }
 
             history.push(pathName, {
-                rule: state.rule,
+                ...state,
                 season: s,
             });
 
@@ -46,13 +49,13 @@ const SeasonSelector: React.FC<{
     };
 
     return (
-        <Selector
-            value={season}
-            onChange={onChange}
-            optionData={pageData.seasons}
-            className={className}
-            style={style}
-        />
+        <Selector value={season} onChange={onChange} {...props}>
+            {pageData.seasons.map((option, i) => (
+                <Option key={i} value={option.value}>
+                    {option.text}
+                </Option>
+            ))}
+        </Selector>
     );
 };
 
