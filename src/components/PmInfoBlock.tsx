@@ -111,8 +111,12 @@ const PmInfoBlock: React.FC<{
             </div>
             <div className="d-flex flex-wrap mb-3">
                 {pageData.pokemon_types[pmId].map((v, i) => (
-                    <Link key={i} 
-                        to={({ state, search }: Location<HistoryStateType>) => ({
+                    <Link
+                        key={i}
+                        to={({
+                            state,
+                            search,
+                        }: Location<HistoryStateType>) => ({
                             pathname: `/${pmId}/${i}`,
                             search: search,
                             state: state,
