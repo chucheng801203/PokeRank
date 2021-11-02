@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Location } from "history";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import PmTypeBlock from "./PmTypeBlock";
 import LoadingBlock from "./LoadingBlock";
 import PageDataContext, { PageDataType } from "../PageDataContext";
@@ -64,8 +64,6 @@ const PmInfoBlock: React.FC<{
     isLoading?: boolean;
 }> = ({ pmId, formId, pmRank, isLoading }) => {
     const pageData = useContext(PageDataContext);
-
-    const location = useLocation();
 
     if (isLoading || typeof pmId !== "number" || typeof formId !== "number")
         return LoadingMode(pageData);
