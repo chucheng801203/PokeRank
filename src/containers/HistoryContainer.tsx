@@ -25,38 +25,43 @@ const HistoryContainer: React.FC = () => {
     const history = useHistory();
     const { state, search } = useLocation<HistoryStateType>();
 
+    const defaultState = getDefaultState(pageData);
+
+    // 網頁剛載入時加入預設 history state
     useEffect(() => {
-        if (!state) {
+        if (state) return;
+        history.replace(window.location.pathname + search, {
+            rule: defaultState.rule[0],
+            season: defaultState.season[0],
+            searchText: "",
+        });
+    });
+
+    // popstate event
+    useEffect(() => {
+        if (!state || history.action !== "POP") return;
+
+        if (
+            state.season.index === season[0].index &&
+            defaultState.season[0].value !== season[0].value &&
+            search === ""
+        ) {
+            // 當賽季更新時，重新整理時首頁的 location state 也要更新成最新賽季
             history.replace(window.location.pathname + search, {
-                rule: rule[0],
-                season: season[0],
+                rule: defaultState.rule[0],
+                season: defaultState.season[0],
                 searchText: "",
             });
-        } else if (history.action === "POP") {
-            const defaultState = getDefaultState(pageData);
+        } else {
+            if (state.season.index !== season[0].index)
+                dispatch(toggleSeason(state.season));
 
-            if (
-                state.season.index === season[0].index &&
-                defaultState.season[0].value !== season[0].value &&
-                search === ""
-            ) {
-                // 當賽季更新時，重新整理時首頁的 location state 也要更新成最新賽季
-                history.replace(window.location.pathname + search, {
-                    rule: defaultState.rule[0],
-                    season: defaultState.season[0],
-                    searchText: "",
-                });
-            } else {
-                if (state.season.index !== season[0].index)
-                    dispatch(toggleSeason(state.season));
+            if (state.rule.index !== rule[0].index)
+                dispatch(toggleRule(state.rule));
 
-                if (state.rule.index !== rule[0].index)
-                    dispatch(toggleRule(state.rule));
-
-                dispatch(
-                    searchTextAction(state.searchText ? state.searchText : "")
-                );
-            }
+            dispatch(
+                searchTextAction(state.searchText ? state.searchText : "")
+            );
         }
     });
 
