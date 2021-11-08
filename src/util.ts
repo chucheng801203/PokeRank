@@ -75,23 +75,3 @@ export const getNodeText = (node: any): string => {
 
     return "";
 };
-
-export const getDefaultState = (pageData: PageDataType): RootState => {
-    const defaultRule = {
-        index: pageData.rules.length - 1,
-        value: pageData.rules[pageData.rules.length - 1].value,
-    };
-
-    const defaultSeason = {
-        index: pageData.seasons.length - 1,
-        value: pageData.seasons[pageData.seasons.length - 1].value,
-    };
-
-    return {
-        rule: [defaultRule],
-        season: [defaultSeason],
-        topList: {},
-        rankData: [],
-        searchText: "",
-    };
-};

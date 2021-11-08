@@ -7,7 +7,7 @@ import searchTextAction from "../redux/actions/searchText";
 import { RuleState } from "../redux/reducers/rule";
 import { SeasonState } from "../redux/reducers/season";
 import PageDataContext from "../PageDataContext";
-import { getDefaultState } from "../util";
+import { getDefaultState } from "../redux/store";
 
 export type HomePageLinkPropsType = {
     className?: string;

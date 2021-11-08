@@ -10,7 +10,7 @@ import HistoryContainer from "../containers/HistoryContainer";
 import GetRankData from "../containers/GetRankData";
 import MobilePokemonSelector from "../containers/MobilePokemonSelector";
 import PageDataContext from "../PageDataContext";
-import { getDefaultState } from "../util";
+import { getDefaultState } from "../redux/store";
 import styles from "./app.module.scss";
 
 const App: React.FC = () => {

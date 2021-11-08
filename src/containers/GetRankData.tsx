@@ -12,7 +12,7 @@ import {
     getRankDataState,
 } from "../redux/selectors";
 import PageDataContext from "../PageDataContext";
-import { getDefaultState } from "../util";
+import { getDefaultState } from "../redux/store";
 import styles from "../components/pmRow.module.scss";
 import ShowWikiModal from "../components/ShowWikiModal";
 
