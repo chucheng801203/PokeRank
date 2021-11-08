@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import PageDataContext from "../PageDataContext";
+import PageDataContext from "../contexts/PageDataContext";
 
 export interface PmTypeBlockPropsType
     extends React.HTMLAttributes<HTMLDivElement> {

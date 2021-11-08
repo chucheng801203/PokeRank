@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import PmModal from "./PmModal";
-import WikiDataContext from "../WikiDataContext";
+import WikiDataContext from "../contexts/WikiDataContext";
 import styles from "./showWikiModal.module.scss";
 
 export type ShowWikiModalPropsType = {

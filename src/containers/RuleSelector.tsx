@@ -8,7 +8,7 @@ import {
 import { SelectValueType } from "../components/SelectorComponent/DefaultSelector";
 import toggleRule from "../redux/actions/rule";
 import { getRuleState } from "../redux/selectors";
-import PageDataContext from "../PageDataContext";
+import PageDataContext from "../contexts/PageDataContext";
 import { HistoryStateType } from "./HistoryContainer";
 import { getParameterByName } from "../util";
 

@@ -10,7 +10,7 @@ import {
     getRuleState,
     getSearchTextState,
 } from "../redux/selectors";
-import PageDataContext from "../PageDataContext";
+import PageDataContext from "../contexts/PageDataContext";
 
 export type PokemonInputSelectorPropsType = {
     className?: string;

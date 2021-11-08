@@ -5,11 +5,11 @@ import toggleSeason from "../redux/actions/season";
 import PageDataContext, {
     PageDataType,
     defaultPageData,
-} from "../PageDataContext";
+} from "../contexts/PageDataContext";
 import WikiDataContext, {
     WikiDataType,
     defaultWikiData,
-} from "../WikiDataContext";
+} from "../contexts/WikiDataContext";
 import { getParameterByName } from "../util";
 import { getDefaultState } from "../redux/store";
 import "whatwg-fetch";

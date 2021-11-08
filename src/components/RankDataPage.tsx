@@ -4,7 +4,7 @@ import PmInfoBlock from "./PmInfoBlock";
 import PmRowLoading from "./PmRowLoading";
 import PercentageRow from "./PercentageRow";
 import BaseStatRow from "./BaseStatRow";
-import { defaultPageData } from "../PageDataContext";
+import { defaultPageData } from "../contexts/PageDataContext";
 import styles from "./rankDataPage.module.scss";
 import pageRowStyles from "./pmRow.module.scss";
 import pmListStyles from "./pmList.module.scss";

@@ -1,4 +1,4 @@
-import { PageDataType } from "./PageDataContext";
+import { PageDataType } from "./contexts/PageDataContext";
 import { RootState } from "./redux/store";
 
 /**

@@ -9,7 +9,7 @@ import PmRowLoading from "./PmRowLoading";
 import HistoryContainer from "../containers/HistoryContainer";
 import GetRankData from "../containers/GetRankData";
 import MobilePokemonSelector from "../containers/MobilePokemonSelector";
-import PageDataContext from "../PageDataContext";
+import PageDataContext from "../contexts/PageDataContext";
 import { getDefaultState } from "../redux/store";
 import styles from "./app.module.scss";
 

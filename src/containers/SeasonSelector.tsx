@@ -8,7 +8,7 @@ import {
 import { SelectValueType } from "../components/SelectorComponent/DefaultSelector";
 import toggleSeason from "../redux/actions/season";
 import { getSeasonState } from "../redux/selectors";
-import PageDataContext from "../PageDataContext";
+import PageDataContext from "../contexts/PageDataContext";
 import { HistoryStateType } from "./HistoryContainer";
 import { getParameterByName } from "../util";
 

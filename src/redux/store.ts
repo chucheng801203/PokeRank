@@ -6,7 +6,7 @@ import { SeasonState } from "./reducers/season";
 import { TopListState } from "./reducers/topList";
 import { RankDataState } from "./reducers/rankData";
 import { SearchTextState } from "./reducers/searchText";
-import { PageDataType } from "../PageDataContext";
+import { PageDataType } from "../contexts/PageDataContext";
 
 export type RootState = {
     rule: Array<RuleState>;

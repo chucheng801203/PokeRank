@@ -9,7 +9,7 @@ import {
     getRuleState,
     getTopListState,
 } from "../redux/selectors";
-import PageDataContext from "../PageDataContext";
+import PageDataContext from "../contexts/PageDataContext";
 
 export type RankTopListPropsType = {
     className?: string;

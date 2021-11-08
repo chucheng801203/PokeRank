@@ -6,7 +6,7 @@ import toggleSeason from "../redux/actions/season";
 import searchTextAction from "../redux/actions/searchText";
 import { RuleState } from "../redux/reducers/rule";
 import { SeasonState } from "../redux/reducers/season";
-import PageDataContext from "../PageDataContext";
+import PageDataContext from "../contexts/PageDataContext";
 import { getDefaultState } from "../redux/store";
 
 export type HomePageLinkPropsType = {

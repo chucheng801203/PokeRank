@@ -3,7 +3,7 @@ import { Location } from "history";
 import { Link } from "react-router-dom";
 import PmTypeBlock from "./PmTypeBlock";
 import LoadingBlock from "./LoadingBlock";
-import PageDataContext, { PageDataType } from "../PageDataContext";
+import PageDataContext, { PageDataType } from "../contexts/PageDataContext";
 import { HistoryStateType } from "../containers/HistoryContainer";
 import styles from "./pmInfoBlock.module.scss";
 import LazyLoadImage from "./LazyLoadImage";
