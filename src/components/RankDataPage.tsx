@@ -4,12 +4,14 @@ import PmInfoBlock from "./PmInfoBlock";
 import PmRowLoading from "./PmRowLoading";
 import PercentageRow from "./PercentageRow";
 import BaseStatRow from "./BaseStatRow";
-import { BaseStatType } from "../PageDataContext";
+import { defaultPageData } from "../PageDataContext";
 import styles from "./rankDataPage.module.scss";
 import pageRowStyles from "./pmRow.module.scss";
 import pmListStyles from "./pmList.module.scss";
 
-const RankDataPage: React.FC<{
+type BaseStatType = typeof defaultPageData.base_stats[0][0];
+
+export type RankDataPagePropsType = {
     isLoading?: boolean;
     pmInfo?: React.ReactNode;
     teamPokemons?: React.ReactNode;
@@ -22,7 +24,9 @@ const RankDataPage: React.FC<{
     losePokemons?: React.ReactNode;
     loseMove?: React.ReactNode;
     baseStat?: BaseStatType;
-}> = ({
+};
+
+const RankDataPage: React.FC<RankDataPagePropsType> = ({
     isLoading,
     pmInfo,
     teamPokemons,
@@ -144,13 +148,15 @@ const RankDataPage: React.FC<{
                         >
                             {isLoading
                                 ? Array.apply(null, Array(5)).map((v, i) => (
-                                    <PmRowLoading
-                                        className={
-                                            pageRowStyles["rank-data-page-pmrow"]
-                                        }
-                                        key={i}
-                                    />
-                                ))
+                                      <PmRowLoading
+                                          className={
+                                              pageRowStyles[
+                                                  "rank-data-page-pmrow"
+                                              ]
+                                          }
+                                          key={i}
+                                      />
+                                  ))
                                 : teamPokemons}
                         </PmList>
                     </div>
@@ -162,8 +168,8 @@ const RankDataPage: React.FC<{
                         >
                             {isLoading
                                 ? Array.apply(null, Array(5)).map((v, i) => (
-                                    <PercentageRow key={i} isLoading={true} />
-                                ))
+                                      <PercentageRow key={i} isLoading={true} />
+                                  ))
                                 : item}
                         </PmList>
                     </div>

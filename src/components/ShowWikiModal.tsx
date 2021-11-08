@@ -3,11 +3,16 @@ import PmModal from "./PmModal";
 import WikiDataContext from "../WikiDataContext";
 import styles from "./showWikiModal.module.scss";
 
-const ShowWikiModal: React.FC<{
-    children: React.ReactNode;
+export type ShowWikiModalPropsType = {
     type: string;
     name?: string;
-}> = ({ children, type, name }) => {
+};
+
+const ShowWikiModal: React.FC<ShowWikiModalPropsType> = ({
+    children,
+    type,
+    name,
+}) => {
     const { abilities, items, moves, natures } = useContext(WikiDataContext);
 
     let title: React.ReactNode = "";

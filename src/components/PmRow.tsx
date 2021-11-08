@@ -1,4 +1,5 @@
 import React from "react";
+import classNames from "classnames";
 import { Location } from "history";
 import { Link } from "react-router-dom";
 import PmTypeBlock from "./PmTypeBlock";
@@ -6,7 +7,7 @@ import LazyLoadImage from "./LazyLoadImage";
 import { HistoryStateType } from "../containers/HistoryContainer";
 import styles from "./pmRow.module.scss";
 
-const PmRow: React.FC<{
+export type PmRowPropsType = {
     className?: string;
     pmRank?: number; // pokemon 排名
     pmAvatar?: string; // pokemon 圖片
@@ -14,18 +15,18 @@ const PmRow: React.FC<{
     pmFormId?: number; // pokemon 型態編號
     pmName?: string; // pokemon 名稱
     pmType?: Array<number>; // pokemon 屬性 id
-    [otherProps: string]: any;
-}> = ({
-    className = "",
-    pmRank = 0,
-    pmAvatar = "",
-    pmId = 0,
-    pmFormId = 0,
-    pmName = "",
-    pmType = [],
-    ...otherProps
+};
+
+const PmRow: React.FC<PmRowPropsType> = ({
+    className,
+    pmRank,
+    pmAvatar,
+    pmId,
+    pmFormId,
+    pmName,
+    pmType,
 }) => (
-    <li className={`${styles["pr-pm-row"]} ${className}`} {...otherProps}>
+    <li className={classNames(styles["pr-pm-row"], className)}>
         <Link
             className={`${styles["pm-row-link"]} ${styles["pm-row-container"]}`}
             to={({ state }: Location<HistoryStateType>) => ({
@@ -35,7 +36,9 @@ const PmRow: React.FC<{
             })}
         >
             <div className={`${styles["pm-row-content"]}`}>
-                <div className={`${styles["pm-row-rank"]}`}>{pmRank + 1}</div>
+                <div className={`${styles["pm-row-rank"]}`}>
+                    {typeof pmRank === "number" ? pmRank + 1 : ""}
+                </div>
                 <LazyLoadImage
                     className={`${styles["pm-row-img"]}`}
                     src={pmAvatar}

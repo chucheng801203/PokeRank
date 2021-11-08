@@ -9,9 +9,14 @@ import { SeasonState } from "../redux/reducers/season";
 import PageDataContext from "../PageDataContext";
 import { getDefaultState } from "../util";
 
-const HomePageLink: React.FC<{
+export type HomePageLinkPropsType = {
     className?: string;
-}> = ({ children, className }) => {
+};
+
+const HomePageLink: React.FC<HomePageLinkPropsType> = ({
+    children,
+    className,
+}) => {
     const pageData = useContext(PageDataContext);
     const dispatch = useDispatch();
     const history = useHistory();

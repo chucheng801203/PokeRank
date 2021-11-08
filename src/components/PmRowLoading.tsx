@@ -1,12 +1,14 @@
 import React from "react";
+import classNames from "classnames";
 import LoadingBlock from "./LoadingBlock";
 import styles from "./pmRow.module.scss";
 
-const PmRowLoading: React.FC<{
+export type PmRowLoadingPropsType = {
     className?: string;
-    [otherProps: string]: any;
-}> = ({ className, ...otherProps }) => (
-    <li className={`${styles["pr-pm-row"]} ${className}`} {...otherProps}>
+};
+
+const PmRowLoading: React.FC<PmRowLoadingPropsType> = ({ className }) => (
+    <li className={classNames(styles["pr-pm-row"], className)}>
         <div
             className={`${styles["pm-row-container"]} ${styles["pm-row-container-loading"]}`}
         >

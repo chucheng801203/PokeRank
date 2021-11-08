@@ -6,14 +6,20 @@ import { getSeasonState, getRuleState } from "../redux/selectors";
 import styles from "./pokemonSelectorPage.module.scss";
 import arrowBackIcon from "../images/arrow_back_black_24dp.svg";
 
-const PokemonSelectorPage: React.FC<{
+export type PokemonSelectorPagePropsType = {
     value?: string;
     pokemonOptions?: Array<{
         id: number;
         name: string;
     }>;
     onChange?: (v: string) => void;
-}> = ({ value, pokemonOptions, onChange }) => {
+};
+
+const PokemonSelectorPage: React.FC<PokemonSelectorPagePropsType> = ({
+    value,
+    pokemonOptions,
+    onChange,
+}) => {
     const history = useHistory();
     const season = useSelector(getSeasonState);
     const rule = useSelector(getRuleState);

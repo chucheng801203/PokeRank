@@ -3,11 +3,13 @@ import ReactDOM from "react-dom";
 import styles from "./pmModal.module.scss";
 import closeIcon from "../images/close_white_24dp.svg";
 
-const PmModal: React.FC<{
+export type PmModalPropsType = {
     title?: React.ReactNode;
     content?: React.ReactNode;
     onCancel?: () => void;
-}> = ({ title, content, onCancel }) => {
+};
+
+const PmModal: React.FC<PmModalPropsType> = ({ title, content, onCancel }) => {
     return ReactDOM.createPortal(
         <div className={styles["pr-modal-mask"]} onClick={onCancel}>
             <div

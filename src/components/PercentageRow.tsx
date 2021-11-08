@@ -3,14 +3,23 @@ import LoadingBlock from "./LoadingBlock";
 import PmTypeBlock from "./PmTypeBlock";
 import styles from "./percentageRow.module.scss";
 
-const PercentageRow: React.FC<{
+export type PercentageRowPropsType = {
     rank?: number;
     name?: string;
     typeId?: number | null;
     percentage?: number | string;
     isLoading?: boolean;
     onClick?: () => void;
-}> = ({ rank, name, typeId, percentage, isLoading, onClick }) => {
+};
+
+const PercentageRow: React.FC<PercentageRowPropsType> = ({
+    rank,
+    name,
+    typeId,
+    percentage,
+    isLoading,
+    onClick,
+}) => {
     let className = styles["pr-percentage-row"];
     if (onClick) {
         className = `${className} ${styles["pr-percentage-row-hover"]}`;

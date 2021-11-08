@@ -26,9 +26,7 @@ const getValue = (value: number, data: Array<{ value: number }>) => {
     }
 };
 
-const Portal: React.FC<{
-    children: React.ReactNode;
-}> = ({ children }) => {
+const Portal: React.FC = ({ children }) => {
     const pr_url = `${process.env.REACT_APP_S3_HOST}/pr_data.json`;
 
     const dispatch = useDispatch();

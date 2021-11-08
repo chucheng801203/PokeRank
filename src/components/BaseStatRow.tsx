@@ -2,12 +2,19 @@ import React from "react";
 import LoadingBlock from "./LoadingBlock";
 import styles from "./baseStat.module.scss";
 
-const BaseStats: React.FC<{
+export type BaseStatsPropsType = {
     isLoading?: boolean;
     name?: string;
     value?: number;
     rectColor?: string;
-}> = ({ isLoading, name, rectColor, value = 0 }) => {
+};
+
+const BaseStats: React.FC<BaseStatsPropsType> = ({
+    isLoading,
+    name,
+    rectColor,
+    value = 0,
+}) => {
     let styleAttr: React.CSSProperties = {};
     if (Number.isInteger(value)) {
         styleAttr.width = `${(value / 255) * 100}%`;

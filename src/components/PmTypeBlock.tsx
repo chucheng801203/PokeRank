@@ -1,11 +1,16 @@
 import React, { useContext } from "react";
 import PageDataContext from "../PageDataContext";
 
-const PmTypeBlock: React.FC<{
-    style?: React.CSSProperties;
+export interface PmTypeBlockPropsType
+    extends React.HTMLAttributes<HTMLDivElement> {
     pmType: number; // pokemon 屬性 id
-    [otherProps: string]: any;
-}> = ({ style, pmType, ...otherProps }) => {
+}
+
+const PmTypeBlock: React.FC<PmTypeBlockPropsType> = ({
+    style,
+    pmType,
+    ...otherProps
+}) => {
     const pageData = useContext(PageDataContext);
 
     // pokemon 屬性區塊的背景色

@@ -11,9 +11,11 @@ import {
 } from "../redux/selectors";
 import PageDataContext from "../PageDataContext";
 
-const RankTopList: React.FC<{
+export type RankTopListPropsType = {
     className?: string;
-}> = ({ className }) => {
+};
+
+const RankTopList: React.FC<RankTopListPropsType> = ({ className }) => {
     const { page_loading, seasons, rules, pokemon, pokemon_types } =
         useContext(PageDataContext);
     const dispatch = useDispatch();

@@ -8,7 +8,14 @@ import { HistoryStateType } from "../containers/HistoryContainer";
 import styles from "./pmInfoBlock.module.scss";
 import LazyLoadImage from "./LazyLoadImage";
 
-const LoadingMode = (pageData: PageDataType) => {
+export type PmInfoBlockPropsType = {
+    pmId?: number;
+    formId?: number;
+    pmRank?: number;
+    isLoading?: boolean;
+};
+
+export const LoadingMode = (pageData: PageDataType) => {
     const types =
         pageData && pageData.types && pageData.types.length > 0
             ? pageData.types
@@ -57,12 +64,12 @@ const LoadingMode = (pageData: PageDataType) => {
     );
 };
 
-const PmInfoBlock: React.FC<{
-    pmId?: number;
-    formId?: number;
-    pmRank?: number;
-    isLoading?: boolean;
-}> = ({ pmId, formId, pmRank, isLoading }) => {
+const PmInfoBlock: React.FC<PmInfoBlockPropsType> = ({
+    pmId,
+    formId,
+    pmRank,
+    isLoading,
+}) => {
     const pageData = useContext(PageDataContext);
 
     if (isLoading || typeof pmId !== "number" || typeof formId !== "number")
