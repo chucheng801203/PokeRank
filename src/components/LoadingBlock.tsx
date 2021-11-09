@@ -25,7 +25,7 @@ const LoadingBlock: React.FC<LoadingBlockPropsType> = ({
 
     return (
         <div
-            className={classNames(styles["pr-loading-block"], className)}
+            className={classNames(styles["loading-block"], className)}
             style={styleAttr}
         />
     );

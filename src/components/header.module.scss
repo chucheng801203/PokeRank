@@ -1,4 +1,4 @@
-.pr-header {
+.header {
     position: fixed;
     top: 0;
     left: 0;
@@ -10,7 +10,7 @@
     box-shadow: 0 0 10px 0 #000;
     z-index: 1030;
 
-    .pr-header-logo {
+    &-logo {
         margin-right: auto;
         font-size: 20.8px;
         font-weight: bold;
@@ -26,20 +26,20 @@
         }
     }
 
-    .pr-header-search {
+    &-search {
         display: none;
         margin-right: auto;
     }
 
-    .pr-header-mobile-search-btn {
+    &-mobile-search-btn {
         display: block;
     }
 
-    .pr-header-season-selector {
+    &-season-selector {
         display: none;
     }
 
-    .pr-header-nav-btn {
+    &-nav-btn {
         margin: 0 4px;
         cursor: pointer;
 
@@ -54,21 +54,21 @@
 }
 
 @media (min-width: 768px) {
-    .pr-header {
-        .pr-header-logo {
+    .header {
+        &-logo {
             margin-right: 1.4rem;
             // font-size: 1rem;
         }
 
-        .pr-header-search {
+        &-search {
             display: inline-block;
         }
 
-        .pr-header-season-selector {
+        &-season-selector {
             display: inline-block;
         }
 
-        .pr-header-mobile-search-btn {
+        &-mobile-search-btn {
             display: none;
         }
     }

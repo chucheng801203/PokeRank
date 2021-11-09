@@ -1,27 +1,27 @@
-.pr-info-block {
+.info {
     border-radius: 4px;
     padding: 16px;
     margin-bottom: 16px;
     background-color: #1b1b1b;
 
-    .info-name {
+    &-name {
         margin: 0;
         font-size: 18px;
     }
 
-    .info-loading-name {
+    &-loading-name {
         width: 140px;
         height: 26px;
         margin-right: 8px;
     }
 
-    .info-loading-rank {
+    &-loading-rank {
         width: 80px;
         height: 26px;
         margin-right: auto;
     }
 
-    .info-type {
+    &-type {
         width: 80px;
         height: 26px;
         line-height: 26px;
@@ -34,7 +34,7 @@
         }
     }
 
-    .info-img {
+    &-img {
         width: 90px;
         height: 90px;
         margin: 0 12px 0 0;
@@ -51,7 +51,7 @@
         }
     }
 
-    .info-weakness-table {
+    &-weakness-table {
         display: table;
         width: 100%;
         min-width: 990px;
@@ -70,7 +70,4 @@
             text-align: center;
         }
     }
-}
-
-@media (min-width: 768px) {
 }

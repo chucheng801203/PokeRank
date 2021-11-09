@@ -1,4 +1,4 @@
-.pr-pokemon-selector-page {
+.pm-selector-page {
     position: fixed;
     left: 0;
     top: 0;
@@ -12,7 +12,7 @@
         background-color: #2c2c2c;
     }
 
-    .search-bar {
+    &-bar {
         display: flex;
         flex-wrap: nowrap;
         align-items: center;
@@ -21,7 +21,7 @@
         padding: 12px 8px;
     }
 
-    .back-btn {
+    &-back-btn {
         border: none;
         margin-right: 4px;
         background-color: #000000;
@@ -32,7 +32,7 @@
         }
     }
 
-    .option-list {
+    &-option-list {
         height: calc(100% - 61px);
         padding: 8px 16px 60px;
         overflow-y: auto;

@@ -33,10 +33,10 @@ const PokemonSelectorPage: React.FC<PokemonSelectorPagePropsType> = ({
     });
 
     return (
-        <div className={styles["pr-pokemon-selector-page"]}>
-            <div className={styles["search-bar"]}>
+        <div className={styles["pm-selector-page"]}>
+            <div className={styles["pm-selector-page-bar"]}>
                 <button
-                    className={styles["back-btn"]}
+                    className={styles["pm-selector-page-back-btn"]}
                     onClick={() => {
                         history.goBack();
                     }}
@@ -54,7 +54,7 @@ const PokemonSelectorPage: React.FC<PokemonSelectorPagePropsType> = ({
                     autoComplete="off"
                 />
             </div>
-            <div className={styles["option-list"]}>
+            <div className={styles["pm-selector-page-option-list"]}>
                 {pokemonOptions &&
                     pokemonOptions.map((o, i) => (
                         <Link

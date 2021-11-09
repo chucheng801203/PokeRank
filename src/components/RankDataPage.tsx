@@ -48,7 +48,7 @@ const RankDataPage: React.FC<RankDataPagePropsType> = ({
                 <div className={`row ${styles["row-custom"]}`}>
                     <div className="col-12 col-md-6">
                         <PmList
-                            className={`mb-3 ${pmListStyles["rank-data-page-pmList"]}`}
+                            className={`mb-3 ${pmListStyles["rank-page-list"]}`}
                             listTitle="種族值"
                         >
                             {isLoading ? (
@@ -102,7 +102,7 @@ const RankDataPage: React.FC<RankDataPagePropsType> = ({
                             )}
                         </PmList>
                         <PmList
-                            className={`mb-3 ${pmListStyles["rank-data-page-pmList"]}`}
+                            className={`mb-3 ${pmListStyles["rank-page-list"]}`}
                             listTitle="特性"
                         >
                             {isLoading
@@ -115,7 +115,7 @@ const RankDataPage: React.FC<RankDataPagePropsType> = ({
 
                     <div className="col-12 col-md-6">
                         <PmList
-                            className={`mb-3 ${pmListStyles["rank-data-page-pmList"]}`}
+                            className={`mb-3 ${pmListStyles["rank-page-list"]}`}
                             listTitle="招式"
                         >
                             {isLoading
@@ -126,7 +126,7 @@ const RankDataPage: React.FC<RankDataPagePropsType> = ({
                         </PmList>
 
                         <PmList
-                            className={`mb-3 ${pmListStyles["rank-data-page-pmList"]}`}
+                            className={`mb-3 ${pmListStyles["rank-page-list"]}`}
                             listTitle="性格"
                         >
                             {isLoading
@@ -143,16 +143,14 @@ const RankDataPage: React.FC<RankDataPagePropsType> = ({
                 <div className={`row ${styles["row-custom"]}`}>
                     <div className="col-12 col-md-6 col-xl-12">
                         <PmList
-                            className={`mb-3 ${pmListStyles["rank-data-page-pmList"]}`}
+                            className={`mb-3 ${pmListStyles["rank-page-list"]}`}
                             listTitle="一起加入對戰隊伍的寶可夢TOP10"
                         >
                             {isLoading
                                 ? Array.apply(null, Array(5)).map((v, i) => (
                                       <PmRowLoading
                                           className={
-                                              pageRowStyles[
-                                                  "rank-data-page-pmrow"
-                                              ]
+                                              pageRowStyles["rank-page-row"]
                                           }
                                           key={i}
                                       />
@@ -163,7 +161,7 @@ const RankDataPage: React.FC<RankDataPagePropsType> = ({
 
                     <div className="col-12 col-md-6 col-xl-12">
                         <PmList
-                            className={`mb-3 ${pmListStyles["rank-data-page-pmList"]}`}
+                            className={`mb-3 ${pmListStyles["rank-page-list"]}`}
                             listTitle="道具"
                         >
                             {isLoading
@@ -185,15 +183,13 @@ const RankDataPage: React.FC<RankDataPagePropsType> = ({
             {(isLoading || winPokemons) && (
                 <div className="col-12 col-md-6 mb-3">
                     <PmList
-                        className={pmListStyles["rank-data-page-pmList"]}
+                        className={pmListStyles["rank-page-list"]}
                         listTitle="這隻寶可夢打倒的寶可夢TOP10"
                     >
                         {isLoading
                             ? Array.apply(null, Array(10)).map((v, i) => (
                                   <PmRowLoading
-                                      className={
-                                          pageRowStyles["rank-data-page-pmrow"]
-                                      }
+                                      className={pageRowStyles["rank-page-row"]}
                                       key={i}
                                   />
                               ))
@@ -205,7 +201,7 @@ const RankDataPage: React.FC<RankDataPagePropsType> = ({
             {(isLoading || winMove) && (
                 <div className="col-12 col-md-6 mb-3">
                     <PmList
-                        className={pmListStyles["rank-data-page-pmList"]}
+                        className={pmListStyles["rank-page-list"]}
                         listTitle="這隻寶可夢打倒對手時使用的招式TOP10"
                     >
                         {isLoading
@@ -226,15 +222,13 @@ const RankDataPage: React.FC<RankDataPagePropsType> = ({
             {(isLoading || losePokemons) && (
                 <div className="col-12 col-md-6 mb-3">
                     <PmList
-                        className={pmListStyles["rank-data-page-pmList"]}
+                        className={pmListStyles["rank-page-list"]}
                         listTitle="打倒這隻寶可夢的寶可夢TOP10"
                     >
                         {isLoading
                             ? Array.apply(null, Array(10)).map((v, i) => (
                                   <PmRowLoading
-                                      className={
-                                          pageRowStyles["rank-data-page-pmrow"]
-                                      }
+                                      className={pageRowStyles["rank-page-row"]}
                                       key={i}
                                   />
                               ))
@@ -246,7 +240,7 @@ const RankDataPage: React.FC<RankDataPagePropsType> = ({
             {(isLoading || loseMove) && (
                 <div className="col-12 col-md-6 mb-3">
                     <PmList
-                        className={pmListStyles["rank-data-page-pmList"]}
+                        className={pmListStyles["rank-page-list"]}
                         listTitle="對手打倒這隻寶可夢時使用的招式TOP10"
                     >
                         {isLoading

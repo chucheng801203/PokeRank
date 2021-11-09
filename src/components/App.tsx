@@ -20,7 +20,7 @@ const App: React.FC = () => {
 
     if (pageData.page_loading) {
         unMatch = (
-            <PmList className={styles["pr-app-list"]}>
+            <PmList className={styles["app-list"]}>
                 {Array.apply(null, Array(10)).map((v, i) => (
                     <PmRowLoading key={i} />
                 ))}
@@ -43,16 +43,16 @@ const App: React.FC = () => {
     }
 
     return (
-        <div className={styles["pr-app"]}>
+        <div className={styles["app"]}>
             {!pageData.page_loading && <HistoryContainer />}
             <Header />
             <div className="container">
-                <div className={styles["pr-app-season-selector"]}>
+                <div className={styles["app-season-selector"]}>
                     <SeasonSelector />
                 </div>
                 <Switch>
                     <Route exact path="/">
-                        <RankTopList className={styles["pr-app-list"]} />
+                        <RankTopList className={styles["app-list"]} />
                     </Route>
                     <Route exact path="/mobile/search/">
                         <MobilePokemonSelector />

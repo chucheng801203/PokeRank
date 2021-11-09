@@ -22,7 +22,7 @@ const ShowWikiModal: React.FC<ShowWikiModalPropsType> = ({
         case "abilities":
             if (name && abilities[name]) {
                 title = (
-                    <table className={styles["pr-show-wiki-modal-table"]}>
+                    <table className={styles["table"]}>
                         <thead>
                             <tr>
                                 <th>特性：</th>
@@ -32,7 +32,7 @@ const ShowWikiModal: React.FC<ShowWikiModalPropsType> = ({
                     </table>
                 );
                 content = (
-                    <table className={styles["pr-show-wiki-modal-table"]}>
+                    <table className={styles["table"]}>
                         <tbody>
                             <tr>
                                 <td>描述：</td>
@@ -46,7 +46,7 @@ const ShowWikiModal: React.FC<ShowWikiModalPropsType> = ({
         case "items":
             if (name && items[name]) {
                 title = (
-                    <table className={styles["pr-show-wiki-modal-table"]}>
+                    <table className={styles["table"]}>
                         <thead>
                             <tr>
                                 <th>道具：</th>
@@ -56,7 +56,7 @@ const ShowWikiModal: React.FC<ShowWikiModalPropsType> = ({
                     </table>
                 );
                 content = (
-                    <table className={styles["pr-show-wiki-modal-table"]}>
+                    <table className={styles["table"]}>
                         <tbody>
                             <tr>
                                 <td>描述：</td>
@@ -70,7 +70,7 @@ const ShowWikiModal: React.FC<ShowWikiModalPropsType> = ({
         case "moves":
             if (name && moves[name]) {
                 title = (
-                    <table className={styles["pr-show-wiki-modal-table"]}>
+                    <table className={styles["table"]}>
                         <thead>
                             <tr>
                                 <th>招式：</th>
@@ -80,7 +80,7 @@ const ShowWikiModal: React.FC<ShowWikiModalPropsType> = ({
                     </table>
                 );
                 content = (
-                    <table className={styles["pr-show-wiki-modal-table"]}>
+                    <table className={styles["table"]}>
                         <tbody>
                             <tr>
                                 <td>屬性：</td>
@@ -114,7 +114,7 @@ const ShowWikiModal: React.FC<ShowWikiModalPropsType> = ({
         case "natures":
             if (name && natures[name]) {
                 title = (
-                    <table className={styles["pr-show-wiki-modal-table"]}>
+                    <table className={styles["table"]}>
                         <thead>
                             <tr>
                                 <th>性格：</th>
@@ -124,7 +124,7 @@ const ShowWikiModal: React.FC<ShowWikiModalPropsType> = ({
                     </table>
                 );
                 content = (
-                    <table className={styles["pr-show-wiki-modal-table"]}>
+                    <table className={styles["table"]}>
                         <tbody>
                             <tr>
                                 <td>加：</td>

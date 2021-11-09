@@ -16,17 +16,12 @@ const PmSelectListContent: React.FC<PmSelectListContentPropsType> = ({
     pmName,
 }) => {
     return (
-        <div
-            className={classNames(
-                styles["pr-pm-select-list-content"],
-                className
-            )}
-        >
-            <div className={styles["content-id"]}>No. {pmId}</div>
-            <figure className={styles["content-img"]}>
+        <div className={classNames(styles["item"], className)}>
+            <div className={styles["item-id"]}>No. {pmId}</div>
+            <figure className={styles["item-img"]}>
                 <img src={pmAvatar} alt="pokemon" />
             </figure>
-            <div className={styles["content-name"]}>{pmName}</div>
+            <div className={styles["item-name"]}>{pmName}</div>
         </div>
     );
 };

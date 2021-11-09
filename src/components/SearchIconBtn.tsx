@@ -7,7 +7,7 @@ const SearchIconBtn: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement>> =
     ({ className, ...otherProps }) => {
         return (
             <button
-                className={classNames(styles["search-icon-btn"], className)}
+                className={classNames(styles["btn"], className)}
                 title="搜尋"
                 {...otherProps}
             >

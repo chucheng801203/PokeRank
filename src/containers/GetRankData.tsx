@@ -152,7 +152,7 @@ const GetRankData: React.FC = () => {
                         return (
                             <PmRow
                                 key={i}
-                                className={styles["rank-data-page-pmrow"]}
+                                className={styles["rank-page-row"]}
                                 pmRank={i}
                                 pmAvatar={`${process.env.REACT_APP_IMAGE_PATH}/cap${v.id}_f${v.form_id}_s0.png`}
                                 pmId={v.id}

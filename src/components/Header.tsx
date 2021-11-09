@@ -11,24 +11,24 @@ import styles from "./header.module.scss";
 
 const Header: React.FC = () => (
     <nav
-        className={`${styles["pr-header"]} container-fluid d-flex align-items-center`}
+        className={`${styles["header"]} container-fluid d-flex align-items-center`}
     >
         <div
             className="container d-flex align-items-center"
             style={{ lineHeight: "1.3" }}
         >
-            <HomePageLink className={styles["pr-header-logo"]}>
+            <HomePageLink className={styles["header-logo"]}>
                 PokéRank
             </HomePageLink>
 
             <PokemonSelector
-                className={styles["pr-header-search"]}
+                className={styles["header-search"]}
                 SufixIconBtn={SearchIconBtn}
                 placeholder="搜尋名稱或編號"
             />
 
             <div
-                className={`${styles["pr-header-nav-btn"]} ${styles["pr-header-mobile-search-btn"]}`}
+                className={`${styles["header-nav-btn"]} ${styles["header-mobile-search-btn"]}`}
             >
                 <Link
                     to={({ state }: Location<HistoryStateType>) => ({
@@ -41,12 +41,12 @@ const Header: React.FC = () => (
             </div>
 
             <div
-                className={`${styles["pr-header-nav-btn"]} ${styles["pr-header-season-selector"]}`}
+                className={`${styles["header-nav-btn"]} ${styles["header-season-selector"]}`}
             >
                 <SeasonSelector style={{ width: "106px" }} />
             </div>
 
-            <div className={styles["pr-header-nav-btn"]}>
+            <div className={styles["header-nav-btn"]}>
                 <RuleSelector />
             </div>
         </div>

@@ -1,33 +1,33 @@
-.pr-app {
+.app {
     min-height: 100vh;
     position: relative;
     padding: 64px 0 160px;
 
-    .pr-app-season-selector {
+    &-season-selector {
         margin-bottom: 16px;
     }
 
-    .pr-app-list {
+    &-list {
         width: 100%;
         margin: 0 auto;
     }
 }
 
 @media (min-width: 768px) {
-    .pr-app {
-        .pr-app-season-selector {
+    .app {
+        &-season-selector {
             display: none;
         }
 
-        .pr-app-list {
+        &-list {
             width: 80%;
         }
     }
 }
 
 @media (min-width: 992px) {
-    .pr-app {
-        .pr-app-list {
+    .app {
+        &-list {
             width: 60%;
         }
     }

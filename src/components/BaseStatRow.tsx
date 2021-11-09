@@ -24,29 +24,33 @@ const BaseStats: React.FC<BaseStatsPropsType> = ({
     }
 
     return !isLoading && (name === undefined || value === undefined) ? null : (
-        <li className={styles["pr-baseStat-row"]}>
-            <div className={styles["row-content"]}>
-                <div className={styles["row-name"]}>
+        <li className={styles["baseStat"]}>
+            <div className={styles["baseStat-content"]}>
+                <div className={styles["baseStat-name"]}>
                     {name ? `${name}：` : ""}
                 </div>
 
                 {isLoading ? (
-                    <LoadingBlock className={styles["row-loading-value"]} />
+                    <LoadingBlock
+                        className={styles["baseStat-loading-value"]}
+                    />
                 ) : (
-                    <div className={styles["row-value"]}>
+                    <div className={styles["baseStat-value"]}>
                         {value ? value : ""}
                     </div>
                 )}
 
                 {isLoading ? (
                     <LoadingBlock
-                        className={styles["row-loading-value-rect"]}
+                        className={styles["baseStat-loading-value-rect"]}
                     />
                 ) : (
-                    <div className={styles["row-value-rect"]}>
+                    <div className={styles["baseStat-value-rect"]}>
                         {Number.isInteger(value) ? (
                             <div
-                                className={styles["row-value-rect-content"]}
+                                className={
+                                    styles["baseStat-value-rect-content"]
+                                }
                                 style={styleAttr}
                             />
                         ) : (

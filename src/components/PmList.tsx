@@ -14,10 +14,8 @@ const PmList: React.FC<PmListPropsType> = ({
     listTitle,
 }) => {
     return (
-        <section className={classNames(styles["pr-pm-list"], className)}>
-            {listTitle && (
-                <h3 className={styles["pm-list-title"]}>{listTitle}</h3>
-            )}
+        <section className={classNames(styles["list"], className)}>
+            {listTitle && <h3 className={styles["list-title"]}>{listTitle}</h3>}
             <ul>{children}</ul>
         </section>
     );

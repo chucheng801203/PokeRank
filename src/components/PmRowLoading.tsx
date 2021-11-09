@@ -8,28 +8,20 @@ export type PmRowLoadingPropsType = {
 };
 
 const PmRowLoading: React.FC<PmRowLoadingPropsType> = ({ className }) => (
-    <li className={classNames(styles["pr-pm-row"], className)}>
+    <li className={classNames(styles["row"], className)}>
         <div
-            className={`${styles["pm-row-container"]} ${styles["pm-row-container-loading"]}`}
+            className={`${styles["row-container"]} ${styles["row-container-loading"]}`}
         >
-            <div className={`${styles["pm-row-content"]}`}>
-                <LoadingBlock className={`${styles["pm-row-loading-rank"]}`} />
-                <LoadingBlock className={`${styles["pm-row-loading-img"]}`} />
-                <div className={`${styles["pm-row-info"]}`}>
-                    <LoadingBlock
-                        className={`${styles["pm-row-loading-id"]}`}
-                    />
-                    <LoadingBlock
-                        className={`${styles["pm-row-loading-name"]}`}
-                    />
+            <div className={`${styles["row-content"]}`}>
+                <LoadingBlock className={`${styles["row-loading-rank"]}`} />
+                <LoadingBlock className={`${styles["row-loading-img"]}`} />
+                <div className={`${styles["row-info"]}`}>
+                    <LoadingBlock className={`${styles["row-loading-id"]}`} />
+                    <LoadingBlock className={`${styles["row-loading-name"]}`} />
                 </div>
-                <div className={`${styles["pm-row-types"]}`}>
-                    <LoadingBlock
-                        className={`${styles["pm-row-loading-type"]}`}
-                    />
-                    <LoadingBlock
-                        className={`${styles["pm-row-loading-type"]}`}
-                    />
+                <div className={`${styles["row-types"]}`}>
+                    <LoadingBlock className={`${styles["row-loading-type"]}`} />
+                    <LoadingBlock className={`${styles["row-loading-type"]}`} />
                 </div>
             </div>
         </div>

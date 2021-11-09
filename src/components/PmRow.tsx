@@ -26,25 +26,25 @@ const PmRow: React.FC<PmRowPropsType> = ({
     pmName,
     pmType,
 }) => (
-    <li className={classNames(styles["pr-pm-row"], className)}>
+    <li className={classNames(styles["row"], className)}>
         <Link
-            className={`${styles["pm-row-link"]} ${styles["pm-row-container"]}`}
+            className={`${styles["row-link"]} ${styles["row-container"]}`}
             to={({ state }: Location<HistoryStateType>) => ({
                 pathname: `/${pmId}/${pmFormId}`,
                 search: `?season=${state.season.value}&rule=${state.rule.value}`,
                 state: state,
             })}
         >
-            <div className={`${styles["pm-row-content"]}`}>
-                <div className={`${styles["pm-row-rank"]}`}>
+            <div className={`${styles["row-content"]}`}>
+                <div className={`${styles["row-rank"]}`}>
                     {typeof pmRank === "number" ? pmRank + 1 : ""}
                 </div>
                 <LazyLoadImage
-                    className={`${styles["pm-row-img"]}`}
+                    className={`${styles["row-img"]}`}
                     src={pmAvatar}
                     alt="pokemon"
                 />
-                <div className={`${styles["pm-row-info"]}`}>
+                <div className={`${styles["row-info"]}`}>
                     {`No. ${pmId}`}
                     <br />
                     {pmName}
@@ -53,7 +53,7 @@ const PmRow: React.FC<PmRowPropsType> = ({
                     {pmType?.map((type_id, i) => (
                         <PmTypeBlock
                             key={i}
-                            className={`${styles["pm-row-type"]}`}
+                            className={`${styles["row-type"]}`}
                             pmType={type_id}
                         />
                     ))}

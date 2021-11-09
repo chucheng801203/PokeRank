@@ -11,20 +11,20 @@ export type PmModalPropsType = {
 
 const PmModal: React.FC<PmModalPropsType> = ({ title, content, onCancel }) => {
     return ReactDOM.createPortal(
-        <div className={styles["pr-modal-mask"]} onClick={onCancel}>
+        <div className={styles["mask"]} onClick={onCancel}>
             <div
-                className={styles["pr-modal-modal"]}
+                className={styles["modal"]}
                 onClick={(e) => {
                     e.stopPropagation();
                 }}
             >
-                <div className={styles["header"]}>
+                <div className={styles["modal-header"]}>
                     <h4 className={styles["title"]}>{title}</h4>
                     <button className={styles["close-btn"]}>
                         <img src={closeIcon} alt="cancel" onClick={onCancel} />
                     </button>
                 </div>
-                <div className={styles["body"]}>{content}</div>
+                <div className={styles["modal-body"]}>{content}</div>
             </div>
         </div>,
         window.document.body

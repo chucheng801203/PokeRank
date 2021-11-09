@@ -22,7 +22,7 @@ export const LoadingMode = (pageData: PageDataType) => {
             : Array.apply(null, Array(18));
 
     return (
-        <div className={styles["pr-info-block"]}>
+        <div className={styles["info"]}>
             <div className="d-sm-flex mb-3">
                 <div className="d-flex align-items-center mr-sm-auto mb-2 mb-sm-0">
                     <LoadingBlock
@@ -96,7 +96,7 @@ const PmInfoBlock: React.FC<PmInfoBlockPropsType> = ({
     }
 
     return (
-        <div className={styles["pr-info-block"]}>
+        <div className={styles["info"]}>
             <div className="d-sm-flex mb-3">
                 <div className="d-flex align-items-center mr-sm-auto mb-2 mb-sm-0">
                     <h1 className={`${styles["info-name"]} mr-2`}>

@@ -20,9 +20,9 @@ const PercentageRow: React.FC<PercentageRowPropsType> = ({
     isLoading,
     onClick,
 }) => {
-    let className = styles["pr-percentage-row"];
+    let className = styles["row"];
     if (onClick) {
-        className = `${className} ${styles["pr-percentage-row-hover"]}`;
+        className = `${className} ${styles["row-hover"]}`;
     }
 
     return (
