@@ -37,7 +37,7 @@ const RankTopList: React.FC<RankTopListPropsType> = ({ className }) => {
         document.title = "PokéRank";
     });
 
-    let seasonText: string = "";
+    let seasonText: string = "　";
     if (!page_loading) {
         const s = seasons[season[0].index];
         const r = rules[rule[0].index];
