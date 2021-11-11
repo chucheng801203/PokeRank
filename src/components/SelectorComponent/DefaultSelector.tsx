@@ -1,4 +1,5 @@
 import React, { useRef, ReactText, useState, useEffect } from "react";
+import classNames from "classnames";
 import Popup from "../PopupComponent";
 import { convertNodeToOption } from "./Option";
 import OptionList from "./OptionList";
@@ -6,16 +7,16 @@ import useIsActive from "./hooks/useIsActive";
 import selectStyle from "./select.module.scss";
 import expandMoreIcon from "../../images/expand_more_black_24dp.svg";
 
-export type SelectValue = Array<{
+export type SelectValueType = Array<{
     index: number;
     value?: ReactText;
     text?: ReactText;
 }>;
 
 export type DefaultSelectorProps = {
-    value?: SelectValue;
+    value?: SelectValueType;
     children?: React.ReactNode;
-    onChange?: (v: SelectValue) => void;
+    onChange?: (v: SelectValueType) => void;
     placeholder?: string;
     className?: string;
     [otherProps: string]: any;
@@ -26,15 +27,15 @@ const DefaultSelector: React.FC<DefaultSelectorProps> = ({
     children,
     onChange,
     placeholder,
-    className = "",
+    className,
     ...otherProps
 }) => {
     const options = React.Children.map(children, (elem, i) => {
         return convertNodeToOption(elem, i);
     })?.filter((option) => option);
 
-    const getCurrentValue = (): SelectValue => {
-        let current: SelectValue;
+    const getCurrentValue = (): SelectValueType => {
+        let current: SelectValueType;
 
         if (value && value.length > 0) {
             current = value;
@@ -58,7 +59,7 @@ const DefaultSelector: React.FC<DefaultSelectorProps> = ({
         return [];
     };
 
-    const [currentValue, setCurrentValue] = useState<SelectValue>(
+    const [currentValue, setCurrentValue] = useState<SelectValueType>(
         getCurrentValue()
     );
 
@@ -67,7 +68,7 @@ const DefaultSelector: React.FC<DefaultSelectorProps> = ({
     useEffect(() => {
         if (
             (nextValue.length > 0 && currentValue.length === 0) ||
-            (currentValue[0] &&
+            (currentValue.length > 0 &&
                 nextValue.length > 0 &&
                 nextValue[0].index !== currentValue[0].index)
         )
@@ -79,7 +80,7 @@ const DefaultSelector: React.FC<DefaultSelectorProps> = ({
     const [isActive, setIsActive] = useIsActive(selectorRef);
 
     // 當 currentValue 發生變動而觸發的事件
-    const onChangeHandler = (v: SelectValue) => {
+    const onChangeHandler = (v: SelectValueType) => {
         setCurrentValue(v);
 
         if (onChange) onChange(v);
@@ -87,15 +88,16 @@ const DefaultSelector: React.FC<DefaultSelectorProps> = ({
         setIsActive(false);
     };
 
-    className = `${selectStyle["pr-select-selector"]} ${className}`.trim();
-
-    if (isActive)
-        className = `${className} ${selectStyle["pr-select-selector-focus"]}`;
-
     return (
         <div className={selectStyle["pr-select"]} {...otherProps}>
             <div
-                className={className}
+                className={classNames(
+                    selectStyle["pr-select-selector"],
+                    className,
+                    {
+                        [selectStyle["pr-select-selector-focus"]]: isActive,
+                    }
+                )}
                 tabIndex={0}
                 ref={selectorRef}
                 onClick={(e) => {

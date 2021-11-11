@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import "react-app-polyfill/ie11";
 import "core-js/features/promise";
+import "whatwg-fetch";
 import "core-js/features/array/includes";
 import "./global.scss";
 import App from "./components/App";

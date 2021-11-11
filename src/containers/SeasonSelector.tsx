@@ -5,17 +5,19 @@ import {
     DefaultSelector as Selector,
     Option,
 } from "../components/SelectorComponent";
-import { SelectValue } from "../components/SelectorComponent/DefaultSelector";
+import { SelectValueType } from "../components/SelectorComponent/DefaultSelector";
 import toggleSeason from "../redux/actions/season";
 import { getSeasonState } from "../redux/selectors";
-import PageDataContext from "../PageDataContext";
+import PageDataContext from "../contexts/PageDataContext";
 import { HistoryStateType } from "./HistoryContainer";
 import { getParameterByName } from "../util";
 
-const SeasonSelector: React.FC<{
+export type SeasonSelectorPropsType = {
     className?: string;
     style?: React.CSSProperties;
-}> = (props) => {
+};
+
+const SeasonSelector: React.FC<SeasonSelectorPropsType> = (props) => {
     const pageData = useContext(PageDataContext);
     const season = useSelector(getSeasonState);
 
@@ -23,7 +25,7 @@ const SeasonSelector: React.FC<{
     const history = useHistory();
     const { state, pathname } = useLocation<HistoryStateType>();
 
-    const onChange = (v: SelectValue) => {
+    const onChange = (v: SelectValueType) => {
         if (v.length <= 0) return;
 
         const s = {

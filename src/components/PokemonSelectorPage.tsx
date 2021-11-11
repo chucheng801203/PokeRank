@@ -6,14 +6,20 @@ import { getSeasonState, getRuleState } from "../redux/selectors";
 import styles from "./pokemonSelectorPage.module.scss";
 import arrowBackIcon from "../images/arrow_back_black_24dp.svg";
 
-const PokemonSelectorPage: React.FC<{
+export type PokemonSelectorPagePropsType = {
     value?: string;
     pokemonOptions?: Array<{
         id: number;
         name: string;
     }>;
     onChange?: (v: string) => void;
-}> = ({ value, pokemonOptions, onChange }) => {
+};
+
+const PokemonSelectorPage: React.FC<PokemonSelectorPagePropsType> = ({
+    value,
+    pokemonOptions,
+    onChange,
+}) => {
     const history = useHistory();
     const season = useSelector(getSeasonState);
     const rule = useSelector(getRuleState);
@@ -27,10 +33,10 @@ const PokemonSelectorPage: React.FC<{
     });
 
     return (
-        <div className={styles["pr-pokemon-selector-page"]}>
-            <div className={styles["search-bar"]}>
+        <div className={styles["pm-selector-page"]}>
+            <div className={styles["pm-selector-page-bar"]}>
                 <button
-                    className={styles["back-btn"]}
+                    className={styles["pm-selector-page-back-btn"]}
                     onClick={() => {
                         history.goBack();
                     }}
@@ -48,7 +54,7 @@ const PokemonSelectorPage: React.FC<{
                     autoComplete="off"
                 />
             </div>
-            <div className={styles["option-list"]}>
+            <div className={styles["pm-selector-page-option-list"]}>
                 {pokemonOptions &&
                     pokemonOptions.map((o, i) => (
                         <Link

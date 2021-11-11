@@ -1,19 +1,19 @@
-.pr-percentage-row {
+.row {
     padding: 0 19.2px;
 
-    .row-content {
+    &-content {
         display: flex;
         align-items: center;
         padding: 8px 0;
         border-bottom: 1px solid #4b4b4b;
     }
 
-    &:last-child .row-content {
+    &:last-child &-content {
         border-bottom: none;
     }
 
-    .row-loading-rank,
-    .row-rank {
+    &-loading-rank,
+    &-rank {
         width: 28px;
         height: 28px;
         line-height: 28px;
@@ -21,8 +21,8 @@
         text-align: center;
     }
 
-    .row-loading-name,
-    .row-name {
+    &-loading-name,
+    &-name {
         height: 28px;
         line-height: 28px;
         margin-right: auto;
@@ -32,21 +32,21 @@
         overflow: hidden;
     }
 
-    .row-loading-name {
+    &-loading-name {
         width: 96px;
     }
 
-    .row-loading-percentage,
-    .row-percentage {
+    &-loading-percentage,
+    &-percentage {
         height: 28px;
         line-height: 28px;
     }
 
-    .row-loading-percentage {
+    &-loading-percentage {
         width: 60px;
     }
 
-    .row-type {
+    &-type {
         color: #fff;
         width: 48px;
         height: 28px;
@@ -57,16 +57,16 @@
 }
 
 @media (max-width: 346px) {
-    .pr-percentage-row {
-        .row-loading-rank,
-        .row-rank {
+    .row {
+        &-loading-rank,
+        &-rank {
             display: none;
         }
     }
 }
 
 @media (min-width: 768px) {
-    .pr-percentage-row-hover {
+    .row-hover {
         cursor: pointer;
 
         &:hover {

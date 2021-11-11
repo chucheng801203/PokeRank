@@ -3,19 +3,26 @@ import { Location } from "history";
 import { Link } from "react-router-dom";
 import PmTypeBlock from "./PmTypeBlock";
 import LoadingBlock from "./LoadingBlock";
-import PageDataContext, { PageDataType } from "../PageDataContext";
+import PageDataContext, { PageDataType } from "../contexts/PageDataContext";
 import { HistoryStateType } from "../containers/HistoryContainer";
 import styles from "./pmInfoBlock.module.scss";
 import LazyLoadImage from "./LazyLoadImage";
 
-const LoadingMode = (pageData: PageDataType) => {
+export type PmInfoBlockPropsType = {
+    pmId?: number;
+    formId?: number;
+    pmRank?: number;
+    isLoading?: boolean;
+};
+
+export const LoadingMode = (pageData: PageDataType) => {
     const types =
         pageData && pageData.types && pageData.types.length > 0
             ? pageData.types
             : Array.apply(null, Array(18));
 
     return (
-        <div className={styles["pr-info-block"]}>
+        <div className={styles["info"]}>
             <div className="d-sm-flex mb-3">
                 <div className="d-flex align-items-center mr-sm-auto mb-2 mb-sm-0">
                     <LoadingBlock
@@ -57,12 +64,12 @@ const LoadingMode = (pageData: PageDataType) => {
     );
 };
 
-const PmInfoBlock: React.FC<{
-    pmId?: number;
-    formId?: number;
-    pmRank?: number;
-    isLoading?: boolean;
-}> = ({ pmId, formId, pmRank, isLoading }) => {
+const PmInfoBlock: React.FC<PmInfoBlockPropsType> = ({
+    pmId,
+    formId,
+    pmRank,
+    isLoading,
+}) => {
     const pageData = useContext(PageDataContext);
 
     if (isLoading || typeof pmId !== "number" || typeof formId !== "number")
@@ -89,7 +96,7 @@ const PmInfoBlock: React.FC<{
     }
 
     return (
-        <div className={styles["pr-info-block"]}>
+        <div className={styles["info"]}>
             <div className="d-sm-flex mb-3">
                 <div className="d-flex align-items-center mr-sm-auto mb-2 mb-sm-0">
                     <h1 className={`${styles["info-name"]} mr-2`}>

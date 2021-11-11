@@ -1,4 +1,4 @@
-.pr-pm-select-list-content {
+.item {
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
@@ -6,11 +6,11 @@
     height: 56px;
     padding: 0 8px;
 
-    .content-id {
+    &-id {
         margin-right: 12px;
     }
 
-    .content-img {
+    &-img {
         width: 36px;
         height: 36px;
         margin: 0 12px 0 0;
@@ -21,7 +21,7 @@
         }
     }
 
-    .content-name {
+    &-name {
         margin-right: 12px;
     }
 }

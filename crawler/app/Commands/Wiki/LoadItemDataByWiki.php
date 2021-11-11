@@ -57,6 +57,12 @@ class LoadItemDataByWiki extends Command
                         }
                     }
                 }
+
+                // Pokémon home 的中文和百科的不一樣
+                WikiItemData::where('name_zh_tw', '棱瓜果')
+                    ->update([
+                        'name_zh_tw' => '稜瓜果',
+                    ]);
             });
 
             $this->log->info('pokemonWiki:load-item-data 命令已執行完畢');

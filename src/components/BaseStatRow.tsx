@@ -2,12 +2,19 @@ import React from "react";
 import LoadingBlock from "./LoadingBlock";
 import styles from "./baseStat.module.scss";
 
-const BaseStats: React.FC<{
+export type BaseStatsPropsType = {
     isLoading?: boolean;
     name?: string;
     value?: number;
     rectColor?: string;
-}> = ({ isLoading, name, rectColor, value = 0 }) => {
+};
+
+const BaseStats: React.FC<BaseStatsPropsType> = ({
+    isLoading,
+    name,
+    rectColor,
+    value = 0,
+}) => {
     let styleAttr: React.CSSProperties = {};
     if (Number.isInteger(value)) {
         styleAttr.width = `${(value / 255) * 100}%`;
@@ -17,29 +24,33 @@ const BaseStats: React.FC<{
     }
 
     return !isLoading && (name === undefined || value === undefined) ? null : (
-        <li className={styles["pr-baseStat-row"]}>
-            <div className={styles["row-content"]}>
-                <div className={styles["row-name"]}>
+        <li className={styles["baseStat"]}>
+            <div className={styles["baseStat-content"]}>
+                <div className={styles["baseStat-name"]}>
                     {name ? `${name}：` : ""}
                 </div>
 
                 {isLoading ? (
-                    <LoadingBlock className={styles["row-loading-value"]} />
+                    <LoadingBlock
+                        className={styles["baseStat-loading-value"]}
+                    />
                 ) : (
-                    <div className={styles["row-value"]}>
+                    <div className={styles["baseStat-value"]}>
                         {value ? value : ""}
                     </div>
                 )}
 
                 {isLoading ? (
                     <LoadingBlock
-                        className={styles["row-loading-value-rect"]}
+                        className={styles["baseStat-loading-value-rect"]}
                     />
                 ) : (
-                    <div className={styles["row-value-rect"]}>
+                    <div className={styles["baseStat-value-rect"]}>
                         {Number.isInteger(value) ? (
                             <div
-                                className={styles["row-value-rect-content"]}
+                                className={
+                                    styles["baseStat-value-rect-content"]
+                                }
                                 style={styleAttr}
                             />
                         ) : (

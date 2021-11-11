@@ -7,8 +7,8 @@ import searchTextAction from "../redux/actions/searchText";
 import { RuleState } from "../redux/reducers/rule";
 import { SeasonState } from "../redux/reducers/season";
 import { getSeasonState, getRuleState } from "../redux/selectors";
-import PageDataContext from "../PageDataContext";
-import { getDefaultState } from "../util";
+import PageDataContext from "../contexts/PageDataContext";
+import { getDefaultState } from "../redux/store";
 
 export type HistoryStateType = {
     rule: RuleState;

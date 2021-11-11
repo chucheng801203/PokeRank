@@ -44,36 +44,42 @@ export const topListTypeCheck = (topList: TopListResponse) => {
     return true;
 };
 
+const topListApi = async (
+    seasonNum: number,
+    ruleNum: number
+): Promise<TopListResponse | false> => {
+    const url = `${process.env.REACT_APP_RANK_DATA_PATH}/${seasonNum}/top_list/${ruleNum}.json`;
+    const response = await window.fetch(url);
+
+    if (!response.ok) return false;
+
+    return await response.json();
+};
+
 const getTopList: ThunkAction<void, RootState, unknown, TopListAction> = (
     dispatch,
     getState
 ) => {
-    const state = getState();
-    const url = `${process.env.REACT_APP_RANK_DATA_PATH}/${state.season[0].value}/top_list/${state.rule[0].value}.json`;
+    const { season, rule } = getState();
 
-    import("axios").then((axios) => {
-        axios.default
-            .get<TopListResponse>(url)
-            .then(function (response) {
-                const { data } = response;
-
-                if (!topListTypeCheck(data)) {
-                    alert("與伺服器連接失敗，請稍後在試。");
-                    return;
-                }
-
-                dispatch({
-                    type: GET_TOPLIST,
-                    season: state.season[0].value,
-                    rule: state.rule[0].value,
-                    topList: data,
-                });
-            })
-            .catch((e) => {
+    topListApi(season[0].value, rule[0].value)
+        .then((data) => {
+            if (!data || !topListTypeCheck(data)) {
                 alert("與伺服器連接失敗，請稍後在試。");
-                console.log(e);
+                return;
+            }
+
+            dispatch({
+                type: GET_TOPLIST,
+                season: season[0].value,
+                rule: rule[0].value,
+                topList: data,
             });
-    });
+        })
+        .catch((e) => {
+            alert("與伺服器連接失敗，請稍後在試。");
+            console.log(e);
+        });
 };
 
 export default getTopList;

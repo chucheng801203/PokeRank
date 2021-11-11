@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import PokemonSelectorPage from "../components/PokemonSelectorPage";
 import searchTextAction from "../redux/actions/searchText";
 import { getSearchTextState } from "../redux/selectors";
-import PageDataContext from "../PageDataContext";
+import PageDataContext from "../contexts/PageDataContext";
 
 const MobilePokemonSelector: React.FC = () => {
     const pageData = useContext(PageDataContext);

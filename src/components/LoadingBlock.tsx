@@ -1,13 +1,21 @@
 import React from "react";
+import classNames from "classnames";
 import styles from "./loadingBlock.module.scss";
 
-const LoadingBlock: React.FC<{
+export type LoadingBlockPropsType = {
     className?: string;
     width?: string;
     height?: string;
-    [otherProps: string]: any;
-}> = ({ className = "", width, height, ...otherProps }) => {
-    const styleAttr: React.CSSProperties = {};
+    style?: React.CSSProperties;
+};
+
+const LoadingBlock: React.FC<LoadingBlockPropsType> = ({
+    className,
+    width,
+    height,
+    style,
+}) => {
+    const styleAttr: React.CSSProperties = style ? style : {};
     if (width) {
         styleAttr.width = width;
     }
@@ -17,9 +25,8 @@ const LoadingBlock: React.FC<{
 
     return (
         <div
-            className={`${styles["pr-loading-block"]} ${className}`}
+            className={classNames(styles["loading-block"], className)}
             style={styleAttr}
-            {...otherProps}
         />
     );
 };

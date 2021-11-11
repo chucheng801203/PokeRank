@@ -1,9 +1,9 @@
-.pr-pm-list {
+.list {
     border-radius: 4px;
     background-color: #1b1b1b;
     overflow: hidden;
 
-    .pm-list-title {
+    &-title {
         font-size: 16px;
         text-align: center;
     }
@@ -16,7 +16,7 @@
 }
 
 @media (min-width: 768px) {
-    .rank-data-page-pmList {
+    .rank-page-list {
         ul {
             height: 270px;
             overflow-y: auto;

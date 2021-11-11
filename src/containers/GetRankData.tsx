@@ -11,8 +11,8 @@ import {
     getSeasonState,
     getRankDataState,
 } from "../redux/selectors";
-import PageDataContext, { BaseStatType } from "../PageDataContext";
-import { getDefaultState } from "../util";
+import PageDataContext from "../contexts/PageDataContext";
+import { getDefaultState } from "../redux/store";
 import styles from "../components/pmRow.module.scss";
 import ShowWikiModal from "../components/ShowWikiModal";
 
@@ -60,7 +60,7 @@ const GetRankData: React.FC = () => {
     let winMove: React.ReactNode;
     let losePokemons: React.ReactNode;
     let loseMove: React.ReactNode;
-    let baseStat: BaseStatType | undefined;
+    let baseStat: typeof pageData.base_stats[0][0] | undefined;
 
     let unMatch: React.ReactNode;
 
@@ -152,7 +152,7 @@ const GetRankData: React.FC = () => {
                         return (
                             <PmRow
                                 key={i}
-                                className={styles["rank-data-page-pmrow"]}
+                                className={styles["rank-page-row"]}
                                 pmRank={i}
                                 pmAvatar={`${process.env.REACT_APP_IMAGE_PATH}/cap${v.id}_f${v.form_id}_s0.png`}
                                 pmId={v.id}

@@ -6,12 +6,17 @@ import toggleSeason from "../redux/actions/season";
 import searchTextAction from "../redux/actions/searchText";
 import { RuleState } from "../redux/reducers/rule";
 import { SeasonState } from "../redux/reducers/season";
-import PageDataContext from "../PageDataContext";
-import { getDefaultState } from "../util";
+import PageDataContext from "../contexts/PageDataContext";
+import { getDefaultState } from "../redux/store";
 
-const HomePageLink: React.FC<{
+export type HomePageLinkPropsType = {
     className?: string;
-}> = ({ children, className }) => {
+};
+
+const HomePageLink: React.FC<HomePageLinkPropsType> = ({
+    children,
+    className,
+}) => {
     const pageData = useContext(PageDataContext);
     const dispatch = useDispatch();
     const history = useHistory();
