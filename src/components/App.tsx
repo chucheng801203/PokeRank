@@ -1,17 +1,18 @@
-import React, { useContext } from "react";
+import React, { useContext, Suspense } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 import SeasonSelector from "../containers/SeasonSelector";
-import RankTopList from "../containers/RankTopList";
 import PmList from "./PmList";
 import PmRowLoading from "./PmRowLoading";
 import HistoryContainer from "../containers/HistoryContainer";
-import GetRankData from "../containers/GetRankData";
-import MobilePokemonSelector from "../containers/MobilePokemonSelector";
 import PageDataContext from "../contexts/PageDataContext";
 import { getDefaultState } from "../redux/store";
 import styles from "./app.module.scss";
+
+const RankTopList = React.lazy(() => import('../containers/RankTopList'));
+const GetRankData = React.lazy(() => import('../containers/GetRankData'));
+const MobilePokemonSelector = React.lazy(() => import('../containers/MobilePokemonSelector'));
 
 const App: React.FC = () => {
     const pageData = useContext(PageDataContext);
@@ -52,13 +53,19 @@ const App: React.FC = () => {
                 </div>
                 <Switch>
                     <Route exact path="/">
-                        <RankTopList className={styles["app-list"]} />
+                        <Suspense fallback={null}>
+                            <RankTopList className={styles["app-list"]} />
+                        </Suspense>
                     </Route>
                     <Route exact path="/mobile/search/">
-                        <MobilePokemonSelector />
+                        <Suspense fallback={null}>
+                            <MobilePokemonSelector />
+                        </Suspense>
                     </Route>
                     <Route exact path="/:pmId/:formId/">
-                        <GetRankData />
+                        <Suspense fallback={null}>
+                            <GetRankData />
+                        </Suspense>
                     </Route>
                     <Route path="*">{unMatch}</Route>
                 </Switch>
