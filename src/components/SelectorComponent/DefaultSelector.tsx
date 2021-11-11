@@ -1,4 +1,5 @@
 import React, { useRef, ReactText, useState, useEffect } from "react";
+import classNames from "classnames";
 import Popup from "../PopupComponent";
 import { convertNodeToOption } from "./Option";
 import OptionList from "./OptionList";
@@ -26,7 +27,7 @@ const DefaultSelector: React.FC<DefaultSelectorProps> = ({
     children,
     onChange,
     placeholder,
-    className = "",
+    className,
     ...otherProps
 }) => {
     const options = React.Children.map(children, (elem, i) => {
@@ -67,7 +68,7 @@ const DefaultSelector: React.FC<DefaultSelectorProps> = ({
     useEffect(() => {
         if (
             (nextValue.length > 0 && currentValue.length === 0) ||
-            (currentValue[0] &&
+            (currentValue.length > 0 &&
                 nextValue.length > 0 &&
                 nextValue[0].index !== currentValue[0].index)
         )
@@ -87,15 +88,16 @@ const DefaultSelector: React.FC<DefaultSelectorProps> = ({
         setIsActive(false);
     };
 
-    className = `${selectStyle["pr-select-selector"]} ${className}`.trim();
-
-    if (isActive)
-        className = `${className} ${selectStyle["pr-select-selector-focus"]}`;
-
     return (
         <div className={selectStyle["pr-select"]} {...otherProps}>
             <div
-                className={className}
+                className={classNames(
+                    selectStyle["pr-select-selector"],
+                    className,
+                    {
+                        [selectStyle["pr-select-selector-focus"]]: isActive,
+                    }
+                )}
                 tabIndex={0}
                 ref={selectorRef}
                 onClick={(e) => {
