@@ -1,3 +1,0 @@
-25 13 2 * * /usr/local/bin/php /var/www/PokeRank/pokemon pokemonHome:update-data >> /dev/null 2>&1
-30 13 * * * /usr/local/bin/php /var/www/PokeRank/pokemon pokemonHome:update-rank --season latest  --upload >> /dev/null 2>&1
-40 13 2 * * /usr/local/bin/php /var/www/PokeRank/pokemon pokemonHome:upload-data-to-S3 >> /dev/null 2>&1
