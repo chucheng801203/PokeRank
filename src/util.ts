@@ -1,6 +1,3 @@
-import { PageDataType } from "./contexts/PageDataContext";
-import { RootState } from "./redux/store";
-
 /**
  * 取得網址 query string 的參數值
  * @param string
