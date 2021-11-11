@@ -11,7 +11,6 @@
     "@types/react": "^17.0.24",
     "@types/react-dom": "^17.0.9",
     "@types/react-router-dom": "^5.3.0",
-    "axios": "^0.21.4",
     "bootstrap": "^4.5.3",
     "classnames": "^2.3.1",
     "core-js": "^3.18.0",

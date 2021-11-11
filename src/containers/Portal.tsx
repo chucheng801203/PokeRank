@@ -12,7 +12,6 @@ import WikiDataContext, {
 } from "../contexts/WikiDataContext";
 import { getParameterByName } from "../util";
 import { getDefaultState } from "../redux/store";
-import "whatwg-fetch";
 
 const getValue = (value: number, data: Array<{ value: number }>) => {
     for (let i = 0; i < data.length; i++) {

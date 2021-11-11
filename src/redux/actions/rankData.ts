@@ -125,36 +125,41 @@ export const rankDataCheck = (rankData: any) => {
     return true;
 };
 
-const getRankData: (
+const rankDataApi = async (
+    seasonNum: number,
     pmId: number
-) => ThunkAction<void, RootState, unknown, RankDataAction> =
-    (pmId) => (dispatch, getState) => {
-        const state = getState();
-        const url = `${process.env.REACT_APP_RANK_DATA_PATH}/${state.season[0].value}/${pmId}.json`;
+): Promise<RankDataResponse | false> => {
+    const url = `${process.env.REACT_APP_RANK_DATA_PATH}/${seasonNum}/${pmId}.json`;
+    const response = await window.fetch(url);
 
-        import("axios").then((axios) => {
-            axios.default
-                .get<RankDataResponse>(url)
-                .then(function (response) {
-                    const { data } = response;
+    if (!response.ok) return false;
 
-                    if (!rankDataCheck(data)) {
-                        alert("與伺服器連接失敗，請稍後在試。");
-                        return;
-                    }
+    return await response.json();
+};
 
-                    dispatch({
-                        type: GET_RANK_DATA,
-                        season: state.season[0].value,
-                        pmId: pmId,
-                        rankData: data,
-                    });
-                })
-                .catch((e) => {
+const getRankData =
+    (pmId: number): ThunkAction<void, RootState, unknown, RankDataAction> =>
+    (dispatch, getState) => {
+        const { season } = getState();
+
+        rankDataApi(season[0].value, pmId)
+            .then((data) => {
+                if (!data || !rankDataCheck(data)) {
                     alert("與伺服器連接失敗，請稍後在試。");
-                    console.log(e);
+                    return;
+                }
+
+                dispatch({
+                    type: GET_RANK_DATA,
+                    season: season[0].value,
+                    pmId: pmId,
+                    rankData: data,
                 });
-        });
+            })
+            .catch((e) => {
+                alert("與伺服器連接失敗，請稍後在試。");
+                console.log(e);
+            });
     };
 
 export default getRankData;
