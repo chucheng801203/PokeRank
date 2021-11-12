@@ -51,7 +51,7 @@ const App: React.FC = () => {
                 <div className={styles["app-season-selector"]}>
                     <SeasonSelector />
                 </div>
-                <Suspense fallback={null}>
+                <Suspense fallback={<div className="center">Loading...</div>}>
                     <Switch>
                         <Route exact path="/">
                             <RankTopList className={styles["app-list"]} />
