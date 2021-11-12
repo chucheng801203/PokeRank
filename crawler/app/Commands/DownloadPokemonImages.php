@@ -53,7 +53,7 @@ class DownloadPokemonImages extends Command
                     'Key'          => 'images/'.basename($file),
                     'SourceFile'   => $file,
                     'ACL'          => 'public-read',
-                    'CacheControl' => 'max-age=10800',
+                    'CacheControl' => 'max-age=31536000',
                 ]);
             }
 
