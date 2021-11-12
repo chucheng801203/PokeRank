@@ -51,24 +51,20 @@ const App: React.FC = () => {
                 <div className={styles["app-season-selector"]}>
                     <SeasonSelector />
                 </div>
-                <Switch>
-                    <Route exact path="/">
-                        <Suspense fallback={null}>
+                <Suspense fallback={null}>
+                    <Switch>
+                        <Route exact path="/">
                             <RankTopList className={styles["app-list"]} />
-                        </Suspense>
-                    </Route>
-                    <Route exact path="/mobile/search/">
-                        <Suspense fallback={null}>
+                        </Route>
+                        <Route exact path="/mobile/search/">
                             <MobilePokemonSelector />
-                        </Suspense>
-                    </Route>
-                    <Route exact path="/:pmId/:formId/">
-                        <Suspense fallback={null}>
+                        </Route>
+                        <Route exact path="/:pmId/:formId/">
                             <GetRankData />
-                        </Suspense>
-                    </Route>
-                    <Route path="*">{unMatch}</Route>
-                </Switch>
+                        </Route>
+                        <Route path="*">{unMatch}</Route>
+                    </Switch>
+                </Suspense>
             </div>
             <Footer />
         </div>
