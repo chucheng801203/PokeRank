@@ -258,6 +258,20 @@ class PokemonHome
     }
 
     /**
+     * 取得賽制: 單打、雙打
+     * 
+     * @return array
+     */
+    public function get_rules()
+    {
+        // value 0、1 是 pokemon home 定義的
+        return [
+            ['value'=> 0, 'text' => '單打'],
+            ['value'=> 1, 'text' => '雙打'],
+        ];
+    }
+
+    /**
      * 取得不同屬性之間的傷害倍率.
      *
      * @return mixed array
