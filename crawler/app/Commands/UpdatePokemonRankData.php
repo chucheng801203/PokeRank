@@ -86,6 +86,7 @@ class UpdatePokemonRankData extends Command
                 foreach ($seasons as $season_num) {
                     $battle_data = $pm->get_rank_data($season_num);
 
+                    // 先刪除資料庫已存在該賽季的資料
                     RankMove::where('season_number', $season_num)->delete();
                     RankWinMove::where('season_number', $season_num)->delete();
                     RankLoseMove::where('season_number', $season_num)->delete();

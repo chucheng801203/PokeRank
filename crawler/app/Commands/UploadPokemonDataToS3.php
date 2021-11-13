@@ -50,10 +50,7 @@ class UploadPokemonDataToS3 extends Command
                 }),
 
                 // 賽制
-                'rules' => [
-                    ['value'=> 0, 'text' => '單打'],
-                    ['value'=> 1, 'text' => '雙打'],
-                ],
+                'rules' => $this->pm->get_rules(),
 
                 // 道具
                 'items' => Item::all()->mapWithKeys(function ($item, $key) {

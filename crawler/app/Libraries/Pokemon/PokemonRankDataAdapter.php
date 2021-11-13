@@ -24,11 +24,15 @@ class PokemonRankDataAdapter
 
     public function data()
     {
+        // 賽制
         foreach ($this->rank_data as $rule => $w) {
+            // 寶可夢編號
             foreach ($w as $pm_id => $x) {
+                // 寶可夢型態編號
                 foreach ($x as $form_id => $data) {
                     $tables = [];
 
+                    // 取得資料庫裡型態的流水號(id)
                     $pf = Pokeform::where([
                         'pm_id'   => $pm_id,
                         'form_id' => $form_id,
@@ -50,6 +54,7 @@ class PokemonRankDataAdapter
                     $tables['rank_ability'] = $this->other_adapter($pf->id, $rule, $data['temoti']['tokusei'], 'ability');
                     $tables['rank_item'] = $this->other_adapter($pf->id, $rule, $data['temoti']['motimono'], 'item');
 
+                    // 賽季 9 以前沒有性格資料
                     if (isset($data['temoti']['seikaku'])) {
                         $tables['rank_nature'] = $this->other_adapter($pf->id, $rule, $data['temoti']['seikaku'], 'nature');
                     }

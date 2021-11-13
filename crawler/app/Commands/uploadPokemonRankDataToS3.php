@@ -68,6 +68,7 @@ class uploadPokemonRankDataToS3 extends Command
                     break;
             }
 
+            $rules = $this->pm->get_rules();
             $pokemons = Pokemon::select('id')->get();
 
             foreach ($seasons as $season_number) {
@@ -198,42 +199,28 @@ class uploadPokemonRankDataToS3 extends Command
 
                 $fileSystem->ensureDirectoryExists(storage_path("app/{$tmp_path}/{$season_number}/top_list"), 0755, true);
 
-                $single_top_list = json_encode(
-                    $this->rankTopPokemonResource(
-                        RankTopPokemon::with('pokeform')
-                                    ->where('season_number', $season_number)
-                                    ->where('rule', 0)
-                                    ->orderBy('ranking')
-                                    ->get()
-                    )
-                );
+                // 使用率排名
+                foreach ($rules as $r) {
+                    $d = json_encode(
+                        $this->rankTopPokemonResource(
+                            RankTopPokemon::with('pokeform')
+                                        ->where('season_number', $season_number)
+                                        ->where('rule', $r['value'])
+                                        ->orderBy('ranking')
+                                        ->get()
+                        )
+                    );
 
-                $fileSystem->put(storage_path("app/{$tmp_path}/{$season_number}/top_list/0.json"), $single_top_list);
-                $S3->putObject([
-                    'Bucket'       => $_ENV['AWS_BUCKET'],
-                    'Key'          => "rank_data/{$season_number}/top_list/0.json",
-                    'Body'         => $single_top_list,
-                    'ACL'          => 'public-read',
-                    'CacheControl' => 'max-age=1800',
-                ]);
+                    $fileSystem->put(storage_path("app/{$tmp_path}/{$season_number}/top_list/{$r['value']}.json"), $d);
 
-                $doublie_top_list = json_encode(
-                    $this->rankTopPokemonResource(
-                        RankTopPokemon::with('pokeform')
-                                    ->where('season_number', $season_number)
-                                    ->where('rule', 1)
-                                    ->orderBy('ranking')
-                                    ->get()
-                    )
-                );
-                $fileSystem->put(storage_path("app/{$tmp_path}/{$season_number}/top_list/1.json"), $doublie_top_list);
-                $S3->putObject([
-                    'Bucket'       => $_ENV['AWS_BUCKET'],
-                    'Key'          => "rank_data/{$season_number}/top_list/1.json",
-                    'Body'         => $doublie_top_list,
-                    'ACL'          => 'public-read',
-                    'CacheControl' => 'max-age=1800',
-                ]);
+                    $S3->putObject([
+                        'Bucket'       => $_ENV['AWS_BUCKET'],
+                        'Key'          => "rank_data/{$season_number}/top_list/{$r['value']}.json",
+                        'Body'         => $d,
+                        'ACL'          => 'public-read',
+                        'CacheControl' => 'max-age=1800',
+                    ]);
+                }
             }
 
             $this->log->info('pokemonHome:upload-rank-to-S3 命令已執行完畢');
