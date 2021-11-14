@@ -131,6 +131,10 @@ class UpdatePokemonRankData extends Command
                                 'form_id' => $pm_data['form'],
                             ])->first();
 
+                            if (empty($pf)) {
+                                continue;
+                            }
+
                             $data[] = [
                                 'pf_id'         => $pf->id,
                                 'season_number' => $season_num,
