@@ -29,7 +29,7 @@ class PokemonHomeJsParser
      *
      * @return array
      */
-    public function data($name = '')
+    public function data($name)
     {
         $data = [];
 
@@ -44,14 +44,6 @@ class PokemonHomeJsParser
             case 'seikaku':
             case 'wazaType':
                 $data[$name] = $this->parse2($name);
-                break;
-            case '':
-                $data = array_merge($data, $this->parse1('poke'));
-                $data = array_merge($data, $this->parse1('pokeType'));
-                $data = array_merge($data, $this->parse2('waza'));
-                $data = array_merge($data, $this->parse2('tokusei'));
-                $data = array_merge($data, $this->parse2('item'));
-                $data = array_merge($data, $this->parse2('seikaku'));
                 break;
         }
 

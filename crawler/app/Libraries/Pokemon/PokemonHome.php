@@ -24,7 +24,7 @@ class PokemonHome
      *
      * @return array
      */
-    public function get_pokemon_data($name = '')
+    public function get_pokemon_data($name)
     {
         $parser = PokemonHomeJsParser::get_parser();
 
