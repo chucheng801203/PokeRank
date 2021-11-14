@@ -77,6 +77,20 @@ class PokemonHome
     }
 
     /**
+     * 取得 pokemon home 賽季可用寶可夢資料
+     *
+     * @param string https://api.battle.pokemon-home.com/cbd/competition/rankmatch/list 賽季列表回傳的資料
+     *
+     * @return array
+     */
+    public function get_season_active_pokemon($reg)
+    {
+        $parser = PokemonHomeJsParser::get_parser();
+
+        return $parser->season_active_pokemon($reg);
+    }
+
+    /**
      * 下載 pokemon home 的 pokemon 圖片.
      *
      * @param string $directory 要把檔案存到哪個目錄
@@ -129,32 +143,6 @@ class PokemonHome
         $season_list = $result['list'];
 
         return $result['list'];
-    }
-
-    /**
-     * 檢查數字是否是有效的賽季.
-     *
-     * @param mixed string | int
-     *
-     * @return bool
-     */
-    public function is_valid_season_num($num)
-    {
-        $season_list = $this->get_season_list();
-
-        if (is_string($num)) {
-            if (!preg_match('/^\d+$/', $num)) {
-                return false;
-            }
-
-            $num = intval($num);
-        }
-
-        if ($num === 0 || $num > max(array_keys($season_list))) {
-            return false;
-        }
-
-        return true;
     }
 
     /**

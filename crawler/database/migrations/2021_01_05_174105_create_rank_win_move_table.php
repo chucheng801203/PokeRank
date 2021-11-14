@@ -20,13 +20,14 @@ class CreateRankWinMoveTable extends Migration
         Capsule::schema()->create($tableName, function (Blueprint $table) {
             $table->unsignedSmallInteger('pf_id')->nullable(true)->comment('pokemon 型態 id');
             $table->unsignedTinyInteger('season_number')->nullable(true)->comment('賽季');
-            $table->string('rule', 6)->comment('single=單打, double=雙打');
+            $table->boolean('rule')->comment('0=單打, 1=雙打');
             $table->unsignedSmallInteger('move_id')->nullable(true)->comment('招式 id');
             $table->decimal('percentage', $precision = 5, $scale = 2);
             $table->unsignedTinyInteger('sort')->comment('排序');
             $table->timestampsTz($precision = 0);
             $table->index('pf_id');
             $table->index('move_id');
+            $table->index('season_number');
             $table->foreign('pf_id')->references('id')->on('pokeform')->onUpdate('cascade')->onDelete('SET NULL');
             $table->foreign('move_id')->references('id')->on('move')->onUpdate('cascade')->onDelete('SET NULL');
             $table->foreign('season_number')->references('season')->on('rank_season_list')->onUpdate('cascade')->onDelete('SET NULL');
