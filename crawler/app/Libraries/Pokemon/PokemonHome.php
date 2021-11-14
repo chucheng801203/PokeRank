@@ -79,7 +79,7 @@ class PokemonHome
     /**
      * 取得 pokemon home 賽季可用寶可夢資料
      *
-     * @param string https://api.battle.pokemon-home.com/cbd/competition/rankmatch/list 賽季列表回傳的資料
+     * @param string PokemonHome::get_season_list() 賽季列表回傳的資料
      *
      * @return array
      */
