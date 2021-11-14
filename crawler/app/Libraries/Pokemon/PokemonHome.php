@@ -146,32 +146,6 @@ class PokemonHome
     }
 
     /**
-     * 檢查數字是否是有效的賽季.
-     *
-     * @param mixed string | int
-     *
-     * @return bool
-     */
-    public function is_valid_season_num($num)
-    {
-        $season_list = $this->get_season_list();
-
-        if (is_string($num)) {
-            if (!preg_match('/^\d+$/', $num)) {
-                return false;
-            }
-
-            $num = intval($num);
-        }
-
-        if ($num === 0 || $num > max(array_keys($season_list))) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
      * 下載指定賽季 pokemon 對戰資料.
      *
      * @param int $season_number 指定賽季資料
