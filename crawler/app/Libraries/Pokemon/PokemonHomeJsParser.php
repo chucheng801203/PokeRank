@@ -99,6 +99,7 @@ class PokemonHomeJsParser
     {
         $source_data = $this->get_source();
 
+        // 抓取陣列類型的資料
         if (!preg_match_all("/{$name}:(\[.*\])/U", $source_data, $match)) {
             throw new PokemonFormatException();
         }
@@ -129,13 +130,15 @@ class PokemonHomeJsParser
     {
         $source_data = $this->get_source();
 
+        // 抓取物件類型的資料
         if (!preg_match_all("/{$name}:\{(.*)\}/U", $source_data, $match)) {
             throw new PokemonFormatException();
         }
 
         if ($name === 'wazaType') {
-            $r = preg_replace_callback('/([^,]+):([^,]+)/', function ($m) {
-                return '"'.intval($m[1]).'"'.':'.'"'.intval($m[2]).'"';
+            // pokemon home index 1000 時用 1e3 表示
+            $r = preg_replace_callback('/(\w+):(\d+)/', function ($m) {
+                return '"'.intval($m[1]).'":'.intval($m[2]);
             }, $match[1][0]);
 
             $r = json_decode('{'.$r.'}', true);
@@ -154,9 +157,9 @@ class PokemonHomeJsParser
         $data['zh_tw'] = $match[1][8];
 
         foreach ($data as $k => &$w) {
-            // index 1000 時用 1e3 表示
+            // pokemon home index 1000 時用 1e3 表示
             $w = preg_replace_callback('/(\w+):(".*")/U', function ($m) {
-                return '"'.intval($m[1]).'"'.':'.$m[2];
+                return '"'.intval($m[1]).'":'.$m[2];
             }, $w);
 
             $w = json_decode('{'.$w.'}', true);
@@ -181,20 +184,23 @@ class PokemonHomeJsParser
             throw new PokemonFormatException();
         }
 
-        if (!preg_match_all('/[^,]+:\{.*\}/U', $match[1][0], $match)) {
+        if (!preg_match_all('/\w+:\{.*\}/U', $match[1][0], $match)) {
             throw new PokemonFormatException();
         }
 
         $pokeform = [];
 
         foreach ($match[0] as $v) {
-            if (!preg_match('/(.+):\{(.+)\}/U', $v, $m)) {
+            // &1 = 寶可夢編號
+            // pokemon home 索引 1000 時會用 1e3 表示
+            if (!preg_match('/(\w+):\{(.+)\}/U', $v, $m)) {
                 throw new PokemonFormatException();
             }
 
             $pokeform[$m[1]] = [];
 
-            if (!preg_match_all('/([^,]+):(\[.+])/U', $m[2], $m2)) {
+            // &1 = 寶可夢型態編號，&2 = 寶可夢屬性
+            if (!preg_match_all('/(\d+):(\[.+\])/U', $m[2], $m2)) {
                 throw new PokemonFormatException();
             }
 
