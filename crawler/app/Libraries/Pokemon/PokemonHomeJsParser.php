@@ -172,6 +172,36 @@ class PokemonHomeJsParser
     }
 
     /**
+     * 解析 pokemon home 賽季可用寶可夢資料
+     *
+     * @param string https://api.battle.pokemon-home.com/cbd/competition/rankmatch/list 賽季列表回傳的資料
+     *
+     * @return array
+     */
+    public function season_active_pokemon($reg)
+    {
+        $source_data = $this->get_active_pokemon_page_source($reg);
+
+        if (!preg_match("/const P_LIST = (\[.*\]);/U", $source_data, $match)) {
+            throw new PokemonFormatException();
+        }
+
+        $r = json_decode($match[1], true);
+
+        if(empty($r)) {
+            throw new PokemonFormatException();
+        }
+
+        $data = [];
+
+        foreach ($r as $v) {
+            $data = array_merge($data, $v);
+        }
+
+        return $data;
+    }
+
+    /**
      * 取得所有 pokemon 型態編號，及其對應的屬性的編號
      *
      * @return array
@@ -232,5 +262,23 @@ class PokemonHomeJsParser
         $source = $s;
 
         return $source;
+    }
+
+    /**
+     * 取得 pokemon home 賽季可用寶可夢頁面的 html 檔
+     * 
+     * @param string https://api.battle.pokemon-home.com/cbd/competition/rankmatch/list 賽季列表回傳的資料 
+     * 
+     * @return string
+     */
+    public function get_active_pokemon_page_source($reg)
+    {
+        $url = "https://battle.pokemon-home.com/regulation/{$reg}/available-pokemon-list-ja-s";
+
+        if (($s = @file_get_contents($url)) == false) {
+            throw new PokemonException('file_get_contents('.$url.'): 無法抓取檔案');
+        }
+
+        return $s;
     }
 }

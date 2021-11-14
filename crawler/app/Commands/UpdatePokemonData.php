@@ -12,6 +12,7 @@ use App\Models\Pokemon;
 use App\Models\Poketype;
 use App\Models\RankSeasonList;
 use App\Models\Type;
+use App\Models\RankActivePokemon;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Monolog\Logger;
 use Symfony\Component\Console\Command\Command;
@@ -50,22 +51,6 @@ class UpdatePokemonData extends Command
             $pm = $this->pm;
 
             Capsule::transaction(function () use ($pm) {
-                // 更新賽季列表
-                $season_list = $pm->get_season_list();
-
-                foreach ($season_list as $season_num => $data) {
-                    $d = array_values($data);
-
-                    RankSeasonList::updateOrCreate(
-                        ['season' => $season_num],
-                        [
-                            'season' => $season_num,
-                            'start'  => date('Y-m-d H:i:s', strtotime($d[0]['start'])),
-                            'end'    => date('Y-m-d H:i:s', strtotime($d[0]['end'])),
-                        ]
-                    );
-                }
-
                 // 更新 pokemon、屬性、特性、道具、性格和招式列表
                 $tables = ['pokemon', 'type', 'ability', 'item', 'nature', 'move'];
 
@@ -119,6 +104,51 @@ class UpdatePokemonData extends Command
                                 // 有可能會有小數點，將小數點轉成整數
                                 'type_id' => intval($type_id),
                             ]);
+                        }
+                    }
+                }
+
+                // 更新賽季列表
+                $season_list = $pm->get_season_list();
+                $rules = $pm->get_rules();
+
+                foreach ($season_list as $season_num => $data) {
+                    $d = array_values($data);
+
+                    $rank_season_list = RankSeasonList::updateOrCreate(
+                        ['season' => $season_num],
+                        [
+                            'season' => $season_num,
+                            'start'  => date('Y-m-d H:i:s', strtotime($d[0]['start'])),
+                            'end'    => date('Y-m-d H:i:s', strtotime($d[0]['end'])),
+                        ]
+                    );
+
+                    // 檢查是否 create
+                    if ($rank_season_list->wasRecentlyCreated) {
+                        foreach ($rules as $r) {
+                            $active_pm = $pm->get_season_active_pokemon($d[$r['value']]['reg']);
+
+                            foreach ($active_pm as $v) {
+                                $pf = Pokeform::where([
+                                    'pm_id'   => intval($v['ino']),
+                                    'form_id' => intval($v['ifo']),
+                                ])->first();
+
+                                // 有一些比較特殊的型態(薩戮德 阿爸型態)，home 兩個頁面資料不同步
+                                // 以 home 主頁面 js 檔資料為主
+                                if (empty($pf)) {
+                                    continue;
+                                }
+        
+                                RankActivePokemon::updateOrCreate([
+                                    'pf_id' => $pf->id,
+                                    'season_number' => $season_num,
+                                    'rule' => $r['value'],
+                                ], [
+                                    'active' => $v['av'],
+                                ]);
+                            }
                         }
                     }
                 }
