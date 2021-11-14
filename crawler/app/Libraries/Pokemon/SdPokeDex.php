@@ -13,7 +13,7 @@ class SdPokeDex
 
     public function __construct()
     {
-        $data_path = __DIR__.'/data/dex_en.json';
+        $data_path = __DIR__.'/SdData/dex_en.json';
 
         if (($data = @file_get_contents($data_path)) === false) {
             throw new PokemonException("file_get_contents({$data_path}): 無法抓取檔案");

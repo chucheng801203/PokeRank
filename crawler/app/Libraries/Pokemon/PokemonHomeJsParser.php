@@ -29,7 +29,7 @@ class PokemonHomeJsParser
      *
      * @return array
      */
-    public function data($name = '')
+    public function data($name)
     {
         $data = [];
 
@@ -44,14 +44,6 @@ class PokemonHomeJsParser
             case 'seikaku':
             case 'wazaType':
                 $data[$name] = $this->parse2($name);
-                break;
-            case '':
-                $data = array_merge($data, $this->parse1('poke'));
-                $data = array_merge($data, $this->parse1('pokeType'));
-                $data = array_merge($data, $this->parse2('waza'));
-                $data = array_merge($data, $this->parse2('tokusei'));
-                $data = array_merge($data, $this->parse2('item'));
-                $data = array_merge($data, $this->parse2('seikaku'));
                 break;
         }
 
@@ -174,7 +166,7 @@ class PokemonHomeJsParser
     /**
      * 解析 pokemon home 賽季可用寶可夢資料
      *
-     * @param string https://api.battle.pokemon-home.com/cbd/competition/rankmatch/list 賽季列表回傳的資料
+     * @param string PokemonHome::get_season_list() 賽季列表回傳的資料
      *
      * @return array
      */
@@ -267,7 +259,7 @@ class PokemonHomeJsParser
     /**
      * 取得 pokemon home 賽季可用寶可夢頁面的 html 檔
      * 
-     * @param string https://api.battle.pokemon-home.com/cbd/competition/rankmatch/list 賽季列表回傳的資料 
+     * @param string PokemonHome::get_season_list() 賽季列表回傳的資料 
      * 
      * @return string
      */

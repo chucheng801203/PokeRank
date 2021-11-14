@@ -34,23 +34,21 @@ class LoadBaseStatByShowDown extends Command
                 foreach ($pokeform as $pf) {
                     $pms = $this->dex->getById($pf->pm_id);
 
-                    if (empty($pms[$pf->form_id]) || empty($pms[$pf->form_id]['baseStats'])) {
+                    if (empty($pms[$pf->form_id]) || empty($baseStats = $pms[$pf->form_id]['baseStats'])) {
                         continue;
                     }
-
-                    $baseStats = $pms[$pf->form_id]['baseStats'];
 
                     if (!isset($baseStats['hp']) || !isset($baseStats['atk']) || !isset($baseStats['def']) || !isset($baseStats['spa']) || !isset($baseStats['spd']) || !isset($baseStats['spe'])) {
                         continue;
                     }
 
                     $updates = [
-                        'hp'  => $pms[$pf->form_id]['baseStats']['hp'],
-                        'atk' => $pms[$pf->form_id]['baseStats']['atk'],
-                        'def' => $pms[$pf->form_id]['baseStats']['def'],
-                        'spa' => $pms[$pf->form_id]['baseStats']['spa'],
-                        'spd' => $pms[$pf->form_id]['baseStats']['spd'],
-                        'spe' => $pms[$pf->form_id]['baseStats']['spe'],
+                        'hp'  => $baseStats['hp'],
+                        'atk' => $baseStats['atk'],
+                        'def' => $baseStats['def'],
+                        'spa' => $baseStats['spa'],
+                        'spd' => $baseStats['spd'],
+                        'spe' => $baseStats['spe'],
                     ];
 
                     SdBaseStat::updateOrCreate(['pf_id' => $pf->id], $updates);
