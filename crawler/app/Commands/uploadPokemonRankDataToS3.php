@@ -4,6 +4,7 @@ namespace App\Commands;
 
 use App\Models\Pokemon;
 use App\Models\RankTopPokemon;
+use App\Models\RankActivePokemon;
 use App\Services\Pokemon\PokemonHome;
 use Aws\S3\S3Client;
 use Illuminate\Filesystem\Filesystem;
@@ -182,8 +183,9 @@ class UploadPokemonRankDataToS3 extends Command
                 }
 
                 $fileSystem->ensureDirectoryExists(storage_path("app/{$tmp_path}/{$season_number}/top_list"), 0755, true);
+                $fileSystem->ensureDirectoryExists(storage_path("app/{$tmp_path}/{$season_number}/active_pokemon"), 0755, true);
 
-                // 使用率排名
+                // 使用率排名和可以使用的寶可夢列表
                 foreach ($rules as $r) {
                     $d = json_encode(
                         $this->rankTopPokemonResource(
@@ -203,6 +205,27 @@ class UploadPokemonRankDataToS3 extends Command
                         'Body'         => $d,
                         'ACL'          => 'public-read',
                         'CacheControl' => 'max-age=1800',
+                    ]);
+
+                    $d = json_encode(
+                        $this->rankActivePokemonResource(
+                            RankActivePokemon::with('pokeform')
+                                        ->where('season_number', $season_number)
+                                        ->where('rule', $r['value'])
+                                        ->where('active', 1)
+                                        ->orderBy('pf_id')
+                                        ->get()
+                        )
+                    );
+
+                    $fileSystem->put(storage_path("app/{$tmp_path}/{$season_number}/active_pokemon/{$r['value']}.json"), $d);
+
+                    $S3->putObject([
+                        'Bucket'       => $_ENV['AWS_BUCKET'],
+                        'Key'          => "rank_data/{$season_number}/active_pokemon/{$r['value']}.json",
+                        'Body'         => $d,
+                        'ACL'          => 'public-read',
+                        'CacheControl' => 'max-age=31536000',
                     ]);
                 }
             }
@@ -280,6 +303,20 @@ class UploadPokemonRankDataToS3 extends Command
                     'id'      => $item['pokeform']['pm_id'],
                     'form_id' => $item['pokeform']['form_id'],
                 ],
+            ];
+        });
+    }
+
+    /**
+     * @param Illuminate\Support\Collection
+     */
+    public function rankActivePokemonResource($collection)
+    {
+        return $collection->map(function ($item, $key) {
+            return [
+                'pf_id' => $item['pf_id'],
+                'id'      => $item['pokeform']['pm_id'],
+                'form_id' => $item['pokeform']['form_id'],
             ];
         });
     }
