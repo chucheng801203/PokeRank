@@ -2,8 +2,8 @@
 
 namespace App\Commands;
 
-use App\Libraries\Pokemon\PokemonHome;
-use App\Libraries\Pokemon\PokemonRankDataAdapter;
+use App\Services\Pokemon\PokemonHome;
+use App\Services\Pokemon\PokemonRankDataAdapter;
 use App\Models\Pokeform;
 use App\Models\RankAbility;
 use App\Models\RankItem;

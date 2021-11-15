@@ -3,7 +3,7 @@
  * 轉換 PokemonHome::get_rank_data 傳回的資料，轉成資料庫對應的欄位.
  */
 
-namespace App\Libraries\Pokemon;
+namespace App\Services\Pokemon;
 
 use App\Models\Pokeform;
 

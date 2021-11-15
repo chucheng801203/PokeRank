@@ -3,10 +3,10 @@
  * 解析 pokemon home js 檔案的靜態資料.
  */
 
-namespace App\Libraries\Pokemon;
+namespace App\Services\Pokemon;
 
-use App\Libraries\Pokemon\Exceptions\PokemonException;
-use App\Libraries\Pokemon\Exceptions\PokemonFormatException;
+use App\Services\Pokemon\Exceptions\PokemonException;
+use App\Services\Pokemon\Exceptions\PokemonFormatException;
 
 class PokemonHomeJsParser
 {

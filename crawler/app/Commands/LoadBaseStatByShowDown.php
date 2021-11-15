@@ -2,7 +2,7 @@
 
 namespace App\Commands;
 
-use App\Libraries\Pokemon\SdPokeDex;
+use App\Services\Pokemon\SdPokeDex;
 use App\Models\Pokeform;
 use App\Models\SdBaseStat;
 use Illuminate\Database\Capsule\Manager as Capsule;

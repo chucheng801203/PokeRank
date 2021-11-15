@@ -3,9 +3,9 @@
  * pokemon 圖鑑資料，裡面有寶可夢資料包含種族值的資料，但是只有英文.
  */
 
-namespace App\Libraries\Pokemon;
+namespace App\Services\Pokemon;
 
-use App\Libraries\Pokemon\Exceptions\PokemonException;
+use App\Services\Pokemon\Exceptions\PokemonException;
 
 class SdPokeDex
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Libraries\Pokemon\Exceptions;
+namespace App\Services\Pokemon\Exceptions;
 
 class PokemonFormatException extends \Exception
 {

@@ -2,7 +2,7 @@
 
 namespace App\Commands;
 
-use App\Libraries\Pokemon\PokemonHome;
+use App\Services\Pokemon\PokemonHome;
 use App\Models\Ability;
 use App\Models\Item;
 use App\Models\Move;

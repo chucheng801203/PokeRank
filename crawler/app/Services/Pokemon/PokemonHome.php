@@ -3,10 +3,10 @@
  * 取得 pokemon home 靜態資料與每個 pokemon rank 資料.
  */
 
-namespace App\Libraries\Pokemon;
+namespace App\Services\Pokemon;
 
-use App\Libraries\Pokemon\Exceptions\PokemonException;
-use App\Libraries\Pokemon\Exceptions\PokemonFormatException;
+use App\Services\Pokemon\Exceptions\PokemonException;
+use App\Services\Pokemon\Exceptions\PokemonFormatException;
 
 class PokemonHome
 {

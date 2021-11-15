@@ -2,7 +2,7 @@
 
 namespace App\Commands;
 
-use App\Libraries\Pokemon\PokemonHome;
+use App\Services\Pokemon\PokemonHome;
 use App\Models\Pokeform;
 use Aws\S3\S3Client;
 use Illuminate\Filesystem\Filesystem;
