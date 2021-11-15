@@ -2,7 +2,6 @@
 
 namespace App\Commands;
 
-use App\Services\Pokemon\PokemonHome;
 use App\Models\Ability;
 use App\Models\Item;
 use App\Models\Move;
@@ -12,6 +11,7 @@ use App\Models\Poketype;
 use App\Models\RankSeasonList;
 use App\Models\SdBaseStat;
 use App\Models\Type;
+use App\Services\Pokemon\PokemonHome;
 use Aws\S3\S3Client;
 use Illuminate\Filesystem\Filesystem;
 use Monolog\Logger;
