@@ -8,7 +8,7 @@ namespace App\Services\Pokemon;
 use App\Services\Pokemon\Exceptions\PokemonException;
 use App\Services\Pokemon\Exceptions\PokemonFormatException;
 
-class PokemonHomeService
+class PokemonHome
 {
     // pokemon 圖片網址路徑
     const POKEMON_IMAGE_URL = 'https://resource.pokemon-home.com/battledata/img/poke/';
@@ -143,6 +143,20 @@ class PokemonHomeService
         $season_list = $result['list'];
 
         return $result['list'];
+    }
+
+    /**
+     * 把從 home 抓回來的資料轉換成資料庫對應欄位
+     * 
+     * @param int $season_number 指定賽季資料
+     * 
+     * @return App\Services\Pokemon\PokemonRankDataAdapter
+     */
+    public function rank_data_generator($season_num)
+    {
+        $data = $this->get_rank_data($season_num);
+
+        return new PokemonRankDataAdapter($season_num, $data);
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace App\Commands;
 
-use App\Services\Pokemon\PokemonHomeService;
+use App\Services\Pokemon\PokemonHome;
 use App\Models\Pokemon;
 use App\Models\RankSeasonList;
 use App\Models\RankTopPokemon;
@@ -20,7 +20,7 @@ class UploadPokemonRankDataToS3 extends Command
 
     protected static $defaultDescription = '上傳 pokemon home 的賽季資料到 AWS S3';
 
-    public function __construct(Logger $log, Filesystem $fileSystem, S3Client $S3, PokemonHomeService $pm)
+    public function __construct(Logger $log, Filesystem $fileSystem, S3Client $S3, PokemonHome $pm)
     {
         $this->log = $log;
         $this->fileSystem = $fileSystem;

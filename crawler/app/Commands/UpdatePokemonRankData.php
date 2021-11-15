@@ -2,8 +2,7 @@
 
 namespace App\Commands;
 
-use App\Services\Pokemon\PokemonHomeService;
-use App\Services\Pokemon\PokemonRankDataAdapter;
+use App\Services\Pokemon\PokemonHome;
 use App\Models\Pokeform;
 use App\Models\RankAbility;
 use App\Models\RankItem;
@@ -30,7 +29,7 @@ class UpdatePokemonRankData extends Command
 
     protected static $defaultDescription = '抓取 pokemon home 的賽季資料(排名、道具使用率、招式使用率...)，並將其存入資料庫';
 
-    public function __construct(Logger $log, PokemonHomeService $pm)
+    public function __construct(Logger $log, PokemonHome $pm)
     {
         $this->log = $log;
         $this->pm = $pm;
@@ -84,8 +83,6 @@ class UpdatePokemonRankData extends Command
                 $date_time = date('Y-m-d H:i:s');
 
                 foreach ($seasons as $season_num) {
-                    $battle_data = $pm->get_rank_data($season_num);
-
                     // 先刪除資料庫已存在該賽季的資料
                     RankMove::where('season_number', $season_num)->delete();
                     RankWinMove::where('season_number', $season_num)->delete();
@@ -99,7 +96,7 @@ class UpdatePokemonRankData extends Command
                     RankItem::where('season_number', $season_num)->delete();
                     RankNature::where('season_number', $season_num)->delete();
 
-                    $generator = new PokemonRankDataAdapter($season_num, $battle_data);
+                    $generator = $pm->rank_data_generator($season_num);
 
                     foreach ($generator->data() as $data) {
                         RankMove::insert($data['rank_move']);

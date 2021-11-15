@@ -2,7 +2,7 @@
 
 namespace App\Commands;
 
-use App\Services\Pokemon\PokemonHomeService;
+use App\Services\Pokemon\PokemonHome;
 use App\Models\Pokeform;
 use Aws\S3\S3Client;
 use Illuminate\Filesystem\Filesystem;
@@ -17,7 +17,7 @@ class DownloadPokemonImages extends Command
 
     protected static $defaultDescription = '依序圖鑑編號下載所有寶可夢的圖片';
 
-    public function __construct(Logger $log, Filesystem $fileSystem, S3Client $S3, PokemonHomeService $pm)
+    public function __construct(Logger $log, Filesystem $fileSystem, S3Client $S3, PokemonHome $pm)
     {
         $this->log = $log;
         $this->fileSystem = $fileSystem;
