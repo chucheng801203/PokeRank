@@ -5,9 +5,9 @@
 
 namespace App\Services\Pokemon;
 
+use App\Models\RankSeasonList;
 use App\Services\Pokemon\Exceptions\PokemonException;
 use App\Services\Pokemon\Exceptions\PokemonFormatException;
-use App\Models\RankSeasonList;
 
 class PokemonHome
 {
@@ -78,7 +78,7 @@ class PokemonHome
     }
 
     /**
-     * 取得 pokemon home 賽季可用寶可夢資料
+     * 取得 pokemon home 賽季可用寶可夢資料.
      *
      * @param string PokemonHome::get_season_list() 賽季列表回傳的資料
      *
@@ -147,10 +147,10 @@ class PokemonHome
     }
 
     /**
-     * 從資料庫取得賽季並回傳陣列
-     * 
+     * 從資料庫取得賽季並回傳陣列.
+     *
      * @param string $season 'all' | 'latest' | '[integer]'
-     * 
+     *
      * @return array array<int>
      */
     public function season_selector(string $season)
@@ -175,10 +175,10 @@ class PokemonHome
     }
 
     /**
-     * 把從 home 抓回來的資料轉換成資料庫對應欄位
-     * 
+     * 把從 home 抓回來的資料轉換成資料庫對應欄位.
+     *
      * @param int $season_number 指定賽季資料
-     * 
+     *
      * @return App\Services\Pokemon\PokemonRankDataAdapter
      */
     public function rank_data_generator($season_num)
@@ -189,10 +189,10 @@ class PokemonHome
     }
 
     /**
-     * 把從 home 抓回來的資料轉換成資料庫對應欄位
-     * 
+     * 把從 home 抓回來的資料轉換成資料庫對應欄位.
+     *
      * @param int $season_number 指定賽季資料
-     * 
+     *
      * @return App\Services\Pokemon\PokemonRankTopListAdapter
      */
     public function top_list_generator($season_num)
@@ -303,8 +303,8 @@ class PokemonHome
     }
 
     /**
-     * 取得賽制: 單打、雙打
-     * 
+     * 取得賽制: 單打、雙打.
+     *
      * @return array
      */
     public function get_rules()

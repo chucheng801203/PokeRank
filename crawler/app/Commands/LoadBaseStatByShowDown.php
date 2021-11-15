@@ -2,9 +2,9 @@
 
 namespace App\Commands;
 
-use App\Services\Pokemon\SdPokeDex;
 use App\Models\Pokeform;
 use App\Models\SdBaseStat;
+use App\Services\Pokemon\SdPokeDex;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Monolog\Logger;
 use Symfony\Component\Console\Command\Command;

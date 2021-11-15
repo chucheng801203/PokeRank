@@ -2,8 +2,6 @@
 
 namespace App\Commands;
 
-use App\Services\Pokemon\PokemonHome;
-use App\Models\Pokeform;
 use App\Models\RankAbility;
 use App\Models\RankItem;
 use App\Models\RankLoseMove;
@@ -14,6 +12,7 @@ use App\Models\RankPokemon;
 use App\Models\RankTopPokemon;
 use App\Models\RankWinMove;
 use App\Models\RankWinPokemon;
+use App\Services\Pokemon\PokemonHome;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Monolog\Logger;
 use Symfony\Component\Console\Command\Command;
@@ -116,7 +115,7 @@ class UpdatePokemonRankData extends Command
                 $arguments = [
                     '--season'  => $season_input,
                 ];
-    
+
                 return $command->run(new ArrayInput($arguments), $output);
             }
 
