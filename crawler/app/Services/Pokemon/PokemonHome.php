@@ -7,6 +7,7 @@ namespace App\Services\Pokemon;
 
 use App\Services\Pokemon\Exceptions\PokemonException;
 use App\Services\Pokemon\Exceptions\PokemonFormatException;
+use App\Models\RankSeasonList;
 
 class PokemonHome
 {
@@ -146,6 +147,34 @@ class PokemonHome
     }
 
     /**
+     * 從資料庫取得賽季並回傳陣列
+     * 
+     * @param string $season 'all' | 'latest' | '[integer]'
+     * 
+     * @return array array<int>
+     */
+    public function season_selector(string $season)
+    {
+        switch ($season) {
+            case 'latest':
+                return [RankSeasonList::select('season')->max('season')];
+                break;
+            case 'all':
+                return array_column(RankSeasonList::select('season')->get()->toArray(), 'season');
+                break;
+            default:
+                $r = array_column(RankSeasonList::select('season')->where('season', $season)->get()->toArray(), 'season');
+
+                if (count($r) === 0) {
+                    throw new PokemonException('$season 為無效參數');
+                }
+
+                return $r;
+                break;
+        }
+    }
+
+    /**
      * 把從 home 抓回來的資料轉換成資料庫對應欄位
      * 
      * @param int $season_number 指定賽季資料
@@ -157,6 +186,20 @@ class PokemonHome
         $data = $this->get_rank_data($season_num);
 
         return new PokemonRankDataAdapter($season_num, $data);
+    }
+
+    /**
+     * 把從 home 抓回來的資料轉換成資料庫對應欄位
+     * 
+     * @param int $season_number 指定賽季資料
+     * 
+     * @return App\Services\Pokemon\PokemonRankTopListAdapter
+     */
+    public function top_list_generator($season_num)
+    {
+        $data = $this->get_top_pokemon($season_num);
+
+        return new PokemonRankTopListAdapter($season_num, $data);
     }
 
     /**
