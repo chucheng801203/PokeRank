@@ -2,9 +2,6 @@
 
 namespace App\Commands;
 
-use App\Libraries\Pokemon\PokemonHome;
-use App\Libraries\Pokemon\PokemonRankDataAdapter;
-use App\Models\Pokeform;
 use App\Models\RankAbility;
 use App\Models\RankItem;
 use App\Models\RankLoseMove;
@@ -12,10 +9,10 @@ use App\Models\RankLosePokemon;
 use App\Models\RankMove;
 use App\Models\RankNature;
 use App\Models\RankPokemon;
-use App\Models\RankSeasonList;
 use App\Models\RankTopPokemon;
 use App\Models\RankWinMove;
 use App\Models\RankWinPokemon;
+use App\Services\Pokemon\PokemonHome;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Monolog\Logger;
 use Symfony\Component\Console\Command\Command;
@@ -61,31 +58,12 @@ class UpdatePokemonRankData extends Command
         try {
             $seasons = $season_input = $input->getOption('season');
 
-            switch ($seasons) {
-                case 'latest':
-                    $seasons = [RankSeasonList::select('season')->max('season')];
-                    break;
-                case 'all':
-                    $seasons = array_column(RankSeasonList::select('season')->get()->toArray(), 'season');
-                    break;
-                default:
-                    $seasons = array_column(RankSeasonList::select('season')->where('season', $seasons)->get()->toArray(), 'season');
-
-                    if (count($seasons) === 0) {
-                        throw new \Exception('season 為無效參數');
-                    }
-
-                    break;
-            }
-
             $pm = $this->pm;
 
+            $seasons = $pm->season_selector($seasons);
+
             Capsule::transaction(function () use ($pm, $seasons) {
-                $date_time = date('Y-m-d H:i:s');
-
                 foreach ($seasons as $season_num) {
-                    $battle_data = $pm->get_rank_data($season_num);
-
                     // 先刪除資料庫已存在該賽季的資料
                     RankMove::where('season_number', $season_num)->delete();
                     RankWinMove::where('season_number', $season_num)->delete();
@@ -99,7 +77,7 @@ class UpdatePokemonRankData extends Command
                     RankItem::where('season_number', $season_num)->delete();
                     RankNature::where('season_number', $season_num)->delete();
 
-                    $generator = new PokemonRankDataAdapter($season_num, $battle_data);
+                    $generator = $pm->rank_data_generator($season_num);
 
                     foreach ($generator->data() as $data) {
                         RankMove::insert($data['rank_move']);
@@ -118,33 +96,11 @@ class UpdatePokemonRankData extends Command
                         }
                     }
 
-                    $top_list = $pm->get_top_pokemon($season_num);
-
                     RankTopPokemon::where('season_number', $season_num)->delete();
 
-                    foreach ($top_list as $rule => $w) {
-                        $data = [];
+                    $top_list_generator = $pm->top_list_generator($season_num);
 
-                        foreach ($w as $ranking => $pm_data) {
-                            $pf = Pokeform::where([
-                                'pm_id'   => $pm_data['id'],
-                                'form_id' => $pm_data['form'],
-                            ])->first();
-
-                            if (empty($pf)) {
-                                continue;
-                            }
-
-                            $data[] = [
-                                'pf_id'         => $pf->id,
-                                'season_number' => $season_num,
-                                'rule'          => $rule,
-                                'ranking'       => $ranking,
-                                'created_at'    => $date_time,
-                                'updated_at'    => $date_time,
-                            ];
-                        }
-
+                    foreach ($top_list_generator->data() as $data) {
                         RankTopPokemon::insert($data);
                     }
                 }
@@ -159,7 +115,7 @@ class UpdatePokemonRankData extends Command
                 $arguments = [
                     '--season'  => $season_input,
                 ];
-    
+
                 return $command->run(new ArrayInput($arguments), $output);
             }
 

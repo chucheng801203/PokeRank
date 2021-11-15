@@ -2,7 +2,6 @@
 
 namespace App\Commands;
 
-use App\Libraries\Pokemon\PokemonHome;
 use App\Models\Ability;
 use App\Models\Item;
 use App\Models\Move;
@@ -10,9 +9,10 @@ use App\Models\Nature;
 use App\Models\Pokeform;
 use App\Models\Pokemon;
 use App\Models\Poketype;
+use App\Models\RankActivePokemon;
 use App\Models\RankSeasonList;
 use App\Models\Type;
-use App\Models\RankActivePokemon;
+use App\Services\Pokemon\PokemonHome;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Monolog\Logger;
 use Symfony\Component\Console\Command\Command;
@@ -140,11 +140,11 @@ class UpdatePokemonData extends Command
                                 if (empty($pf)) {
                                     continue;
                                 }
-        
+
                                 RankActivePokemon::updateOrCreate([
-                                    'pf_id' => $pf->id,
+                                    'pf_id'         => $pf->id,
                                     'season_number' => $season_num,
-                                    'rule' => $r['value'],
+                                    'rule'          => $r['value'],
                                 ], [
                                     'active' => $v['av'],
                                 ]);
@@ -192,7 +192,7 @@ class UpdatePokemonData extends Command
             $upload = $input->getOption('upload');
             if ($upload) {
                 $command = $this->getApplication()->find('pokemonHome:upload-data-to-S3');
-    
+
                 return $command->run(new ArrayInput([]), $output);
             }
 

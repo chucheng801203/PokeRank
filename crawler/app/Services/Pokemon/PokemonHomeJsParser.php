@@ -3,10 +3,10 @@
  * 解析 pokemon home js 檔案的靜態資料.
  */
 
-namespace App\Libraries\Pokemon;
+namespace App\Services\Pokemon;
 
-use App\Libraries\Pokemon\Exceptions\PokemonException;
-use App\Libraries\Pokemon\Exceptions\PokemonFormatException;
+use App\Services\Pokemon\Exceptions\PokemonException;
+use App\Services\Pokemon\Exceptions\PokemonFormatException;
 
 class PokemonHomeJsParser
 {
@@ -164,7 +164,7 @@ class PokemonHomeJsParser
     }
 
     /**
-     * 解析 pokemon home 賽季可用寶可夢資料
+     * 解析 pokemon home 賽季可用寶可夢資料.
      *
      * @param string PokemonHome::get_season_list() 賽季列表回傳的資料
      *
@@ -180,7 +180,7 @@ class PokemonHomeJsParser
 
         $r = json_decode($match[1], true);
 
-        if(empty($r)) {
+        if (empty($r)) {
             throw new PokemonFormatException();
         }
 
@@ -257,10 +257,10 @@ class PokemonHomeJsParser
     }
 
     /**
-     * 取得 pokemon home 賽季可用寶可夢頁面的 html 檔
-     * 
-     * @param string PokemonHome::get_season_list() 賽季列表回傳的資料 
-     * 
+     * 取得 pokemon home 賽季可用寶可夢頁面的 html 檔.
+     *
+     * @param string PokemonHome::get_season_list() 賽季列表回傳的資料
+     *
      * @return string
      */
     public function get_active_pokemon_page_source($reg)

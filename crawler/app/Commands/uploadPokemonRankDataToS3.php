@@ -2,10 +2,9 @@
 
 namespace App\Commands;
 
-use App\Libraries\Pokemon\PokemonHome;
 use App\Models\Pokemon;
-use App\Models\RankSeasonList;
 use App\Models\RankTopPokemon;
+use App\Services\Pokemon\PokemonHome;
 use Aws\S3\S3Client;
 use Illuminate\Filesystem\Filesystem;
 use Monolog\Logger;
@@ -51,22 +50,7 @@ class UploadPokemonRankDataToS3 extends Command
 
             $seasons = $season_input = $input->getOption('season');
 
-            switch ($seasons) {
-                case 'latest':
-                    $seasons = [RankSeasonList::select('season')->max('season')];
-                    break;
-                case 'all':
-                    $seasons = array_column(RankSeasonList::select('season')->get()->toArray(), 'season');
-                    break;
-                default:
-                    $seasons = array_column(RankSeasonList::select('season')->where('season', $seasons)->get()->toArray(), 'season');
-
-                    if (count($seasons) === 0) {
-                        throw new \Exception('season 為無效參數');
-                    }
-
-                    break;
-            }
+            $seasons = $this->pm->season_selector($seasons);
 
             $rules = $this->pm->get_rules();
             $pokemons = Pokemon::select('id')->get();
