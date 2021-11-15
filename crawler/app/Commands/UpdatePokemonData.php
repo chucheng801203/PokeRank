@@ -2,7 +2,7 @@
 
 namespace App\Commands;
 
-use App\Services\Pokemon\PokemonHome;
+use App\Services\Pokemon\PokemonHomeService;
 use App\Models\Ability;
 use App\Models\Item;
 use App\Models\Move;
@@ -27,7 +27,7 @@ class UpdatePokemonData extends Command
 
     protected static $defaultDescription = '抓取 pokemon home 的資料(圖鑑、屬性、招式、特性、道具、性格的名稱與編號列表)，並將其存入資料庫';
 
-    public function __construct(Logger $log, PokemonHome $pm)
+    public function __construct(Logger $log, PokemonHomeService $pm)
     {
         $this->log = $log;
         $this->pm = $pm;

@@ -2,7 +2,7 @@
 
 namespace App\Commands;
 
-use App\Services\Pokemon\PokemonHome;
+use App\Services\Pokemon\PokemonHomeService;
 use App\Models\Ability;
 use App\Models\Item;
 use App\Models\Move;
@@ -25,7 +25,7 @@ class UploadPokemonDataToS3 extends Command
 
     protected static $defaultDescription = '將資料庫的 pokemon 資料上傳到 AWS S3';
 
-    public function __construct(Logger $log, Filesystem $fileSystem, S3Client $S3, PokemonHome $pm)
+    public function __construct(Logger $log, Filesystem $fileSystem, S3Client $S3, PokemonHomeService $pm)
     {
         $this->log = $log;
         $this->fileSystem = $fileSystem;

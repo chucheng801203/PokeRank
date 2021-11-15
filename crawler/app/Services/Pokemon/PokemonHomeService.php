@@ -8,7 +8,7 @@ namespace App\Services\Pokemon;
 use App\Services\Pokemon\Exceptions\PokemonException;
 use App\Services\Pokemon\Exceptions\PokemonFormatException;
 
-class PokemonHome
+class PokemonHomeService
 {
     // pokemon 圖片網址路徑
     const POKEMON_IMAGE_URL = 'https://resource.pokemon-home.com/battledata/img/poke/';

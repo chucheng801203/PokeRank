@@ -2,7 +2,7 @@
 
 namespace App\Commands;
 
-use App\Services\Pokemon\PokemonHome;
+use App\Services\Pokemon\PokemonHomeService;
 use App\Services\Pokemon\PokemonRankDataAdapter;
 use App\Models\Pokeform;
 use App\Models\RankAbility;
@@ -30,7 +30,7 @@ class UpdatePokemonRankData extends Command
 
     protected static $defaultDescription = '抓取 pokemon home 的賽季資料(排名、道具使用率、招式使用率...)，並將其存入資料庫';
 
-    public function __construct(Logger $log, PokemonHome $pm)
+    public function __construct(Logger $log, PokemonHomeService $pm)
     {
         $this->log = $log;
         $this->pm = $pm;
