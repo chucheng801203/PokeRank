@@ -213,6 +213,7 @@ const GetRankData: React.FC = () => {
                     state: {
                         rule: defaultState.rule[0],
                         season: defaultState.season[0],
+                        searchText: "",
                     },
                 }}
             />

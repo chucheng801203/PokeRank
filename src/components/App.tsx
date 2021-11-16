@@ -20,32 +20,6 @@ const MobilePokemonSelector = React.lazy(
 const App: React.FC = () => {
     const pageData = useContext(PageDataContext);
 
-    let unMatch: React.ReactNode;
-
-    if (pageData.page_loading) {
-        unMatch = (
-            <PmList className={styles["app-list"]}>
-                {Array.apply(null, Array(10)).map((v, i) => (
-                    <PmRowLoading key={i} />
-                ))}
-            </PmList>
-        );
-    } else {
-        const defaultState = getDefaultState(pageData);
-
-        unMatch = (
-            <Redirect
-                to={{
-                    pathname: "",
-                    state: {
-                        rule: defaultState.rule[0],
-                        season: defaultState.season[0],
-                    },
-                }}
-            />
-        );
-    }
-
     return (
         <div className={styles["app"]}>
             {!pageData.page_loading && <HistoryContainer />}
@@ -66,7 +40,30 @@ const App: React.FC = () => {
                         <Route exact path="/:pmId/:formId/">
                             <GetRankData />
                         </Route>
-                        <Route path="*">{unMatch}</Route>
+                        <Route path="*">
+                            {pageData.page_loading ? (
+                                <PmList className={styles["app-list"]}>
+                                    {Array.apply(null, Array(10)).map(
+                                        (v, i) => (
+                                            <PmRowLoading key={i} />
+                                        )
+                                    )}
+                                </PmList>
+                            ) : (
+                                <Redirect
+                                    to={{
+                                        pathname: "",
+                                        state: {
+                                            rule: getDefaultState(pageData)
+                                                .rule[0],
+                                            season: getDefaultState(pageData)
+                                                .season[0],
+                                            searchText: "",
+                                        },
+                                    }}
+                                />
+                            )}
+                        </Route>
                     </Switch>
                 </Suspense>
             </div>
