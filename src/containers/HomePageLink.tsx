@@ -9,11 +9,11 @@ import { SeasonState } from "../redux/reducers/season";
 import PageDataContext from "../contexts/PageDataContext";
 import { getDefaultState } from "../redux/store";
 
-export type HomePageLinkPropsType = {
+export type HomePageLinkProps = {
     className?: string;
 };
 
-const HomePageLink: React.FC<HomePageLinkPropsType> = ({
+const HomePageLink: React.FC<HomePageLinkProps> = ({
     children,
     className,
 }) => {

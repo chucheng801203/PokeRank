@@ -4,10 +4,10 @@ import { Location } from "history";
 import { Link } from "react-router-dom";
 import PmTypeBlock from "./PmTypeBlock";
 import LazyLoadImage from "./LazyLoadImage";
-import { HistoryStateType } from "../containers/HistoryContainer";
+import { HistoryState } from "../containers/HistoryContainer";
 import styles from "./pmRow.module.scss";
 
-export type PmRowPropsType = {
+export type PmRowProps = {
     className?: string;
     pmRank?: number; // pokemon 排名
     pmAvatar?: string; // pokemon 圖片
@@ -17,7 +17,7 @@ export type PmRowPropsType = {
     pmType?: Array<number>; // pokemon 屬性 id
 };
 
-const PmRow: React.FC<PmRowPropsType> = ({
+const PmRow: React.FC<PmRowProps> = ({
     className,
     pmRank,
     pmAvatar,
@@ -29,7 +29,7 @@ const PmRow: React.FC<PmRowPropsType> = ({
     <li className={classNames(styles["row"], className)}>
         <Link
             className={`${styles["row-link"]} ${styles["row-container"]}`}
-            to={({ state }: Location<HistoryStateType>) => ({
+            to={({ state }: Location<HistoryState>) => ({
                 pathname: `/${pmId}/${pmFormId}`,
                 search: `?season=${state.season.value}&rule=${state.rule.value}`,
                 state: state,

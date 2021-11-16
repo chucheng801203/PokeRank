@@ -1,7 +1,7 @@
 import { ThunkAction } from "redux-thunk";
 import { RootState } from "../store";
 
-export const GET_TOPLIST = "getTopList";
+export const GET_TOP_LIST = "getTopList";
 
 export type TopListResponse = Array<{
     pokemon: {
@@ -12,7 +12,7 @@ export type TopListResponse = Array<{
 }>;
 
 export interface TopListAction {
-    type: typeof GET_TOPLIST;
+    type: typeof GET_TOP_LIST;
     season: number;
     rule: number;
     topList: TopListResponse;
@@ -70,7 +70,7 @@ const getTopList: ThunkAction<void, RootState, unknown, TopListAction> = (
             }
 
             dispatch({
-                type: GET_TOPLIST,
+                type: GET_TOP_LIST,
                 season: season[0].value,
                 rule: rule[0].value,
                 topList: data,

@@ -2,14 +2,14 @@ import React from "react";
 import classNames from "classnames";
 import styles from "./loadingBlock.module.scss";
 
-export type LoadingBlockPropsType = {
+export type LoadingBlockProps = {
     className?: string;
     width?: string;
     height?: string;
     style?: React.CSSProperties;
 };
 
-const LoadingBlock: React.FC<LoadingBlockPropsType> = ({
+const LoadingBlock: React.FC<LoadingBlockProps> = ({
     className,
     width,
     height,

@@ -1,5 +1,5 @@
 import {
-    GET_TOPLIST,
+    GET_TOP_LIST,
     TopListAction,
     TopListResponse,
 } from "../actions/topList";
@@ -17,7 +17,7 @@ export default (
     action: TopListAction
 ): TopListState => {
     switch (action.type) {
-        case GET_TOPLIST:
+        case GET_TOP_LIST:
             return {
                 ...state,
                 [`${action.season}_${action.rule}`]: {

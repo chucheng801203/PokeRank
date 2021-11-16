@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 import PmTypeBlock from "./PmTypeBlock";
 import LoadingBlock from "./LoadingBlock";
 import PageDataContext, { PageDataType } from "../contexts/PageDataContext";
-import { HistoryStateType } from "../containers/HistoryContainer";
+import { HistoryState } from "../containers/HistoryContainer";
 import styles from "./pmInfoBlock.module.scss";
 import LazyLoadImage from "./LazyLoadImage";
 
-export type PmInfoBlockPropsType = {
+export type PmInfoBlockProps = {
     pmId?: number;
     formId?: number;
     pmRank?: number;
@@ -64,7 +64,7 @@ export const LoadingMode = (pageData: PageDataType) => {
     );
 };
 
-const PmInfoBlock: React.FC<PmInfoBlockPropsType> = ({
+const PmInfoBlock: React.FC<PmInfoBlockProps> = ({
     pmId,
     formId,
     pmRank,
@@ -123,7 +123,7 @@ const PmInfoBlock: React.FC<PmInfoBlockPropsType> = ({
                         to={({
                             state,
                             search,
-                        }: Location<HistoryStateType>) => ({
+                        }: Location<HistoryState>) => ({
                             pathname: `/${pmId}/${i}`,
                             search: search,
                             state: state,

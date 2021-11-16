@@ -7,16 +7,16 @@ import useIsActive from "./hooks/useIsActive";
 import selectStyle from "./select.module.scss";
 import expandMoreIcon from "../../images/expand_more_black_24dp.svg";
 
-export type SelectValueType = Array<{
+export type SelectValue = Array<{
     index: number;
     value?: ReactText;
     text?: ReactText;
 }>;
 
 export type DefaultSelectorProps = {
-    value?: SelectValueType;
+    value?: SelectValue;
     children?: React.ReactNode;
-    onChange?: (v: SelectValueType) => void;
+    onChange?: (v: SelectValue) => void;
     placeholder?: string;
     className?: string;
     [otherProps: string]: any;
@@ -34,8 +34,8 @@ const DefaultSelector: React.FC<DefaultSelectorProps> = ({
         return convertNodeToOption(elem, i);
     })?.filter((option) => option);
 
-    const getCurrentValue = (): SelectValueType => {
-        let current: SelectValueType;
+    const getCurrentValue = (): SelectValue => {
+        let current: SelectValue;
 
         if (value && value.length > 0) {
             current = value;
@@ -59,7 +59,7 @@ const DefaultSelector: React.FC<DefaultSelectorProps> = ({
         return [];
     };
 
-    const [currentValue, setCurrentValue] = useState<SelectValueType>(
+    const [currentValue, setCurrentValue] = useState<SelectValue>(
         getCurrentValue()
     );
 
@@ -80,7 +80,7 @@ const DefaultSelector: React.FC<DefaultSelectorProps> = ({
     const [isActive, setIsActive] = useIsActive(selectorRef);
 
     // 當 currentValue 發生變動而觸發的事件
-    const onChangeHandler = (v: SelectValueType) => {
+    const onChangeHandler = (v: SelectValue) => {
         setCurrentValue(v);
 
         if (onChange) onChange(v);

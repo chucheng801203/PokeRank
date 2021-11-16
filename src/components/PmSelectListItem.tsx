@@ -2,14 +2,14 @@ import React from "react";
 import classNames from "classnames";
 import styles from "./pmSelectListItem.module.scss";
 
-export type PmSelectListContentPropsType = {
+export type PmSelectListContentProps = {
     className?: string;
     pmAvatar?: string; // pokemon 圖片
     pmId?: number; // pokemon 編號
     pmName?: string; // pokemon 名稱
 };
 
-const PmSelectListContent: React.FC<PmSelectListContentPropsType> = ({
+const PmSelectListContent: React.FC<PmSelectListContentProps> = ({
     className,
     pmAvatar,
     pmId,

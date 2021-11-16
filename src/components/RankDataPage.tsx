@@ -9,9 +9,9 @@ import styles from "./rankDataPage.module.scss";
 import pageRowStyles from "./pmRow.module.scss";
 import pmListStyles from "./pmList.module.scss";
 
-type BaseStatType = typeof defaultPageData.base_stats[0][0];
+type BaseStat = typeof defaultPageData.base_stats[0][0];
 
-export type RankDataPagePropsType = {
+export type RankDataPageProps = {
     isLoading?: boolean;
     pmInfo?: React.ReactNode;
     teamPokemons?: React.ReactNode;
@@ -23,10 +23,10 @@ export type RankDataPagePropsType = {
     winMove?: React.ReactNode;
     losePokemons?: React.ReactNode;
     loseMove?: React.ReactNode;
-    baseStat?: BaseStatType;
+    baseStat?: BaseStat;
 };
 
-const RankDataPage: React.FC<RankDataPagePropsType> = ({
+const RankDataPage: React.FC<RankDataPageProps> = ({
     isLoading,
     pmInfo,
     teamPokemons,

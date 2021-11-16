@@ -5,27 +5,27 @@ import {
     DefaultSelector as Selector,
     Option,
 } from "../components/SelectorComponent";
-import { SelectValueType } from "../components/SelectorComponent/DefaultSelector";
+import { SelectValue } from "../components/SelectorComponent/DefaultSelector";
 import toggleRule from "../redux/actions/rule";
 import { getRuleState } from "../redux/selectors";
 import PageDataContext from "../contexts/PageDataContext";
-import { HistoryStateType } from "./HistoryContainer";
+import { HistoryState } from "./HistoryContainer";
 import { getParameterByName } from "../util";
 
-export type RuleSelectorPropsType = {
+export type RuleSelectorProps = {
     className?: string;
     style?: React.CSSProperties;
 };
 
-const RuleSelector: React.FC<RuleSelectorPropsType> = (props) => {
+const RuleSelector: React.FC<RuleSelectorProps> = (props) => {
     const pageData = useContext(PageDataContext);
     const rule = useSelector(getRuleState);
 
     const dispatch = useDispatch();
     const history = useHistory();
-    const { state, pathname } = useLocation<HistoryStateType>();
+    const { state, pathname } = useLocation<HistoryState>();
 
-    const onChange = (v: SelectValueType) => {
+    const onChange = (v: SelectValue) => {
         if (v.length <= 0) return;
 
         const r = {

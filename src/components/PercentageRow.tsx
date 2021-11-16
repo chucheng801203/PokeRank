@@ -3,7 +3,7 @@ import LoadingBlock from "./LoadingBlock";
 import PmTypeBlock from "./PmTypeBlock";
 import styles from "./percentageRow.module.scss";
 
-export type PercentageRowPropsType = {
+export type PercentageRowProps = {
     rank?: number;
     name?: string;
     typeId?: number | null;
@@ -12,7 +12,7 @@ export type PercentageRowPropsType = {
     onClick?: () => void;
 };
 
-const PercentageRow: React.FC<PercentageRowPropsType> = ({
+const PercentageRow: React.FC<PercentageRowProps> = ({
     rank,
     name,
     typeId,

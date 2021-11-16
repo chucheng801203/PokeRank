@@ -1,13 +1,13 @@
 import React, { useEffect, useRef } from "react";
 import OptionItem from "./OptionItem";
-import { SelectValueType } from "./DefaultSelector";
+import { SelectValue } from "./DefaultSelector";
 import { OptionData } from "./Option";
 import selectStyle from "./select.module.scss";
 
 export type OptionListProps = {
     selectorRef: React.RefObject<HTMLDivElement>;
-    value?: SelectValueType;
-    onChange?: (v: SelectValueType) => void;
+    value?: SelectValue;
+    onChange?: (v: SelectValue) => void;
     options?: Array<OptionData>;
     selector?: "inputSelector" | "defaultSelector";
 };

@@ -10,7 +10,7 @@ import PageDataContext from "../contexts/PageDataContext";
 import { getDefaultState } from "../redux/store";
 import styles from "./app.module.scss";
 
-const RankTopList = React.lazy(() => import('../containers/RankTopList'));
+const GetRankTopList = React.lazy(() => import('../containers/GetRankTopList'));
 const GetRankData = React.lazy(() => import('../containers/GetRankData'));
 const MobilePokemonSelector = React.lazy(() => import('../containers/MobilePokemonSelector'));
 
@@ -54,7 +54,7 @@ const App: React.FC = () => {
                 <Suspense fallback={<div className="center">Loading...</div>}>
                     <Switch>
                         <Route exact path="/">
-                            <RankTopList className={styles["app-list"]} />
+                            <GetRankTopList className={styles["app-list"]} />
                         </Route>
                         <Route exact path="/mobile/search/">
                             <MobilePokemonSelector />
