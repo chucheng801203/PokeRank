@@ -45,7 +45,7 @@ const PageDataProvider: React.FC = ({ children }) => {
     const [wikiData, setWikiData] = useState<WikiDataType>();
 
     useEffect(() => {
-        if (pageData) return;
+        if (pageData && wikiData) return;
 
         requestPageData()
             .then(function (data) {
