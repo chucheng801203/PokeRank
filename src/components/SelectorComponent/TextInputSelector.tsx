@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import Popup from "../PopupComponent";
-import { SelectValueType } from "./DefaultSelector";
+import { SelectValue } from "./DefaultSelector";
 import { convertNodeToOption, OptionData } from "./Option";
 import OptionList from "./OptionList";
 import useIsActive from "./hooks/useIsActive";
@@ -13,8 +13,8 @@ export type TextInputSelectorProps = {
     SufixIconBtn?: React.ComponentType<any>;
     children?: React.ReactNode;
     onChange?: (v: string) => void;
-    onSubmit?: (v: SelectValueType) => void;
-    onSufixIconBtnClick?: (v: SelectValueType) => void;
+    onSubmit?: (v: SelectValue) => void;
+    onSufixIconBtnClick?: (v: SelectValue) => void;
 };
 
 const TextInputSelector: React.FC<TextInputSelectorProps> = ({
@@ -53,7 +53,7 @@ const TextInputSelector: React.FC<TextInputSelectorProps> = ({
         setIsActive(true);
     };
 
-    const onOptionListChangeHandler = (v: SelectValueType) => {
+    const onOptionListChangeHandler = (v: SelectValue) => {
         onInputChangeHandler(v[0].text ? v[0].text.toString() : "");
 
         setIsActive(false);

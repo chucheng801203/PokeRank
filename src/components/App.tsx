@@ -2,6 +2,7 @@ import React, { useContext, Suspense } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
+import TitleWithSeasonInfo from "./TitleWithSeasonInfo";
 import SeasonSelector from "../containers/SeasonSelector";
 import PmList from "./PmList";
 import PmRowLoading from "./PmRowLoading";
@@ -10,9 +11,11 @@ import PageDataContext from "../contexts/PageDataContext";
 import { getDefaultState } from "../redux/store";
 import styles from "./app.module.scss";
 
-const RankTopList = React.lazy(() => import('../containers/RankTopList'));
-const GetRankData = React.lazy(() => import('../containers/GetRankData'));
-const MobilePokemonSelector = React.lazy(() => import('../containers/MobilePokemonSelector'));
+const GetRankTopList = React.lazy(() => import("../containers/GetRankTopList"));
+const GetRankData = React.lazy(() => import("../containers/GetRankData"));
+const MobilePokemonSelector = React.lazy(
+    () => import("../containers/MobilePokemonSelector")
+);
 
 const App: React.FC = () => {
     const pageData = useContext(PageDataContext);
@@ -54,7 +57,8 @@ const App: React.FC = () => {
                 <Suspense fallback={<div className="center">Loading...</div>}>
                     <Switch>
                         <Route exact path="/">
-                            <RankTopList className={styles["app-list"]} />
+                            <TitleWithSeasonInfo title="寶可夢排行榜" />
+                            <GetRankTopList className={styles["app-list"]} />
                         </Route>
                         <Route exact path="/mobile/search/">
                             <MobilePokemonSelector />

@@ -3,12 +3,12 @@ import PmModal from "./PmModal";
 import WikiDataContext from "../contexts/WikiDataContext";
 import styles from "./showWikiModal.module.scss";
 
-export type ShowWikiModalPropsType = {
+export type ShowWikiModalProps = {
     type: string;
     name?: string;
 };
 
-const ShowWikiModal: React.FC<ShowWikiModalPropsType> = ({
+const ShowWikiModal: React.FC<ShowWikiModalProps> = ({
     children,
     type,
     name,

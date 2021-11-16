@@ -10,7 +10,7 @@ import { getSeasonState, getRuleState } from "../redux/selectors";
 import PageDataContext from "../contexts/PageDataContext";
 import { getDefaultState } from "../redux/store";
 
-export type HistoryStateType = {
+export type HistoryState = {
     rule: RuleState;
     season: SeasonState;
     searchText: string;
@@ -23,7 +23,7 @@ const HistoryContainer: React.FC = () => {
     const rule = useSelector(getRuleState);
 
     const history = useHistory();
-    const { state, search } = useLocation<HistoryStateType>();
+    const { state, search } = useLocation<HistoryState>();
 
     const defaultState = getDefaultState(pageData);
 

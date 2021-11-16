@@ -8,7 +8,7 @@ import "whatwg-fetch";
 import "core-js/features/array/includes";
 import "./global.scss";
 import App from "./components/App";
-import Portal from "./containers/Portal";
+import PageDataProvider from "./containers/PageDataProvider";
 import store from "./redux/store";
 import reportWebVitals from "./reportWebVitals";
 
@@ -16,9 +16,9 @@ ReactDOM.render(
     <React.StrictMode>
         <BrowserRouter>
             <Provider store={store}>
-                <Portal>
+                <PageDataProvider>
                     <App />
-                </Portal>
+                </PageDataProvider>
             </Provider>
         </BrowserRouter>
     </React.StrictMode>,

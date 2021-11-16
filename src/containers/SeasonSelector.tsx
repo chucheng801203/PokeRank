@@ -5,27 +5,27 @@ import {
     DefaultSelector as Selector,
     Option,
 } from "../components/SelectorComponent";
-import { SelectValueType } from "../components/SelectorComponent/DefaultSelector";
+import { SelectValue } from "../components/SelectorComponent/DefaultSelector";
 import toggleSeason from "../redux/actions/season";
 import { getSeasonState } from "../redux/selectors";
 import PageDataContext from "../contexts/PageDataContext";
-import { HistoryStateType } from "./HistoryContainer";
+import { HistoryState } from "./HistoryContainer";
 import { getParameterByName } from "../util";
 
-export type SeasonSelectorPropsType = {
+export type SeasonSelectorProps = {
     className?: string;
     style?: React.CSSProperties;
 };
 
-const SeasonSelector: React.FC<SeasonSelectorPropsType> = (props) => {
+const SeasonSelector: React.FC<SeasonSelectorProps> = (props) => {
     const pageData = useContext(PageDataContext);
     const season = useSelector(getSeasonState);
 
     const dispatch = useDispatch();
     const history = useHistory();
-    const { state, pathname } = useLocation<HistoryStateType>();
+    const { state, pathname } = useLocation<HistoryState>();
 
-    const onChange = (v: SelectValueType) => {
+    const onChange = (v: SelectValue) => {
         if (v.length <= 0) return;
 
         const s = {

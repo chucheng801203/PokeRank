@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import PmSelectListItem from "../components/PmSelectListItem";
 import { TextInputSelector, Option } from "../components/SelectorComponent";
-import { SelectValueType } from "../components/SelectorComponent/DefaultSelector";
+import { SelectValue } from "../components/SelectorComponent/DefaultSelector";
 import searchTextAction from "../redux/actions/searchText";
 import {
     getSeasonState,
@@ -12,15 +12,13 @@ import {
 } from "../redux/selectors";
 import PageDataContext from "../contexts/PageDataContext";
 
-export type PokemonInputSelectorPropsType = {
+export type PokemonInputSelectorProps = {
     className?: string;
     placeholder?: string;
     SufixIconBtn?: React.ComponentType<any>;
 };
 
-const PokemonInputSelector: React.FC<PokemonInputSelectorPropsType> = (
-    props
-) => {
+const PokemonInputSelector: React.FC<PokemonInputSelectorProps> = (props) => {
     const pageData = useContext(PageDataContext);
 
     const dispatch = useDispatch();
@@ -34,7 +32,7 @@ const PokemonInputSelector: React.FC<PokemonInputSelectorPropsType> = (
         dispatch(searchTextAction(v));
     };
 
-    const onSubmitHandler = (v: SelectValueType) => {
+    const onSubmitHandler = (v: SelectValue) => {
         history.push(
             `/${v[0].value}/0?season=${season[0].value}&rule=${rule[0].value}`,
             {

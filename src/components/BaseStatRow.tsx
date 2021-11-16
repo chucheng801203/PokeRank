@@ -2,14 +2,14 @@ import React from "react";
 import LoadingBlock from "./LoadingBlock";
 import styles from "./baseStat.module.scss";
 
-export type BaseStatsPropsType = {
+export type BaseStatsProps = {
     isLoading?: boolean;
     name?: string;
     value?: number;
     rectColor?: string;
 };
 
-const BaseStats: React.FC<BaseStatsPropsType> = ({
+const BaseStats: React.FC<BaseStatsProps> = ({
     isLoading,
     name,
     rectColor,

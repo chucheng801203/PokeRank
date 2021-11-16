@@ -6,7 +6,7 @@ import PokemonSelector from "../containers/PokemonSelector";
 import SearchIconBtn from "./SearchIconBtn";
 import RuleSelector from "../containers/RuleSelector";
 import SeasonSelector from "../containers/SeasonSelector";
-import { HistoryStateType } from "../containers/HistoryContainer";
+import { HistoryState } from "../containers/HistoryContainer";
 import styles from "./header.module.scss";
 
 const Header: React.FC = () => (
@@ -31,7 +31,7 @@ const Header: React.FC = () => (
                 className={`${styles["header-nav-btn"]} ${styles["header-mobile-search-btn"]}`}
             >
                 <Link
-                    to={({ state }: Location<HistoryStateType>) => ({
+                    to={({ state }: Location<HistoryState>) => ({
                         pathname: "/mobile/search/",
                         state: state,
                     })}
@@ -47,7 +47,7 @@ const Header: React.FC = () => (
             </div>
 
             <div className={styles["header-nav-btn"]}>
-                <RuleSelector />
+                <RuleSelector style={{ width: "74px" }} />
             </div>
         </div>
     </nav>
