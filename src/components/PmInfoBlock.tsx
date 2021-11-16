@@ -120,10 +120,7 @@ const PmInfoBlock: React.FC<PmInfoBlockProps> = ({
                 {pageData.pokemon_types[pmId].map((v, i) => (
                     <Link
                         key={i}
-                        to={({
-                            state,
-                            search,
-                        }: Location<HistoryState>) => ({
+                        to={({ state, search }: Location<HistoryState>) => ({
                             pathname: `/${pmId}/${i}`,
                             search: search,
                             state: state,

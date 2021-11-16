@@ -13,10 +13,7 @@ export type HomePageLinkProps = {
     className?: string;
 };
 
-const HomePageLink: React.FC<HomePageLinkProps> = ({
-    children,
-    className,
-}) => {
+const HomePageLink: React.FC<HomePageLinkProps> = ({ children, className }) => {
     const pageData = useContext(PageDataContext);
     const dispatch = useDispatch();
     const history = useHistory();

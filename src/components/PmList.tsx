@@ -8,11 +8,7 @@ export type PmListProps = {
     listTitle?: string;
 };
 
-const PmList: React.FC<PmListProps> = ({
-    className,
-    children,
-    listTitle,
-}) => {
+const PmList: React.FC<PmListProps> = ({ className, children, listTitle }) => {
     return (
         <section className={classNames(styles["list"], className)}>
             {listTitle && <h3 className={styles["list-title"]}>{listTitle}</h3>}

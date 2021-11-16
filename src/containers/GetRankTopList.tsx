@@ -16,7 +16,7 @@ export type RankTopListProps = {
 };
 
 const GetRankTopList: React.FC<RankTopListProps> = ({ className }) => {
-    const { page_loading, seasons, rules, pokemon, pokemon_types } =
+    const { page_loading, pokemon, pokemon_types } =
         useContext(PageDataContext);
     const dispatch = useDispatch();
     const season = useSelector(getSeasonState);
@@ -37,19 +37,8 @@ const GetRankTopList: React.FC<RankTopListProps> = ({ className }) => {
         document.title = "PokéRank";
     });
 
-    let seasonText: string = "　";
-    if (!page_loading) {
-        const s = seasons[season[0].index];
-        const r = rules[rule[0].index];
-        seasonText = `(${s.text}, ${r.text}, ${s.start}~${s.end})`;
-    }
-
     return (
         <>
-            <header>
-                <h2 className="mb-0 text-center">寶可夢排行榜</h2>
-                <h5 className="mt-0 text-center">{seasonText}</h5>
-            </header>
             <PmList className={className}>
                 {shouldLoading
                     ? Array.apply(null, Array(20)).map((v, i) => (

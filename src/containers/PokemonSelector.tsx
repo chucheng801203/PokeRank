@@ -18,9 +18,7 @@ export type PokemonInputSelectorProps = {
     SufixIconBtn?: React.ComponentType<any>;
 };
 
-const PokemonInputSelector: React.FC<PokemonInputSelectorProps> = (
-    props
-) => {
+const PokemonInputSelector: React.FC<PokemonInputSelectorProps> = (props) => {
     const pageData = useContext(PageDataContext);
 
     const dispatch = useDispatch();
