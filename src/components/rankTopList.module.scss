@@ -1,0 +1,16 @@
+.list {
+    width: 100%;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .list {
+        width: 80%;
+    }
+}
+
+@media (min-width: 992px) {
+    .list {
+        width: 60%;
+    }
+}

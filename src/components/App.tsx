@@ -32,7 +32,7 @@ const App: React.FC = () => {
                     <Switch>
                         <Route exact path="/">
                             <TitleWithSeasonInfo title="寶可夢排行榜" />
-                            <GetRankTopList className={styles["app-list"]} />
+                            <GetRankTopList />
                         </Route>
                         <Route exact path="/mobile/search/">
                             <MobilePokemonSelector />

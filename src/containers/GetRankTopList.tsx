@@ -1,8 +1,7 @@
 import React, { useEffect, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import PmList from "../components/PmList";
-import PmRow from "../components/PmRow";
-import PmRowLoading from "../components/PmRowLoading";
+import RankTopList from "../components/RankTopList";
+import RankTopListLoading from "../components/RankTopListLoading";
 import topListAction from "../redux/actions/topList";
 import {
     getSeasonState,
@@ -11,25 +10,12 @@ import {
 } from "../redux/selectors";
 import PageDataContext from "../contexts/PageDataContext";
 
-export type RankTopListProps = {
-    className?: string;
-};
-
-const GetRankTopList: React.FC<RankTopListProps> = ({ className }) => {
-    const { page_loading, pokemon, pokemon_types } =
-        useContext(PageDataContext);
+const GetRankTopList: React.FC = () => {
+    const { page_loading } = useContext(PageDataContext);
     const dispatch = useDispatch();
     const season = useSelector(getSeasonState);
     const rule = useSelector(getRuleState);
     const topLists = useSelector(getTopListState);
-
-    const now = Date.now();
-
-    const currentList = page_loading
-        ? undefined
-        : topLists[`${season[0].value}_${rule[0].value}`];
-
-    const shouldLoading = !currentList || now > currentList.expires;
 
     useEffect(() => {
         if (!page_loading && shouldLoading) dispatch(topListAction);
@@ -37,29 +23,25 @@ const GetRankTopList: React.FC<RankTopListProps> = ({ className }) => {
         document.title = "PokéRank";
     });
 
+    if (page_loading) return <RankTopListLoading />;
+
+    const now = Date.now();
+
+    const currentList = topLists[`${season[0].value}_${rule[0].value}`];
+
+    const shouldLoading = !currentList || now > currentList.expires;
+
     return (
         <>
-            <PmList className={className}>
-                {shouldLoading
-                    ? Array.apply(null, Array(20)).map((v, i) => (
-                          <PmRowLoading key={i} />
-                      ))
-                    : currentList.topList.map((rank, i) => (
-                          <PmRow
-                              key={i}
-                              pmRank={rank.ranking}
-                              pmAvatar={`${process.env.REACT_APP_IMAGE_PATH}/cap${rank.pokemon.id}_f${rank.pokemon.form_id}_s0.png`}
-                              pmId={rank.pokemon.id}
-                              pmFormId={rank.pokemon.form_id}
-                              pmName={pokemon[rank.pokemon.id]}
-                              pmType={
-                                  pokemon_types[rank.pokemon.id][
-                                      rank.pokemon.form_id
-                                  ]
-                              }
-                          />
-                      ))}
-            </PmList>
+            {shouldLoading ? (
+                <RankTopListLoading />
+            ) : (
+                <RankTopList
+                    topList={topLists}
+                    season={season[0]}
+                    rule={rule[0]}
+                />
+            )}
         </>
     );
 };
