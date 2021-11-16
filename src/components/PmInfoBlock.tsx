@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import { Location } from "history";
 import { Link } from "react-router-dom";
 import PmTypeBlock from "./PmTypeBlock";
-import LoadingBlock from "./LoadingBlock";
-import PageDataContext, { PageDataType } from "../contexts/PageDataContext";
+import PmInfoBlockLoading from "./PmInfoBlockLoading";
+import PageDataContext from "../contexts/PageDataContext";
 import { HistoryState } from "../containers/HistoryContainer";
 import styles from "./pmInfoBlock.module.scss";
 import LazyLoadImage from "./LazyLoadImage";
@@ -15,55 +15,6 @@ export type PmInfoBlockProps = {
     isLoading?: boolean;
 };
 
-export const LoadingMode = (pageData: PageDataType) => {
-    const types =
-        pageData && pageData.types && pageData.types.length > 0
-            ? pageData.types
-            : Array.apply(null, Array(18));
-
-    return (
-        <div className={styles["info"]}>
-            <div className="d-sm-flex mb-3">
-                <div className="d-flex align-items-center mr-sm-auto mb-2 mb-sm-0">
-                    <LoadingBlock
-                        className={`${styles["info-loading-name"]} mr-2`}
-                    />
-                    <LoadingBlock
-                        className={`${styles["info-loading-rank"]} mr-auto`}
-                    />
-                </div>
-                <div className="d-flex align-items-center">
-                    <LoadingBlock className={styles["info-type"]} />
-                    <LoadingBlock className={styles["info-type"]} />
-                </div>
-            </div>
-            <div className="d-flex flex-wrap mb-3">
-                <LoadingBlock className={styles["info-img"]} />
-            </div>
-            <div style={{ overflowX: "auto" }}>
-                <div className={styles["info-weakness-table"]}>
-                    <div className={styles["info-table-tr"]}>
-                        {types.map((v, i) => (
-                            <div key={i} className={styles["info-table-td"]}>
-                                <LoadingBlock
-                                    style={{ width: "100%", height: "100%" }}
-                                />
-                            </div>
-                        ))}
-                    </div>
-                    <div className={styles["info-table-tr"]}>
-                        {types.map((v, i) => (
-                            <div key={i} className={styles["info-table-td"]}>
-                                --
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-};
-
 const PmInfoBlock: React.FC<PmInfoBlockProps> = ({
     pmId,
     formId,
@@ -73,11 +24,11 @@ const PmInfoBlock: React.FC<PmInfoBlockProps> = ({
     const pageData = useContext(PageDataContext);
 
     if (isLoading || typeof pmId !== "number" || typeof formId !== "number")
-        return LoadingMode(pageData);
+        return <PmInfoBlockLoading />;
 
     const pmTypes = pageData.pokemon_types;
 
-    if (!pmTypes[pmId] || !pmTypes[pmId][formId]) return LoadingMode(pageData);
+    if (!pmTypes[pmId] || !pmTypes[pmId][formId]) return <PmInfoBlockLoading />;
 
     const damage: Array<number> = [];
     for (let i = 0; i < pmTypes[pmId][formId].length; i++) {

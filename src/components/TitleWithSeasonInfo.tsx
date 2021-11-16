@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { useSelector } from "react-redux";
 import PageDataContext from "../contexts/PageDataContext";
 import { getRuleState, getSeasonState } from "../redux/selectors";
-import styles from "./titleWithSeasonInfo.module.scss"
+import styles from "./titleWithSeasonInfo.module.scss";
 
 export type TitleWIthSeasonInfoProps = {
     title: string;
@@ -23,8 +23,8 @@ const TitleWithSeasonInfo: React.FC<TitleWIthSeasonInfoProps> = ({ title }) => {
 
     return (
         <header>
-            <h1 className={styles['title']}>寶可夢排行榜</h1>
-            <p className={styles['season-info']}>{seasonText}</p>
+            <h1 className={styles["title"]}>寶可夢排行榜</h1>
+            <p className={styles["season-info"]}>{seasonText}</p>
         </header>
     );
 };

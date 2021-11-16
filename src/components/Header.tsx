@@ -47,7 +47,7 @@ const Header: React.FC = () => (
             </div>
 
             <div className={styles["header-nav-btn"]}>
-                <RuleSelector />
+                <RuleSelector style={{ width: "74px" }} />
             </div>
         </div>
     </nav>
