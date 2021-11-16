@@ -26,34 +26,27 @@ const getValue = (value: number, data: Array<{ value: number }>) => {
     }
 };
 
-const requestPageData = () => {
-    const pr_url = `${process.env.REACT_APP_S3_HOST}/pr_data.json`;
-    const wiki_url = `${process.env.REACT_APP_S3_HOST}/wiki_data.json`;
-
-    return Promise.all([
-        window.fetch(pr_url),
-        window.fetch(wiki_url),
-    ]).then(function (response) {
-        return Promise.all([response[0].json(), response[1].json()]);
-    });
-};
-
 const PageDataProvider: React.FC = ({ children }) => {
+    const pr_url = `${process.env.REACT_APP_S3_HOST}/pr_data.json`;
+
     const dispatch = useDispatch();
 
     const [pageData, setPageData] = useState<PageDataType>();
-    const [wikiData, setWikiData] = useState<WikiDataType>();
 
     useEffect(() => {
-        if (pageData && wikiData) return;
+        if (pageData) return;
 
-        requestPageData()
+        window
+            .fetch(pr_url)
+            .then(function (response) {
+                return response.json();
+            })
             .then(function (data) {
-                let defaultState = getDefaultState(data[0]);
+                let defaultState = getDefaultState(data);
 
                 const rule = getParameterByName("rule");
                 if (rule) {
-                    const ruleValue = getValue(parseInt(rule), data[0].rules);
+                    const ruleValue = getValue(parseInt(rule), data.rules);
                     if (ruleValue) {
                         defaultState.rule = ruleValue;
                     }
@@ -63,7 +56,7 @@ const PageDataProvider: React.FC = ({ children }) => {
                 if (season) {
                     const seasonValue = getValue(
                         parseInt(season),
-                        data[0].seasons
+                        data.seasons
                     );
                     if (seasonValue) {
                         defaultState.season = seasonValue;
@@ -73,11 +66,30 @@ const PageDataProvider: React.FC = ({ children }) => {
                 dispatch(toggleRule(defaultState.rule[0]));
                 dispatch(toggleSeason(defaultState.season[0]));
 
-                data[0].page_loading = false;
-                setPageData(data[0]);
+                data.page_loading = false;
+                setPageData(data);
+            })
+            .catch((e) => {
+                alert("與伺服器連接失敗，請稍後在試。");
+                console.log(e);
+            });
+    });
 
-                data[1].page_loading = false;
-                setWikiData(data[1]);
+    const wiki_url = `${process.env.REACT_APP_S3_HOST}/wiki_data.json`;
+
+    const [wikiData, setWikiData] = useState<WikiDataType>();
+
+    useEffect(() => {
+        if (wikiData || !pageData) return;
+
+        window
+            .fetch(wiki_url)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                data.page_loading = false;
+                setWikiData(data);
             })
             .catch((e) => {
                 alert("與伺服器連接失敗，請稍後在試。");
