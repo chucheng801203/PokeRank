@@ -29,6 +29,9 @@ const GetRankData: React.FC = () => {
         if (pageData.page_loading || !shouldLoading || !isValidPmId) return;
 
         dispatch(rankDataAction(pmIdNum));
+    });
+
+    useEffect(() => {
         document.title = `No. ${pmIdNum} ${pageData.pokemon[pmIdNum]} - PokéRank`;
         window.scroll(0, 0);
     });
