@@ -25,11 +25,12 @@ const HistoryContainer: React.FC = () => {
     const history = useHistory();
     const { state, search } = useLocation<HistoryState>();
 
-    const defaultState = getDefaultState(pageData);
-
     // 網頁剛載入時加入預設 history state
     useEffect(() => {
-        if (state) return;
+        if (state || pageData.page_loading) return;
+
+        const defaultState = getDefaultState(pageData);
+
         history.replace(window.location.pathname + search, {
             rule: defaultState.rule[0],
             season: defaultState.season[0],
@@ -39,7 +40,9 @@ const HistoryContainer: React.FC = () => {
 
     // popstate event
     useEffect(() => {
-        if (!state || history.action !== "POP") return;
+        if (!state || history.action !== "POP" || pageData.page_loading) return;
+
+        const defaultState = getDefaultState(pageData);
 
         if (
             state.season.index === season[0].index &&
