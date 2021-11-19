@@ -32,7 +32,10 @@ const PmRow: React.FC<PmRowProps> = ({
             to={({ state }: Location<HistoryState>) => ({
                 pathname: `/${pmId}/${pmFormId}`,
                 search: `?season=${state.season.value}&rule=${state.rule.value}`,
-                state: state,
+                state: {
+                    ...state,
+                    searchText: "",
+                },
             })}
         >
             <div className={`${styles["row-content"]}`}>
