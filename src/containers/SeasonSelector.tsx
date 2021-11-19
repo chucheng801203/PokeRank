@@ -1,12 +1,11 @@
 import React, { useContext } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import {
     DefaultSelector as Selector,
     Option,
 } from "../components/SelectorComponent";
 import { SelectValue } from "../components/SelectorComponent/DefaultSelector";
-import toggleSeason from "../redux/actions/season";
 import { getSeasonState } from "../redux/selectors";
 import PageDataContext from "../contexts/PageDataContext";
 import { HistoryState } from "./HistoryContainer";
@@ -21,31 +20,26 @@ const SeasonSelector: React.FC<SeasonSelectorProps> = (props) => {
     const pageData = useContext(PageDataContext);
     const season = useSelector(getSeasonState);
 
-    const dispatch = useDispatch();
-    const history = useHistory();
-    const { state, pathname } = useLocation<HistoryState>();
+    const history = useHistory<HistoryState>();
 
     const onChange = (v: SelectValue) => {
         if (v.length <= 0) return;
 
-        const s = {
-            index: v[0].index,
-            value: v[0].value as number,
-        };
-
-        dispatch(toggleSeason(s));
-
         const ruleParam = getParameterByName("rule");
 
-        let pathName = `${pathname}?season=${v[0].value}`;
+        const location = history.location;
+        let pathname = `${location.pathname}?season=${v[0].value}`;
 
         if (ruleParam) {
-            pathName += `&rule=${ruleParam}`;
+            pathname += `&rule=${ruleParam}`;
         }
 
-        history.push(pathName, {
-            ...state,
-            season: s,
+        history.push(pathname, {
+            ...location.state,
+            season: {
+                index: v[0].index,
+                value: v[0].value as number,
+            },
         });
 
         window.scroll(0, 0);
