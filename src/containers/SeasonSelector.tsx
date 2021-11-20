@@ -28,7 +28,14 @@ const SeasonSelector: React.FC<SeasonSelectorProps> = (props) => {
         const ruleParam = getParameterByName("rule");
 
         const location = history.location;
-        let pathname = `${location.pathname}?season=${v[0].value}`;
+
+        let pathname = location.pathname;
+
+        if (/^\/active-pokemon\/\d+$/.test(pathname)) {
+            pathname = "/active-pokemon/1";
+        }
+
+        pathname = `${pathname}?season=${v[0].value}`;
 
         if (ruleParam) {
             pathname += `&rule=${ruleParam}`;

@@ -4,6 +4,7 @@ import season from "./season";
 import topList from "./topList";
 import rankData from "./rankData";
 import searchText from "./searchText";
+import activePokemon from "./activePokemon";
 
 export default combineReducers({
     rule,
@@ -11,4 +12,5 @@ export default combineReducers({
     topList,
     rankData,
     searchText,
+    activePokemon,
 });

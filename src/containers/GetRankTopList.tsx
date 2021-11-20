@@ -20,7 +20,7 @@ const GetRankTopList: React.FC = () => {
     useEffect(() => {
         if (!page_loading && shouldLoading) dispatch(topListAction);
 
-        document.title = "PokéRank";
+        document.title = "寶可夢排行榜 - PokéRank";
     });
 
     if (page_loading) return <RankTopListLoading />;

@@ -20,21 +20,10 @@ const HistoryContainer: React.FC = () => {
     const dispatch = useDispatch();
 
     const store = useStore<RootState>();
-    const { season, rule } = store.getState();
+    const { season } = store.getState();
 
     const history = useHistory();
     const { state, search, pathname } = useLocation<HistoryState>();
-
-    // 網頁剛載入時加入預設 history state
-    useEffect(() => {
-        if (state || pageData.page_loading) return;
-
-        history.replace(pathname + search, {
-            rule: rule[0],
-            season: season[0],
-            searchText: "",
-        });
-    });
 
     // push & popstate & replace event
     useEffect(() => {

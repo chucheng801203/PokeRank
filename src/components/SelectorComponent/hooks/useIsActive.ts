@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { contains } from "../../../util";
 
 const useIsActive: (
-    selectorRef: React.RefObject<HTMLDivElement>
+    selectorRef: React.RefObject<HTMLElement>
 ) => [boolean, React.Dispatch<React.SetStateAction<boolean>>] = (
     selectorRef
 ) => {

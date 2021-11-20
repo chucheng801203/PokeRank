@@ -1,0 +1,112 @@
+.table,
+.table-loading {
+    display: table;
+    width: auto;
+    margin: auto;
+    border: 1px solid #4b4b4b;
+    border-collapse: collapse;
+    border-radius: 4px;
+    background-color: #1b1b1b;
+
+    tr {
+        display: table-row;
+    }
+
+    td,
+    th {
+        display: table-cell;
+        vertical-align: middle;
+        padding: 8px;
+        border: 1px solid #4b4b4b;
+        text-align: center;
+        white-space: nowrap;
+        a {
+            color: #d6d6d6;
+        }
+
+        .img {
+            width: 40px;
+            height: 40px;
+        }
+    }
+}
+
+.table-loading {
+    tr {
+        th:nth-child(1),
+        td:nth-child(1) {
+            width: 49px;
+        }
+        th:nth-child(2),
+        td:nth-child(2) {
+            width: 57px;
+        }
+        th:nth-child(3),
+        td:nth-child(3) {
+            width: 97px;
+        }
+        th:nth-child(4),
+        td:nth-child(4) {
+            width: 130px;
+        }
+        th:nth-child(5),
+        td:nth-child(5) {
+            width: 44.83px;
+        }
+        th:nth-child(6),
+        td:nth-child(6),
+        th:nth-child(7),
+        td:nth-child(7),
+        th:nth-child(8),
+        td:nth-child(8),
+        th:nth-child(9),
+        td:nth-child(9),
+        th:nth-child(10),
+        td:nth-child(10) {
+            width: 49px;
+        }
+
+        td {
+            height: 63px;
+        }
+    }
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 16px 0;
+
+    &-item,
+    &-item-ignore {
+        width: 36px;
+        padding: 8px 0;
+        border: 1px solid #4b4b4b;
+        border-radius: 4px;
+        margin: 0 4px;
+        text-align: center;
+        font-size: 14px;
+        cursor: pointer;
+        user-select: none;
+        color: #d6d6d6;
+        text-decoration: none;
+    }
+
+    &-item {
+        transition: 0.3s border-color;
+    }
+
+    &-item:hover:not(.active) {
+        border-color: #d6d6d6;
+    }
+
+    &-item.active {
+        background-color: #d6d6d6;
+        color: #000;
+    }
+
+    &-item-ignore {
+        border: none;
+        cursor: default;
+    }
+}

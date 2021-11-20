@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams, Redirect } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import RankDataPage from "../components/RankDataPage";
 import rankDataAction from "../redux/actions/rankData";
 import {
@@ -9,7 +9,7 @@ import {
     getRankDataState,
 } from "../redux/selectors";
 import PageDataContext from "../contexts/PageDataContext";
-import { getDefaultState } from "../redux/store";
+import RedirectHome from "../components/RedirectHome";
 
 const GetRankData: React.FC = () => {
     const { pmId, formId } = useParams<{
@@ -52,27 +52,16 @@ const GetRankData: React.FC = () => {
     return (
         <>
             {!isValidPmId ? (
-                <Redirect
-                    to={{
-                        pathname: "",
-                        state: {
-                            rule: getDefaultState(pageData).rule[0],
-                            season: getDefaultState(pageData).season[0],
-                            searchText: "",
-                        },
-                    }}
-                />
+                <RedirectHome />
             ) : (
-                <>
-                    <RankDataPage
-                        isLoading={shouldLoading}
-                        rankData={rankData}
-                        season={season[0]}
-                        rule={rule[0]}
-                        pmId={pmIdNum}
-                        formId={formIdNum}
-                    />
-                </>
+                <RankDataPage
+                    isLoading={shouldLoading}
+                    rankData={rankData}
+                    season={season[0]}
+                    rule={rule[0]}
+                    pmId={pmIdNum}
+                    formId={formIdNum}
+                />
             )}
         </>
     );

@@ -100,7 +100,7 @@ const DefaultSelector: React.FC<DefaultSelectorProps> = ({
                 )}
                 tabIndex={0}
                 ref={selectorRef}
-                onClick={(e) => {
+                onClick={() => {
                     setIsActive(!isActive);
                 }}
             >

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import toggleRule from "../redux/actions/rule";
 import toggleSeason from "../redux/actions/season";
@@ -40,6 +41,7 @@ const requestPageData = () => {
 
 const PageDataProvider: React.FC = ({ children }) => {
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const [gloData, setGloData] = useState<{
         pageData?: PageDataType;
@@ -72,6 +74,15 @@ const PageDataProvider: React.FC = ({ children }) => {
                     if (seasonValue) {
                         defaultState.season = seasonValue;
                     }
+                }
+
+                const { state, pathname, search } = history.location;
+                if (!state) {
+                    history.replace(pathname + search, {
+                        rule: defaultState.rule[0],
+                        season: defaultState.season[0],
+                        searchText: "",
+                    });
                 }
 
                 dispatch(toggleRule(defaultState.rule[0]));
