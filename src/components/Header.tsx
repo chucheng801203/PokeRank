@@ -38,6 +38,9 @@ const Header: React.FC = () => (
                         })}
                         activeClassName={styles["active"]}
                         exact
+                        onClick={() => {
+                            window.scrollTo(0, 0)
+                        }}
                     >
                         排行榜
                     </NavLink>
@@ -57,6 +60,9 @@ const Header: React.FC = () => (
                         isActive={(match, location) =>
                             /^\/active-pokemon\/\d+$/.test(location.pathname)
                         }
+                        onClick={() => {
+                            window.scrollTo(0, 0)
+                        }}
                     >
                         可用寶可夢
                     </NavLink>
