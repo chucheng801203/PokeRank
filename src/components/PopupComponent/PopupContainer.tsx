@@ -3,10 +3,12 @@ import { checkParentHasFixedProp, debounce } from "../../util";
 import popupStyle from "./popup.module.scss";
 
 export interface PopupContainerProps {
-    popupRef: React.RefObject<HTMLDivElement>;
-    triggerRef: React.RefObject<HTMLDivElement>;
+    popupRef: React.RefObject<HTMLElement>;
+    triggerRef: React.RefObject<HTMLElement>;
     isActive?: boolean;
     children?: React.ReactNode;
+    width?: string;
+    align?: "top" | "left";
 }
 
 const PopupContainer: React.FC<PopupContainerProps> = ({
@@ -14,6 +16,8 @@ const PopupContainer: React.FC<PopupContainerProps> = ({
     children,
     isActive,
     popupRef,
+    width,
+    align,
 }) => {
     const popupContainerRef = useRef<HTMLDivElement>(null);
 
@@ -45,9 +49,21 @@ const PopupContainer: React.FC<PopupContainerProps> = ({
             }
 
             popupContainer.style.position = "absolute";
-            popupContainer.style.left = `${x}px`;
-            popupContainer.style.top = `${y + 7}px`;
-            popupContainer.style.width = `${offset.width}px`;
+
+            if (align === "left" || !align) {
+                popupContainer.style.left = `${x}px`;
+            }
+
+            if (align === "top" || !align) {
+                popupContainer.style.top = `${y + 7}px`;
+            }
+
+            if (width) {
+                popupContainer.style.width = width;
+                popupContainer.style.height = "0";
+            } else {
+                popupContainer.style.width = `${offset.width}px`;
+            }
         }
     };
 

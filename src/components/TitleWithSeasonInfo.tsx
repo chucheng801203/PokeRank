@@ -23,7 +23,7 @@ const TitleWithSeasonInfo: React.FC<TitleWIthSeasonInfoProps> = ({ title }) => {
 
     return (
         <header>
-            <h1 className={styles["title"]}>寶可夢排行榜</h1>
+            <h1 className={styles["title"]}>{title}</h1>
             <p className={styles["season-info"]}>{seasonText}</p>
         </header>
     );

@@ -1,18 +1,21 @@
 import React, { useContext, Suspense } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
 import TitleWithSeasonInfo from "./TitleWithSeasonInfo";
 import SeasonSelector from "../containers/SeasonSelector";
 import PmList from "./PmList";
 import PmRowLoading from "./PmRowLoading";
+import RedirectHome from "./RedirectHome";
 import HistoryContainer from "../containers/HistoryContainer";
 import PageDataContext from "../contexts/PageDataContext";
-import { getDefaultState } from "../redux/store";
 import styles from "./app.module.scss";
 
 const GetRankTopList = React.lazy(() => import("../containers/GetRankTopList"));
 const GetRankData = React.lazy(() => import("../containers/GetRankData"));
+const GetActivePokemon = React.lazy(
+    () => import("../containers/GetActivePokemon")
+);
 const MobilePokemonSelector = React.lazy(
     () => import("../containers/MobilePokemonSelector")
 );
@@ -37,6 +40,10 @@ const App: React.FC = () => {
                         <Route exact path="/mobile/search/">
                             <MobilePokemonSelector />
                         </Route>
+                        <Route exact path="/active-pokemon/:pageNum">
+                            <TitleWithSeasonInfo title="可使用的寶可夢" />
+                            <GetActivePokemon />
+                        </Route>
                         <Route exact path="/:pmId/:formId/">
                             <GetRankData />
                         </Route>
@@ -50,18 +57,7 @@ const App: React.FC = () => {
                                     )}
                                 </PmList>
                             ) : (
-                                <Redirect
-                                    to={{
-                                        pathname: "",
-                                        state: {
-                                            rule: getDefaultState(pageData)
-                                                .rule[0],
-                                            season: getDefaultState(pageData)
-                                                .season[0],
-                                            searchText: "",
-                                        },
-                                    }}
-                                />
+                                <RedirectHome />
                             )}
                         </Route>
                     </Switch>

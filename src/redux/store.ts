@@ -6,6 +6,7 @@ import { SeasonState } from "./reducers/season";
 import { TopListState } from "./reducers/topList";
 import { RankDataState } from "./reducers/rankData";
 import { SearchTextState } from "./reducers/searchText";
+import { ActivePokemonState } from "./reducers/activePokemon";
 import { PageDataType } from "../contexts/PageDataContext";
 
 export type RootState = {
@@ -14,6 +15,7 @@ export type RootState = {
     topList: TopListState;
     rankData: RankDataState;
     searchText: SearchTextState;
+    activePokemon: ActivePokemonState;
 };
 
 export const defaultState: RootState = {
@@ -22,6 +24,7 @@ export const defaultState: RootState = {
     topList: {},
     rankData: {},
     searchText: "",
+    activePokemon: {},
 };
 
 // 當頁面資料載入時取得預設的頁面狀態
@@ -42,6 +45,7 @@ export const getDefaultState = (pageData: PageDataType): RootState => {
         topList: {},
         rankData: [],
         searchText: "",
+        activePokemon: {},
     };
 };
 

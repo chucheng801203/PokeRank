@@ -3,6 +3,24 @@ import { RootState } from "../store";
 
 export const GET_RANK_DATA = "getRankData";
 
+export type RankPokemonData = {
+    [rule: number]: {
+        [formId: number]: Array<{
+            id: number;
+            form_id: number;
+        }>;
+    };
+};
+
+export type RankPercentageData = {
+    [rule: number]: {
+        [formId: number]: Array<{
+            id: number;
+            percentage: string;
+        }>;
+    };
+};
+
 export type RankDataResponse = {
     rank: {
         [rule: number]: {
@@ -10,82 +28,19 @@ export type RankDataResponse = {
         };
     };
     team: {
-        pokemon: {
-            [rule: number]: {
-                [formId: number]: Array<{
-                    id: number;
-                    form_id: number;
-                }>;
-            };
-        };
-        move: {
-            [rule: number]: {
-                [formId: number]: Array<{
-                    id: number;
-                    percentage: string;
-                }>;
-            };
-        };
-        ability: {
-            [rule: number]: {
-                [formId: number]: Array<{
-                    id: number;
-                    percentage: string;
-                }>;
-            };
-        };
-        nature: {
-            [rule: number]: {
-                [formId: number]: Array<{
-                    id: number;
-                    percentage: string;
-                }>;
-            };
-        };
-        item: {
-            [rule: number]: {
-                [formId: number]: Array<{
-                    id: number;
-                    percentage: string;
-                }>;
-            };
-        };
+        pokemon: RankPokemonData;
+        move: RankPercentageData;
+        ability: RankPercentageData;
+        nature: RankPercentageData;
+        item: RankPercentageData;
     };
     win: {
-        pokemon: {
-            [rule: number]: {
-                [formId: number]: Array<{
-                    id: number;
-                    form_id: number;
-                }>;
-            };
-        };
-        move: {
-            [rule: number]: {
-                [formId: number]: Array<{
-                    id: number;
-                    percentage: string;
-                }>;
-            };
-        };
+        pokemon: RankPokemonData;
+        move: RankPercentageData;
     };
     lose: {
-        pokemon: {
-            [rule: number]: {
-                [formId: number]: Array<{
-                    id: number;
-                    form_id: number;
-                }>;
-            };
-        };
-        move: {
-            [rule: number]: {
-                [formId: number]: Array<{
-                    id: number;
-                    percentage: string;
-                }>;
-            };
-        };
+        pokemon: RankPokemonData;
+        move: RankPercentageData;
     };
 };
 

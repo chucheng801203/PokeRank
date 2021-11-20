@@ -5,12 +5,20 @@ import { checkParentHasFixedProp } from "../../util";
 import popupStyle from "./popup.module.scss";
 
 export interface PopupProps {
-    triggerRef: React.RefObject<HTMLDivElement>;
+    triggerRef: React.RefObject<HTMLElement>;
     isActive?: boolean;
     children?: React.ReactNode;
+    width?: string;
+    align?: "top" | "left";
 }
 
-const Popup: React.FC<PopupProps> = ({ triggerRef, isActive, children }) => {
+const Popup: React.FC<PopupProps> = ({
+    triggerRef,
+    isActive,
+    children,
+    width,
+    align,
+}) => {
     const popupRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -31,6 +39,8 @@ const Popup: React.FC<PopupProps> = ({ triggerRef, isActive, children }) => {
                 triggerRef={triggerRef}
                 isActive={isActive}
                 popupRef={popupRef}
+                width={width}
+                align={align}
             >
                 {children}
             </PopupContainer>

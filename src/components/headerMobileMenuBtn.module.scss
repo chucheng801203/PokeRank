@@ -1,0 +1,46 @@
+.dropdown {
+    padding: 8px 0;
+    margin: 0;
+    border-radius: 4px;
+    list-style-type: none;
+    background-color: #1a1a1a;
+    box-shadow: 0 0 0 3px rgb(107, 107, 107);
+    transform-origin: 50% 0;
+    animation: show-pr-select-popup-list 0.15s linear;
+
+    &-item {
+        display: flex;
+        align-items: stretch;
+
+        &-link {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            color: #d6d6d6;
+            text-decoration: none;
+
+            &.active {
+                font-weight: bold;
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+@media (min-width: 992px) {
+    .dropdown {
+        display: none;
+    }
+}
+
+@keyframes show-pr-select-popup-list {
+    from {
+        opacity: 0.4;
+        transform: scaleY(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: scaleY(1);
+    }
+}
