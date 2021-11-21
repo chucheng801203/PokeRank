@@ -96,10 +96,6 @@
         transition: 0.3s border-color;
     }
 
-    &-item:hover:not(.active) {
-        border-color: #d6d6d6;
-    }
-
     &-item.active {
         background-color: #d6d6d6;
         color: #000;
@@ -108,5 +104,13 @@
     &-item-ignore {
         border: none;
         cursor: default;
+    }
+}
+
+@media (min-width: 576px) {
+    .pagination {
+        &-item:hover:not(.active) {
+            border-color: #d6d6d6;
+        }
     }
 }
