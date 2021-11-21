@@ -1,13 +1,15 @@
 import React from "react";
 import { Location } from "history";
-import { Link, NavLink } from "react-router-dom";
-import HomePageLink from "../containers/HomePageLink";
-import PokemonSelector from "../containers/PokemonSelector";
-import SearchIconBtn from "./SearchIconBtn";
+import { Link } from "react-router-dom";
+import HomePageLink from "../../containers/HomePageLink";
+import PokemonSelector from "../../containers/PokemonSelector";
+import SearchIconBtn from "../SearchIconBtn";
 import HeaderMobileMenuBtn from "./HeaderMobileMenuBtn";
-import RuleSelector from "../containers/RuleSelector";
-import SeasonSelector from "../containers/SeasonSelector";
-import { HistoryState } from "../containers/HistoryContainer";
+import TopListLink from "./TopListLink";
+import ActivePokemonLink from "./ActivePokemonLink";
+import RuleSelector from "../../containers/RuleSelector";
+import SeasonSelector from "../../containers/SeasonSelector";
+import { HistoryState } from "../../containers/HistoryContainer";
 import styles from "./header.module.scss";
 
 const Header: React.FC = () => (
@@ -26,46 +28,16 @@ const Header: React.FC = () => (
 
             <ul className={styles["header-nav"]}>
                 <li className={styles["header-nav-item"]}>
-                    <NavLink
+                    <TopListLink
                         className={styles["header-nav-item-link"]}
-                        to={(location: Location<HistoryState>) => ({
-                            ...location,
-                            pathname: "/",
-                            state: {
-                                ...location.state,
-                                searchText: "",
-                            },
-                        })}
                         activeClassName={styles["active"]}
-                        exact
-                        onClick={() => {
-                            window.scrollTo(0, 0)
-                        }}
-                    >
-                        排行榜
-                    </NavLink>
+                    />
                 </li>
                 <li className={styles["header-nav-item"]}>
-                    <NavLink
+                    <ActivePokemonLink
                         className={styles["header-nav-item-link"]}
-                        to={(location: Location<HistoryState>) => ({
-                            ...location,
-                            pathname: "/active-pokemon/1",
-                            state: {
-                                ...location.state,
-                                searchText: "",
-                            },
-                        })}
                         activeClassName={styles["active"]}
-                        isActive={(match, location) =>
-                            /^\/active-pokemon\/\d+$/.test(location.pathname)
-                        }
-                        onClick={() => {
-                            window.scrollTo(0, 0)
-                        }}
-                    >
-                        可用寶可夢
-                    </NavLink>
+                    />
                 </li>
             </ul>
 

@@ -1,6 +1,6 @@
 import React, { useContext, Suspense } from "react";
 import { Switch, Route } from "react-router-dom";
-import Header from "./Header";
+import Header from "./HeaderComponent/Header";
 import Footer from "./Footer";
 import TitleWithSeasonInfo from "./TitleWithSeasonInfo";
 import SeasonSelector from "../containers/SeasonSelector";
