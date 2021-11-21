@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import classNames from "classnames";
 import MenuIconBtn from "../MenuIconBtn";
 import Popup from "../PopupComponent";
 import useIsActive from "../SelectorComponent/hooks/useIsActive";
@@ -19,7 +20,9 @@ const HeaderMobileMenuBtn: React.FC<HeaderMobileMenuBtnProps> = ({
     return (
         <>
             <MenuIconBtn
-                className={className}
+                className={classNames(className, {
+                    [styles["btn-active"]]: isActive,
+                })}
                 ref={btnRef}
                 onClick={(e) => {
                     e.preventDefault();
