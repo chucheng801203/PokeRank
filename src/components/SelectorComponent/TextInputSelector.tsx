@@ -3,7 +3,7 @@ import Popup from "../PopupComponent";
 import { SelectValue } from "./DefaultSelector";
 import { convertNodeToOption, OptionData } from "./Option";
 import OptionList from "./OptionList";
-import useIsActive from "./hooks/useIsActive";
+import useIsActive from "../PopupComponent/hooks/useIsActive";
 import selectStyle from "./select.module.scss";
 
 export type TextInputSelectorProps = {

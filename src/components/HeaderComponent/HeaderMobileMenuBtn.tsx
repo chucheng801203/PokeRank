@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import classNames from "classnames";
 import MenuIconBtn from "../MenuIconBtn";
 import Popup from "../PopupComponent";
-import useIsActive from "../SelectorComponent/hooks/useIsActive";
+import useIsActive from "../PopupComponent/hooks/useIsActive";
 import styles from "./headerMobileMenuBtn.module.scss";
 import TopListLink from "./TopListLink";
 import ActivePokemonLink from "./ActivePokemonLink";

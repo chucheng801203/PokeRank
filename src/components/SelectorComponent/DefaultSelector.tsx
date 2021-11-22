@@ -3,7 +3,7 @@ import classNames from "classnames";
 import Popup from "../PopupComponent";
 import { convertNodeToOption } from "./Option";
 import OptionList from "./OptionList";
-import useIsActive from "./hooks/useIsActive";
+import useIsActive from "../PopupComponent/hooks/useIsActive";
 import selectStyle from "./select.module.scss";
 import expandMoreIcon from "../../images/expand_more_black_24dp.svg";
 
