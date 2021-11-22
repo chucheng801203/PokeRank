@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import { Location } from "history";
-import classNames from "classnames";
 import LazyLoadImage from "./LazyLoadImage";
 import PageDataContext from "../contexts/PageDataContext";
 import { ActivePokemonState } from "../redux/reducers/activePokemon";
@@ -12,6 +11,7 @@ import PmTypeBlock from "./PmTypeBlock";
 import { getPmTypeColor } from "../util";
 import RedirectHome from "./RedirectHome";
 import { HistoryState } from "../containers/HistoryContainer";
+import Pagination from "./Pagination";
 
 export type ActivePokemonPageProps = {
     activePokemon: ActivePokemonState;
@@ -25,6 +25,7 @@ const ActivePokemonPage: React.FC<ActivePokemonPageProps> = ({
     rule,
 }) => {
     const { pokemon, pokemon_types, base_stats } = useContext(PageDataContext);
+    const history = useHistory<HistoryState>();
     const acPms = activePokemon[`${season.value}_${rule.value}`];
 
     const { pageNum } = useParams<{
@@ -68,63 +69,21 @@ const ActivePokemonPage: React.FC<ActivePokemonPageProps> = ({
         }
     }
 
-    const scrollToTop = () => {
+    const onPaginationChange = (page: number) => {
+        history.push(`/active-pokemon/${page}${history.location.search}`, {
+            ...history.location.state,
+        });
         window.scrollTo(0, 0);
     };
 
     return (
         <>
-            <div className={styles["pagination"]}>
-                {visiblePages[0] !== 1 && (
-                    <Link
-                        className={styles["pagination-item"]}
-                        to={(location: Location<HistoryState>) => ({
-                            ...location,
-                            pathname: "/active-pokemon/1",
-                        })}
-                        onClick={scrollToTop}
-                    >
-                        1
-                    </Link>
-                )}
-                {visiblePages[0] - 1 > 1 && (
-                    <div className={styles["pagination-item-ignore"]}>•••</div>
-                )}
-                {visiblePages.map((v, i) => {
-                    if (v > pages || v < 1) return null;
-
-                    return (
-                        <Link
-                            className={classNames(styles["pagination-item"], {
-                                [styles["active"]]: v === currentPage,
-                            })}
-                            key={i}
-                            to={(location: Location<HistoryState>) => ({
-                                ...location,
-                                pathname: `/active-pokemon/${v}`,
-                            })}
-                            onClick={scrollToTop}
-                        >
-                            {v}
-                        </Link>
-                    );
-                })}
-                {visiblePages[visiblePages.length - 1] + 1 < pages && (
-                    <div className={styles["pagination-item-ignore"]}>•••</div>
-                )}
-                {visiblePages[visiblePages.length - 1] < pages && (
-                    <Link
-                        className={styles["pagination-item"]}
-                        to={(location: Location<HistoryState>) => ({
-                            ...location,
-                            pathname: `/active-pokemon/${pages}`,
-                        })}
-                        onClick={scrollToTop}
-                    >
-                        {pages}
-                    </Link>
-                )}
-            </div>
+            <Pagination
+                pages={pages}
+                currentPage={currentPage}
+                pageItemCount={pageItemCount}
+                onChange={onPaginationChange}
+            />
             <div style={{ overflowX: "auto" }}>
                 <table className={styles["table"]}>
                     <thead>
@@ -308,57 +267,12 @@ const ActivePokemonPage: React.FC<ActivePokemonPageProps> = ({
                     </tbody>
                 </table>
             </div>
-            <div className={styles["pagination"]}>
-                {visiblePages[0] !== 1 && (
-                    <Link
-                        className={styles["pagination-item"]}
-                        to={(location: Location<HistoryState>) => ({
-                            ...location,
-                            pathname: "/active-pokemon/1",
-                        })}
-                        onClick={scrollToTop}
-                    >
-                        1
-                    </Link>
-                )}
-                {visiblePages[0] - 1 > 1 && (
-                    <div className={styles["pagination-item-ignore"]}>•••</div>
-                )}
-                {visiblePages.map((v, i) => {
-                    if (v > pages || v < 1) return null;
-
-                    return (
-                        <Link
-                            className={classNames(styles["pagination-item"], {
-                                [styles["active"]]: v === currentPage,
-                            })}
-                            key={i}
-                            to={(location: Location<HistoryState>) => ({
-                                ...location,
-                                pathname: `/active-pokemon/${v}`,
-                            })}
-                            onClick={scrollToTop}
-                        >
-                            {v}
-                        </Link>
-                    );
-                })}
-                {visiblePages[visiblePages.length - 1] + 1 < pages && (
-                    <div className={styles["pagination-item-ignore"]}>•••</div>
-                )}
-                {visiblePages[visiblePages.length - 1] < pages && (
-                    <Link
-                        className={styles["pagination-item"]}
-                        to={(location: Location<HistoryState>) => ({
-                            ...location,
-                            pathname: `/active-pokemon/${pages}`,
-                        })}
-                        onClick={scrollToTop}
-                    >
-                        {pages}
-                    </Link>
-                )}
-            </div>
+            <Pagination
+                pages={pages}
+                currentPage={currentPage}
+                pageItemCount={pageItemCount}
+                onChange={onPaginationChange}
+            />
         </>
     );
 };
