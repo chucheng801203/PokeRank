@@ -60,7 +60,7 @@ const ActivePokemonPage: React.FC<ActivePokemonPageProps> = ({
                 pageItemCount={pageItemCount}
                 onChange={onPaginationChange}
             />
-            <div style={{ overflowX: "auto", padding: "0 1px" }}>
+            <div style={{ overflowX: "auto", padding: "1px" }}>
                 <table className={styles["table"]}>
                     <thead>
                         <tr>
