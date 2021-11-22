@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-import styles from "./Pagination.module.scss";
+import styles from "./pagination.module.scss";
 
 export type PaginationProps = {
     pages: number; // 總頁數
