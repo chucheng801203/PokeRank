@@ -45,30 +45,6 @@ const ActivePokemonPage: React.FC<ActivePokemonPageProps> = ({
     // 最大顯示頁數
     const pageItemCount = 5;
 
-    // 可以看見的頁數
-    const visiblePages = [];
-    if (pages <= pageItemCount) {
-        for (let i = 1; i <= pages; i++) {
-            visiblePages.push(i);
-        }
-    } else if (currentPage <= Math.ceil(pageItemCount / 2)) {
-        for (let i = 1; i <= pageItemCount; i++) {
-            visiblePages.push(i);
-        }
-    } else if (currentPage >= pages - Math.ceil(pageItemCount / 2)) {
-        for (let i = pages - pageItemCount + 1; i <= pages; i++) {
-            visiblePages.push(i);
-        }
-    } else if (currentPage > Math.ceil(pageItemCount / 2)) {
-        for (
-            let i = currentPage - Math.floor(pageItemCount / 2);
-            i <= currentPage + Math.floor(pageItemCount / 2);
-            i++
-        ) {
-            visiblePages.push(i);
-        }
-    }
-
     const onPaginationChange = (page: number) => {
         history.push(`/active-pokemon/${page}${history.location.search}`, {
             ...history.location.state,
