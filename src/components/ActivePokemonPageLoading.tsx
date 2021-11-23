@@ -5,7 +5,7 @@ const ActivePokemonPageLoading: React.FC = () => (
     <div style={{ overflowX: "auto", padding: "1px" }}>
         <table className={styles["table-loading"]}>
             <thead>
-                <tr className={styles["tr"]}>
+                <tr>
                     <th>編號</th>
                     <th>圖片</th>
                     <th>名稱</th>
@@ -21,7 +21,7 @@ const ActivePokemonPageLoading: React.FC = () => (
 
             <tbody>
                 {Array.apply(null, Array(20)).map((v, i) => (
-                    <tr className={styles["tr"]} key={i}>
+                    <tr key={i}>
                         <td></td>
                         <td></td>
                         <td></td>
