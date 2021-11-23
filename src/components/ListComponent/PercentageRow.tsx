@@ -1,6 +1,6 @@
 import React from "react";
-import LoadingBlock from "./LoadingBlock";
-import PmTypeBlock from "./PmTypeBlock";
+import LoadingBlock from "../LoadingBlock";
+import PmTypeBlock from "../PmTypeBlock";
 import styles from "./percentageRow.module.scss";
 
 export type PercentageRowProps = {
