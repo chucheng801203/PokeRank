@@ -53,6 +53,44 @@ class LoadBaseStatByShowDown extends Command
 
                     SdBaseStat::updateOrCreate(['pf_id' => $pf->id], $updates);
                 }
+
+                // 大蔥鴨
+                SdBaseStat::updateOrCreate(['pf_id' => 120], [
+                    'hp'  => 52,
+                    'atk' => 90,
+                    'def' => 55,
+                    'spa' => 58,
+                    'spd' => 62,
+                    'spe' => 60,
+                ]);
+
+                SdBaseStat::updateOrCreate(['pf_id' => 121], [
+                    'hp'  => 52,
+                    'atk' => 95,
+                    'def' => 55,
+                    'spa' => 58,
+                    'spd' => 62,
+                    'spe' => 55,
+                ]);
+
+                // 魔牆人偶
+                SdBaseStat::updateOrCreate(['pf_id' => 167], [
+                    'hp'  => 40,
+                    'atk' => 45,
+                    'def' => 65,
+                    'spa' => 100,
+                    'spd' => 120,
+                    'spe' => 90,
+                ]);
+
+                SdBaseStat::updateOrCreate(['pf_id' => 168], [
+                    'hp'  => 50,
+                    'atk' => 65,
+                    'def' => 65,
+                    'spa' => 90,
+                    'spd' => 90,
+                    'spe' => 100,
+                ]);
             });
 
             $this->log->info('pokemonShowDown:load-baseStat-data 命令已執行完畢');
