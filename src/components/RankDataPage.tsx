@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
-import PmList from "./PmList";
+import PmList from "./ListComponent/PmList";
 import PmInfoBlock from "./PmInfoBlock";
-import PercentageRow from "./PercentageRow";
+import PercentageRow from "./ListComponent/PercentageRow";
 import BaseStatRow from "./BaseStatRow";
 import RankDataPageLoading from "./RankDataPageLoading";
 import PageDataContext from "../contexts/PageDataContext";
@@ -9,10 +9,10 @@ import { RankDataState } from "../redux/reducers/rankData";
 import { SeasonState } from "../redux/reducers/season";
 import { RuleState } from "../redux/reducers/rule";
 import styles from "./rankDataPage.module.scss";
-import pageRowStyles from "./pmRow.module.scss";
-import pmListStyles from "./pmList.module.scss";
+import pageRowStyles from "./ListComponent/pmRow.module.scss";
+import pmListStyles from "./ListComponent/pmList.module.scss";
 import ShowWikiModal from "./ShowWikiModal";
-import PmRow from "./PmRow";
+import PmRow from "./ListComponent/PmRow";
 
 export type RankDataPageProps = {
     isLoading?: boolean;

@@ -2,9 +2,9 @@ import React from "react";
 import classNames from "classnames";
 import { Location } from "history";
 import { Link } from "react-router-dom";
-import PmTypeBlock from "./PmTypeBlock";
-import LazyLoadImage from "./LazyLoadImage";
-import { HistoryState } from "../containers/HistoryContainer";
+import PmTypeBlock from "../PmTypeBlock";
+import LazyLoadImage from "../LazyLoadImage";
+import { HistoryState } from "../../containers/HistoryContainer";
 import styles from "./pmRow.module.scss";
 
 export type PmRowProps = {

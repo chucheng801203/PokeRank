@@ -1,6 +1,6 @@
 import React from "react";
-import PmList from "./PmList";
-import PmRowLoading from "./PmRowLoading";
+import PmList from "./ListComponent/PmList";
+import PmRowLoading from "./ListComponent/PmRowLoading";
 import styles from "./rankTopList.module.scss";
 
 const RankTopListLoading: React.FC = () => (

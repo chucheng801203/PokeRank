@@ -1,12 +1,12 @@
 import React from "react";
-import PmList from "./PmList";
+import PmList from "./ListComponent/PmList";
 import PmInfoBlock from "./PmInfoBlock";
-import PmRowLoading from "./PmRowLoading";
-import PercentageRow from "./PercentageRow";
+import PmRowLoading from "./ListComponent/PmRowLoading";
+import PercentageRow from "./ListComponent/PercentageRow";
 import BaseStatRow from "./BaseStatRow";
 import styles from "./rankDataPage.module.scss";
-import pageRowStyles from "./pmRow.module.scss";
-import pmListStyles from "./pmList.module.scss";
+import pageRowStyles from "./ListComponent/pmRow.module.scss";
+import pmListStyles from "./ListComponent/pmList.module.scss";
 
 const RankDataPageLoading: React.FC = () => {
     return (

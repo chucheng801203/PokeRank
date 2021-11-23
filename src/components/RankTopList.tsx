@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import PmList from "./PmList";
-import PmRow from "./PmRow";
+import PmList from "./ListComponent/PmList";
+import PmRow from "./ListComponent/PmRow";
 import { TopListState } from "../redux/reducers/topList";
 import { RuleState } from "../redux/reducers/rule";
 import { SeasonState } from "../redux/reducers/season";

@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-import LoadingBlock from "./LoadingBlock";
+import LoadingBlock from "../LoadingBlock";
 import styles from "./pmRow.module.scss";
 
 export type PmRowLoadingProps = {
