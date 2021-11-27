@@ -26,7 +26,7 @@ const ActivePokemonPage: React.FC<ActivePokemonPageProps> = ({
 }) => {
     const { pokemon, pokemon_types, base_stats } = useContext(PageDataContext);
     const history = useHistory<HistoryState>();
-    const acPms = activePokemon[`${season.value}_${rule.value}`];
+    const acPms = activePokemon[`${season.value}_${rule.value}`].activePokemon;
 
     const { pageNum } = useParams<{
         pageNum: string;

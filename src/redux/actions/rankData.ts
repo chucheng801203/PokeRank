@@ -1,7 +1,9 @@
+import { AnyAction } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { RootState } from "../store";
 
-export const GET_RANK_DATA = "getRankData";
+export const REQUEST_RANK_DATA = "REQUEST_RANK_DATA";
+export const RECEIVE_RANK_DATA = "RECEIVE_RANK_DATA";
 
 export type RankPokemonData = {
     [rule: number]: {
@@ -44,8 +46,14 @@ export type RankDataResponse = {
     };
 };
 
-export interface RankDataAction {
-    type: typeof GET_RANK_DATA;
+export interface RequestRankData {
+    type: typeof REQUEST_RANK_DATA;
+    season: number | string;
+    pmId: number | string;
+}
+
+export interface ReceiveRankData {
+    type: typeof RECEIVE_RANK_DATA;
     season: number | string;
     pmId: number | string;
     rankData: RankDataResponse;
@@ -80,22 +88,31 @@ export const rankDataCheck = (rankData: any) => {
     return true;
 };
 
-const rankDataApi = async (
+const rankDataApi = (
     seasonNum: number,
     pmId: number
 ): Promise<RankDataResponse | false> => {
     const url = `${process.env.REACT_APP_RANK_DATA_PATH}/${seasonNum}/${pmId}.json`;
-    const response = await window.fetch(url);
-
-    if (!response.ok) return false;
-
-    return await response.json();
+    return window.fetch(url).then((response) => response.json());
 };
 
-const getRankData =
-    (pmId: number): ThunkAction<void, RootState, unknown, RankDataAction> =>
+const fetchRankData =
+    (
+        pmId: number
+    ): ThunkAction<
+        void,
+        RootState,
+        unknown,
+        RequestRankData | ReceiveRankData
+    > =>
     (dispatch, getState) => {
         const { season } = getState();
+
+        dispatch({
+            type: REQUEST_RANK_DATA,
+            season: season[0].value,
+            pmId: pmId,
+        });
 
         rankDataApi(season[0].value, pmId)
             .then((data) => {
@@ -105,7 +122,7 @@ const getRankData =
                 }
 
                 dispatch({
-                    type: GET_RANK_DATA,
+                    type: RECEIVE_RANK_DATA,
                     season: season[0].value,
                     pmId: pmId,
                     rankData: data,
@@ -117,4 +134,35 @@ const getRankData =
             });
     };
 
-export default getRankData;
+export const shouldFetchRankData = (
+    state: RootState,
+    pmId: number
+): boolean => {
+    const { season, rankData } = state;
+
+    const currentRankData = rankData[season[0].value as number];
+
+    if (!currentRankData || !currentRankData[pmId]) {
+        return true;
+    }
+
+    if (
+        !currentRankData[pmId].isFetching &&
+        Date.now() > currentRankData[pmId].expires
+    ) {
+        return true;
+    }
+
+    return false;
+};
+
+export const fetchRankDataIfNeed: (
+    pmId: number
+) => ThunkAction<void, RootState, unknown, AnyAction> =
+    (pmId) => (dispatch, getState) => {
+        const state = getState();
+
+        if (shouldFetchRankData(state, pmId)) {
+            dispatch(fetchRankData(pmId));
+        }
+    };

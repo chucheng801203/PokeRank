@@ -1,7 +1,9 @@
+import { AnyAction } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { RootState } from "../store";
 
-export const GET_TOP_LIST = "getTopList";
+export const REQUEST_TOP_LIST = "REQUEST_TOP_LIST";
+export const RECEIVE_TOP_LIST = "RECEIVE_TOP_LIST";
 
 export type TopListResponse = Array<{
     pokemon: {
@@ -11,12 +13,18 @@ export type TopListResponse = Array<{
     ranking: number;
 }>;
 
-export interface TopListAction {
-    type: typeof GET_TOP_LIST;
+export type RequestTopList = {
+    type: typeof REQUEST_TOP_LIST;
+    season: number;
+    rule: number;
+};
+
+export type ReceiveTopList = {
+    type: typeof RECEIVE_TOP_LIST;
     season: number;
     rule: number;
     topList: TopListResponse;
-}
+};
 
 export const topListTypeCheck = (topList: TopListResponse) => {
     if (!Array.isArray(topList)) {
@@ -44,23 +52,27 @@ export const topListTypeCheck = (topList: TopListResponse) => {
     return true;
 };
 
-const topListApi = async (
+export const topListApi = (
     seasonNum: number,
     ruleNum: number
 ): Promise<TopListResponse | false> => {
     const url = `${process.env.REACT_APP_RANK_DATA_PATH}/${seasonNum}/top_list/${ruleNum}.json`;
-    const response = await window.fetch(url);
-
-    if (!response.ok) return false;
-
-    return await response.json();
+    return window.fetch(url).then((response) => response.json());
 };
 
-const getTopList: ThunkAction<void, RootState, unknown, TopListAction> = (
-    dispatch,
-    getState
-) => {
+export const fetchTopList: () => ThunkAction<
+    void,
+    RootState,
+    unknown,
+    ReceiveTopList | RequestTopList
+> = () => (dispatch, getState) => {
     const { season, rule } = getState();
+
+    dispatch({
+        type: REQUEST_TOP_LIST,
+        season: season[0].value,
+        rule: rule[0].value,
+    });
 
     topListApi(season[0].value, rule[0].value)
         .then((data) => {
@@ -70,7 +82,7 @@ const getTopList: ThunkAction<void, RootState, unknown, TopListAction> = (
             }
 
             dispatch({
-                type: GET_TOP_LIST,
+                type: RECEIVE_TOP_LIST,
                 season: season[0].value,
                 rule: rule[0].value,
                 topList: data,
@@ -82,4 +94,31 @@ const getTopList: ThunkAction<void, RootState, unknown, TopListAction> = (
         });
 };
 
-export default getTopList;
+export const shouldFetchTopList = (state: RootState): boolean => {
+    const { season, rule, topList } = state;
+
+    const currentList = topList[`${season[0].value}_${rule[0].value}`];
+
+    if (!currentList) {
+        return true;
+    }
+
+    if (!currentList.isFetching && Date.now() > currentList.expires) {
+        return true;
+    }
+
+    return false;
+};
+
+export const fetchTopListIfNeed: () => ThunkAction<
+    void,
+    RootState,
+    unknown,
+    AnyAction
+> = () => (dispatch, getState) => {
+    const state = getState();
+
+    if (shouldFetchTopList(state)) {
+        dispatch(fetchTopList());
+    }
+};
