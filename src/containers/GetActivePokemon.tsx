@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ActivePokemonPage from "../components/ActivePokemonPage";
 import ActivePokemonPageLoading from "../components/ActivePokemonPageLoading";
-import activePokemonAction from "../redux/actions/activePokemon";
+import { fetchActivePokemonIfNeed } from "../redux/actions/activePokemon";
 import {
     getSeasonState,
     getRuleState,
@@ -18,7 +18,7 @@ const GetActivePokemon: React.FC = () => {
     const activePokemon = useSelector(getActivePokemonState);
 
     useEffect(() => {
-        if (!page_loading && shouldLoading) dispatch(activePokemonAction);
+        if (!page_loading) dispatch(fetchActivePokemonIfNeed());
 
         document.title = "可使用的寶可夢 - PokéRank";
     });
@@ -27,11 +27,11 @@ const GetActivePokemon: React.FC = () => {
 
     const acPms = activePokemon[`${season[0].value}_${rule[0].value}`];
 
-    const shouldLoading = !acPms;
+    const isFetching = !acPms || acPms.isFetching;
 
     return (
         <>
-            {shouldLoading ? (
+            {isFetching ? (
                 <ActivePokemonPageLoading />
             ) : (
                 <ActivePokemonPage

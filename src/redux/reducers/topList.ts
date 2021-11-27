@@ -1,12 +1,15 @@
 import {
-    GET_TOP_LIST,
-    TopListAction,
+    RequestTopList,
+    REQUEST_TOP_LIST,
+    RECEIVE_TOP_LIST,
+    ReceiveTopList,
     TopListResponse,
 } from "../actions/topList";
 
 export type TopListState = {
     [season_rule: string]: {
         topList: TopListResponse;
+        isFetching: boolean;
         expires: number;
     };
 };
@@ -14,14 +17,24 @@ export type TopListState = {
 /* eslint import/no-anonymous-default-export: [2, {"allowArrowFunction": true}] */
 export default (
     state: TopListState = {},
-    action: TopListAction
+    action: RequestTopList | ReceiveTopList
 ): TopListState => {
     switch (action.type) {
-        case GET_TOP_LIST:
+        case REQUEST_TOP_LIST:
+            return {
+                ...state,
+                [`${action.season}_${action.rule}`]: {
+                    topList: [],
+                    isFetching: true,
+                    expires: 0,
+                },
+            };
+        case RECEIVE_TOP_LIST:
             return {
                 ...state,
                 [`${action.season}_${action.rule}`]: {
                     topList: action.topList,
+                    isFetching: false,
                     expires: Date.now() + 10800000,
                 },
             };

@@ -1,7 +1,9 @@
+import { AnyAction } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { RootState } from "../store";
 
-export const GET_ACTIVE_POKEMON = "activePokemon";
+export const REQUEST_ACTIVE_POKEMON = "REQUEST_ACTIVE_POKEMON";
+export const RECEIVE_ACTIVE_POKEMON = "RECEIVE_ACTIVE_POKEMON";
 
 export type ActivePokemonResponse = Array<{
     pf_id: number;
@@ -9,8 +11,14 @@ export type ActivePokemonResponse = Array<{
     form_id: number;
 }>;
 
-export type ActivePokemonAction = {
-    type: typeof GET_ACTIVE_POKEMON;
+export type RequestActivePokemon = {
+    type: typeof REQUEST_ACTIVE_POKEMON;
+    season: number;
+    rule: number;
+};
+
+export type ReceiveActivePokemon = {
+    type: typeof RECEIVE_ACTIVE_POKEMON;
     season: number;
     rule: number;
     activePokemon: ActivePokemonResponse;
@@ -40,25 +48,27 @@ export const activePokemonTypeCheck = (
     return true;
 };
 
-const activePokemonApi = async (
+const activePokemonApi = (
     seasonNum: number,
     ruleNum: number
 ): Promise<ActivePokemonResponse | false> => {
     const url = `${process.env.REACT_APP_RANK_DATA_PATH}/${seasonNum}/active_pokemon/${ruleNum}.json`;
-    const response = await window.fetch(url);
-
-    if (!response.ok) return false;
-
-    return await response.json();
+    return window.fetch(url).then((response) => response.json());
 };
 
-const getActivePokemon: ThunkAction<
+const fetchActivePokemon: () => ThunkAction<
     void,
     RootState,
     unknown,
-    ActivePokemonAction
-> = (dispatch, getState) => {
+    RequestActivePokemon | ReceiveActivePokemon
+> = () => (dispatch, getState) => {
     const { season, rule } = getState();
+
+    dispatch({
+        type: REQUEST_ACTIVE_POKEMON,
+        season: season[0].value,
+        rule: rule[0].value,
+    });
 
     activePokemonApi(season[0].value, rule[0].value)
         .then((data) => {
@@ -68,7 +78,7 @@ const getActivePokemon: ThunkAction<
             }
 
             dispatch({
-                type: GET_ACTIVE_POKEMON,
+                type: RECEIVE_ACTIVE_POKEMON,
                 season: season[0].value,
                 rule: rule[0].value,
                 activePokemon: data,
@@ -80,4 +90,27 @@ const getActivePokemon: ThunkAction<
         });
 };
 
-export default getActivePokemon;
+export const shouldFetchActivePokemon = (state: RootState): boolean => {
+    const { season, rule, activePokemon } = state;
+
+    const acPms = activePokemon[`${season[0].value}_${rule[0].value}`];
+
+    if (!acPms) {
+        return true;
+    }
+
+    return false;
+};
+
+export const fetchActivePokemonIfNeed: () => ThunkAction<
+    void,
+    RootState,
+    unknown,
+    AnyAction
+> = () => (dispatch, getState) => {
+    const state = getState();
+
+    if (shouldFetchActivePokemon(state)) {
+        dispatch(fetchActivePokemon());
+    }
+};

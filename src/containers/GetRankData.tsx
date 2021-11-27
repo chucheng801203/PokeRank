@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import RankDataPage from "../components/RankDataPage";
-import rankDataAction from "../redux/actions/rankData";
+import { fetchRankDataIfNeed } from "../redux/actions/rankData";
 import {
     getRuleState,
     getSeasonState,
@@ -24,11 +24,12 @@ const GetRankData: React.FC = () => {
 
     const pmIdNum = parseInt(pmId);
     const formIdNum = parseInt(formId);
+    const isValidPmId = /^\d+$/.test(pmId) && /^\d+$/.test(formId);
 
     useEffect(() => {
-        if (pageData.page_loading || !shouldLoading || !isValidPmId) return;
+        if (pageData.page_loading || !isValidPmId) return;
 
-        dispatch(rankDataAction(pmIdNum));
+        dispatch(fetchRankDataIfNeed(pmIdNum));
     });
 
     useEffect(() => {
@@ -38,16 +39,12 @@ const GetRankData: React.FC = () => {
 
     if (pageData.page_loading) return <RankDataPage isLoading={true} />;
 
-    const now = Date.now();
-
-    const isValidPmId = /^\d+$/.test(pmId) && /^\d+$/.test(formId);
-
     const currentRankData = rankData[season[0].value as number];
 
-    const shouldLoading =
+    const isFetching =
         !currentRankData ||
         !currentRankData[pmIdNum] ||
-        now > currentRankData[pmIdNum].expires;
+        currentRankData[pmIdNum].isFetching;
 
     return (
         <>
@@ -55,7 +52,7 @@ const GetRankData: React.FC = () => {
                 <RedirectHome />
             ) : (
                 <RankDataPage
-                    isLoading={shouldLoading}
+                    isLoading={isFetching}
                     rankData={rankData}
                     season={season[0]}
                     rule={rule[0]}
