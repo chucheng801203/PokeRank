@@ -76,14 +76,12 @@ const PageDataProvider: React.FC = ({ children }) => {
                     }
                 }
 
-                const { state, pathname, search } = history.location;
-                if (!state) {
-                    history.replace(pathname + search, {
-                        rule: defaultState.rule[0],
-                        season: defaultState.season[0],
-                        searchText: "",
-                    });
-                }
+                const { pathname, search } = history.location;
+                history.replace(pathname + search, {
+                    rule: defaultState.rule[0],
+                    season: defaultState.season[0],
+                    searchText: "",
+                });
 
                 dispatch(toggleRule(defaultState.rule[0]));
                 dispatch(toggleSeason(defaultState.season[0]));
