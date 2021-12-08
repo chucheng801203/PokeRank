@@ -10,12 +10,60 @@ const ActivePokemonPageLoading: React.FC = () => (
                     <th>圖片</th>
                     <th>名稱</th>
                     <th colSpan={2}>屬性</th>
-                    <th>HP</th>
-                    <th>攻擊</th>
-                    <th>防禦</th>
-                    <th>特功</th>
-                    <th>特防</th>
-                    <th>速度</th>
+                    <th>
+                        <div className="d-flex align-items-center">
+                            <span>HP</span>
+                            <div className="d-flex flex-column ml-2">
+                                <span className={styles["sort-desc"]} />
+                                <span className={styles["sort-asc"]} />
+                            </div>
+                        </div>
+                    </th>
+                    <th>
+                        <div className="d-flex align-items-center">
+                            <span>攻擊</span>
+                            <div className="d-flex flex-column ml-1">
+                                <span className={styles["sort-desc"]} />
+                                <span className={styles["sort-asc"]} />
+                            </div>
+                        </div>
+                    </th>
+                    <th>
+                        <div className="d-flex align-items-center">
+                            <span>防禦</span>
+                            <div className="d-flex flex-column ml-1">
+                                <span className={styles["sort-desc"]} />
+                                <span className={styles["sort-asc"]} />
+                            </div>
+                        </div>
+                    </th>
+                    <th>
+                        <div className="d-flex align-items-center">
+                            <span>特功</span>
+                            <div className="d-flex flex-column ml-1">
+                                <span className={styles["sort-desc"]} />
+                                <span className={styles["sort-asc"]} />
+                            </div>
+                        </div>
+                    </th>
+                    <th>
+                        <div className="d-flex align-items-center">
+                            <span>特防</span>
+                            <div className="d-flex flex-column ml-1">
+                                <span className={styles["sort-desc"]} />
+                                <span className={styles["sort-asc"]} />
+                            </div>
+                        </div>
+                    </th>
+                    <th>
+                        <div className="d-flex align-items-center">
+                            <span>速度</span>
+                            <div className="d-flex flex-column ml-1">
+                                <span className={styles["sort-desc"]} />
+                                <span className={styles["sort-asc"]} />
+                            </div>
+                        </div>
+                    </th>
                 </tr>
             </thead>
 

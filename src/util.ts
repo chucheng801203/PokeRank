@@ -1,18 +1,16 @@
+import queryString from "query-string";
+
 /**
  * 取得網址 query string 的參數值
- * @param string
- * @param string
+ * @param string param
+ * @param string search string
  */
 export const getParameterByName = (
     name: string,
-    url: string = window.location.href
+    search: string = window.location.search
 ) => {
-    name = name.replace(/[[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-        results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return "";
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
+    const params = queryString.parse(search);
+    return params ? (params[name] as string) : undefined;
 };
 
 /**

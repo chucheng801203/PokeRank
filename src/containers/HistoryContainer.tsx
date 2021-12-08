@@ -28,9 +28,7 @@ const HistoryContainer: React.FC = () => {
 
         dispatch(toggleRule(state.rule));
 
-        dispatch(
-            searchTextAction(state.searchText ? state.searchText : "")
-        );
+        dispatch(searchTextAction(state.searchText ? state.searchText : ""));
     });
 
     return null;

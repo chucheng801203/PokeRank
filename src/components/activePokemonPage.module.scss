@@ -34,6 +34,32 @@
         th {
             border-bottom: 1px solid #4b4b4b;
         }
+
+        .sort-asc,
+        .sort-desc {
+            display: inline-block;
+            border-color: transparent;
+            border-width: 6px;
+            border-style: solid;
+            cursor: pointer;
+        }
+
+        .sort-asc {
+            border-bottom-width: 0;
+            border-top-color: #777777;
+            &.active {
+                border-top-color: #d6d6d6;
+            }
+        }
+
+        .sort-desc {
+            border-top-width: 0;
+            border-bottom-color: #777777;
+            margin-bottom: 4px;
+            &.active {
+                border-bottom-color: #d6d6d6;
+            }
+        }
     }
 }
 

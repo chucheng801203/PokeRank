@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useHistory, useParams } from "react-router-dom";
 import { Location } from "history";
 import LazyLoadImage from "./LazyLoadImage";
@@ -12,11 +12,17 @@ import { getPmTypeColor } from "../util";
 import RedirectHome from "./RedirectHome";
 import { HistoryState } from "../containers/HistoryContainer";
 import Pagination from "./Pagination";
+import classNames from "classnames";
 
 export type ActivePokemonPageProps = {
     activePokemon: ActivePokemonState;
     season: SeasonState;
     rule: RuleState;
+};
+
+export type OrderByState = {
+    column: "hp" | "atk" | "def" | "spa" | "spd" | "spe";
+    sort: "desc" | "asc";
 };
 
 const ActivePokemonPage: React.FC<ActivePokemonPageProps> = ({
@@ -26,13 +32,43 @@ const ActivePokemonPage: React.FC<ActivePokemonPageProps> = ({
 }) => {
     const { pokemon, pokemon_types, base_stats } = useContext(PageDataContext);
     const history = useHistory<HistoryState>();
-    const acPms = activePokemon[`${season.value}_${rule.value}`].activePokemon;
-
     const { pageNum } = useParams<{
         pageNum: string;
     }>();
+    const [orderBy, setOrderBy] = useState<OrderByState>();
 
     if (!/^\d+$/.test(pageNum)) return <RedirectHome />;
+
+    const acPms = [
+        ...activePokemon[`${season.value}_${rule.value}`].activePokemon,
+    ];
+
+    if (orderBy) {
+        acPms.sort((a, b) => {
+            if (!base_stats[a.id] || !base_stats[a.id][a.form_id]) {
+                if (orderBy.sort === "asc") {
+                    return -1;
+                }
+                return 1;
+            }
+
+            if (!base_stats[b.id] || !base_stats[b.id][b.form_id]) {
+                if (orderBy.sort === "asc") {
+                    return 1;
+                }
+                return -1;
+            }
+
+            const c1 = base_stats[a.id][a.form_id][orderBy.column];
+            const c2 = base_stats[b.id][b.form_id][orderBy.column];
+
+            if (orderBy.sort === "asc") {
+                return c1 - c2;
+            }
+
+            return c2 - c1;
+        });
+    }
 
     let currentPage = parseInt(pageNum);
 
@@ -45,11 +81,26 @@ const ActivePokemonPage: React.FC<ActivePokemonPageProps> = ({
     // 最大顯示頁數
     const pageItemCount = 5;
 
+    const { location } = history;
     const onPaginationChange = (page: number) => {
-        history.push(`/active-pokemon/${page}${history.location.search}`, {
-            ...history.location.state,
+        history.push(`/active-pokemon/${page}${location.search}`, {
+            ...location.state,
         });
         window.scrollTo(0, 0);
+    };
+
+    const onSortBtnClick = (state: OrderByState) => {
+        return () => {
+            if (
+                orderBy &&
+                orderBy.sort === state.sort &&
+                orderBy.column === state.column
+            ) {
+                setOrderBy(undefined);
+                return;
+            }
+            setOrderBy(state);
+        };
     };
 
     return (
@@ -68,12 +119,240 @@ const ActivePokemonPage: React.FC<ActivePokemonPageProps> = ({
                             <th>圖片</th>
                             <th>名稱</th>
                             <th colSpan={2}>屬性</th>
-                            <th>HP</th>
-                            <th>攻擊</th>
-                            <th>防禦</th>
-                            <th>特功</th>
-                            <th>特防</th>
-                            <th>速度</th>
+                            <th>
+                                <div className="d-flex align-items-center">
+                                    <span>HP</span>
+                                    <div className="d-flex flex-column ml-2">
+                                        <span
+                                            className={classNames(
+                                                styles["sort-desc"],
+                                                {
+                                                    [styles["active"]]:
+                                                        orderBy &&
+                                                        orderBy.column ===
+                                                            "hp" &&
+                                                        orderBy.sort === "desc",
+                                                }
+                                            )}
+                                            onClick={onSortBtnClick({
+                                                column: "hp",
+                                                sort: "desc",
+                                            })}
+                                        />
+                                        <span
+                                            className={classNames(
+                                                styles["sort-asc"],
+                                                {
+                                                    [styles["active"]]:
+                                                        orderBy &&
+                                                        orderBy.column ===
+                                                            "hp" &&
+                                                        orderBy.sort === "asc",
+                                                }
+                                            )}
+                                            onClick={onSortBtnClick({
+                                                column: "hp",
+                                                sort: "asc",
+                                            })}
+                                        />
+                                    </div>
+                                </div>
+                            </th>
+                            <th>
+                                <div className="d-flex align-items-center">
+                                    <span>攻擊</span>
+                                    <div className="d-flex flex-column ml-1">
+                                        <span
+                                            className={classNames(
+                                                styles["sort-desc"],
+                                                {
+                                                    [styles["active"]]:
+                                                        orderBy &&
+                                                        orderBy.column ===
+                                                            "atk" &&
+                                                        orderBy.sort === "desc",
+                                                }
+                                            )}
+                                            onClick={onSortBtnClick({
+                                                column: "atk",
+                                                sort: "desc",
+                                            })}
+                                        />
+                                        <span
+                                            className={classNames(
+                                                styles["sort-asc"],
+                                                {
+                                                    [styles["active"]]:
+                                                        orderBy &&
+                                                        orderBy.column ===
+                                                            "atk" &&
+                                                        orderBy.sort === "asc",
+                                                }
+                                            )}
+                                            onClick={onSortBtnClick({
+                                                column: "atk",
+                                                sort: "asc",
+                                            })}
+                                        />
+                                    </div>
+                                </div>
+                            </th>
+                            <th>
+                                <div className="d-flex align-items-center">
+                                    <span>防禦</span>
+                                    <div className="d-flex flex-column ml-1">
+                                        <span
+                                            className={classNames(
+                                                styles["sort-desc"],
+                                                {
+                                                    [styles["active"]]:
+                                                        orderBy &&
+                                                        orderBy.column ===
+                                                            "def" &&
+                                                        orderBy.sort === "desc",
+                                                }
+                                            )}
+                                            onClick={onSortBtnClick({
+                                                column: "def",
+                                                sort: "desc",
+                                            })}
+                                        />
+                                        <span
+                                            className={classNames(
+                                                styles["sort-asc"],
+                                                {
+                                                    [styles["active"]]:
+                                                        orderBy &&
+                                                        orderBy.column ===
+                                                            "def" &&
+                                                        orderBy.sort === "asc",
+                                                }
+                                            )}
+                                            onClick={onSortBtnClick({
+                                                column: "def",
+                                                sort: "asc",
+                                            })}
+                                        />
+                                    </div>
+                                </div>
+                            </th>
+                            <th>
+                                <div className="d-flex align-items-center">
+                                    <span>特功</span>
+                                    <div className="d-flex flex-column ml-1">
+                                        <span
+                                            className={classNames(
+                                                styles["sort-desc"],
+                                                {
+                                                    [styles["active"]]:
+                                                        orderBy &&
+                                                        orderBy.column ===
+                                                            "spa" &&
+                                                        orderBy.sort === "desc",
+                                                }
+                                            )}
+                                            onClick={onSortBtnClick({
+                                                column: "spa",
+                                                sort: "desc",
+                                            })}
+                                        />
+                                        <span
+                                            className={classNames(
+                                                styles["sort-asc"],
+                                                {
+                                                    [styles["active"]]:
+                                                        orderBy &&
+                                                        orderBy.column ===
+                                                            "spa" &&
+                                                        orderBy.sort === "asc",
+                                                }
+                                            )}
+                                            onClick={onSortBtnClick({
+                                                column: "spa",
+                                                sort: "asc",
+                                            })}
+                                        />
+                                    </div>
+                                </div>
+                            </th>
+                            <th>
+                                <div className="d-flex align-items-center">
+                                    <span>特防</span>
+                                    <div className="d-flex flex-column ml-1">
+                                        <span
+                                            className={classNames(
+                                                styles["sort-desc"],
+                                                {
+                                                    [styles["active"]]:
+                                                        orderBy &&
+                                                        orderBy.column ===
+                                                            "spd" &&
+                                                        orderBy.sort === "desc",
+                                                }
+                                            )}
+                                            onClick={onSortBtnClick({
+                                                column: "spd",
+                                                sort: "desc",
+                                            })}
+                                        />
+                                        <span
+                                            className={classNames(
+                                                styles["sort-asc"],
+                                                {
+                                                    [styles["active"]]:
+                                                        orderBy &&
+                                                        orderBy.column ===
+                                                            "spd" &&
+                                                        orderBy.sort === "asc",
+                                                }
+                                            )}
+                                            onClick={onSortBtnClick({
+                                                column: "spd",
+                                                sort: "asc",
+                                            })}
+                                        />
+                                    </div>
+                                </div>
+                            </th>
+                            <th>
+                                <div className="d-flex align-items-center">
+                                    <span>速度</span>
+                                    <div className="d-flex flex-column ml-1">
+                                        <span
+                                            className={classNames(
+                                                styles["sort-desc"],
+                                                {
+                                                    [styles["active"]]:
+                                                        orderBy &&
+                                                        orderBy.column ===
+                                                            "spe" &&
+                                                        orderBy.sort === "desc",
+                                                }
+                                            )}
+                                            onClick={onSortBtnClick({
+                                                column: "spe",
+                                                sort: "desc",
+                                            })}
+                                        />
+                                        <span
+                                            className={classNames(
+                                                styles["sort-asc"],
+                                                {
+                                                    [styles["active"]]:
+                                                        orderBy &&
+                                                        orderBy.column ===
+                                                            "spe" &&
+                                                        orderBy.sort === "asc",
+                                                }
+                                            )}
+                                            onClick={onSortBtnClick({
+                                                column: "spe",
+                                                sort: "asc",
+                                            })}
+                                        />
+                                    </div>
+                                </div>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>

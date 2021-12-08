@@ -91,6 +91,25 @@ class LoadBaseStatByShowDown extends Command
                     'spd' => 90,
                     'spe' => 100,
                 ]);
+
+                // 基格爾德
+                SdBaseStat::updateOrCreate(['pf_id' => 991], [
+                    'hp'  => 54,
+                    'atk' => 100,
+                    'def' => 71,
+                    'spa' => 61,
+                    'spd' => 85,
+                    'spe' => 115,
+                ]);
+
+                SdBaseStat::updateOrCreate(['pf_id' => 992], [
+                    'hp'  => 54,
+                    'atk' => 100,
+                    'def' => 71,
+                    'spa' => 61,
+                    'spd' => 85,
+                    'spe' => 115,
+                ]);
             });
 
             $this->log->info('pokemonShowDown:load-baseStat-data 命令已執行完畢');
