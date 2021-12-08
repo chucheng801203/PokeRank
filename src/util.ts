@@ -10,7 +10,7 @@ export const getParameterByName = (
     search: string = window.location.search
 ) => {
     const params = queryString.parse(search);
-    return params ? params[name] as string : undefined;
+    return params ? (params[name] as string) : undefined;
 };
 
 /**
