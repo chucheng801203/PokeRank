@@ -176,7 +176,8 @@ class UploadPokemonRankDataToS3 extends Command
                         'Key'          => "rank_data/{$season_number}/{$pm->id}.json",
                         'Body'         => $content,
                         'ACL'          => 'public-read',
-                        'CacheControl' => 'max-age=1800',
+                        'CacheControl' => 'max-age=1800, must-revalidate',
+                        'ContentType'  => 'application/json',
                     ]);
 
                     echo "{$season_number} {$pm->id}\n";
@@ -204,7 +205,8 @@ class UploadPokemonRankDataToS3 extends Command
                         'Key'          => "rank_data/{$season_number}/top_list/{$r['value']}.json",
                         'Body'         => $d,
                         'ACL'          => 'public-read',
-                        'CacheControl' => 'max-age=1800',
+                        'CacheControl' => 'max-age=1800, must-revalidate',
+                        'ContentType'  => 'application/json',
                     ]);
 
                     $d = json_encode(
@@ -226,6 +228,7 @@ class UploadPokemonRankDataToS3 extends Command
                         'Body'         => $d,
                         'ACL'          => 'public-read',
                         'CacheControl' => 'max-age=31536000',
+                        'ContentType'  => 'application/json',
                     ]);
                 }
             }
