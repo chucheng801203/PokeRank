@@ -151,7 +151,8 @@ class UploadPokemonDataToS3 extends Command
                 'Key'          => 'pr_data.json',
                 'SourceFile'   => storage_path("app/{$file_name}"),
                 'ACL'          => 'public-read',
-                'CacheControl' => 'max-age=10800',
+                'CacheControl' => 'max-age=10800, must-revalidate',
+                'ContentType'  => 'application/json',
             ]);
 
             $this->log->info('pokemonHome:upload-data-to-S3 命令已執行完畢');
