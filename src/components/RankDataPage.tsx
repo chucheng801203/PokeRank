@@ -4,7 +4,7 @@ import PmInfoBlock from "./PmInfoBlock";
 import PercentageRow from "./ListComponent/PercentageRow";
 import BaseStatRow from "./BaseStatRow";
 import RankDataPageLoading from "./RankDataPageLoading";
-import PageDataContext from "../contexts/PageDataContext";
+import PageDataContext, { BaseState } from "../contexts/PageDataContext";
 import { RankDataState } from "../redux/reducers/rankData";
 import { SeasonState } from "../redux/reducers/season";
 import { RuleState } from "../redux/reducers/rule";
@@ -45,7 +45,7 @@ const RankDataPage: React.FC<RankDataPageProps> = ({
 
     const currentRankData = rankData[season.value as number];
 
-    let baseStat: typeof pageData.base_stats[0][0] | undefined;
+    let baseStat: BaseState | undefined;
     if (pageData.base_stats[pmId] && pageData.base_stats[pmId][formId]) {
         baseStat = pageData.base_stats[pmId][formId];
     }

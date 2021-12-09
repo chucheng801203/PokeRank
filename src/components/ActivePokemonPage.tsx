@@ -13,14 +13,13 @@ import RedirectHome from "./RedirectHome";
 import { HistoryState } from "../containers/HistoryContainer";
 import Pagination from "./Pagination";
 import classNames from "classnames";
+import { BaseStatKey } from "../contexts/PageDataContext";
 
 export type ActivePokemonPageProps = {
     activePokemon: ActivePokemonState;
     season: SeasonState;
     rule: RuleState;
 };
-
-export type BaseStatKey = "hp" | "atk" | "def" | "spa" | "spd" | "spe";
 
 export type OrderByState = {
     column: BaseStatKey;

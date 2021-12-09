@@ -1,5 +1,11 @@
 import React from "react";
 
+export type BaseStatKey = "hp" | "atk" | "def" | "spa" | "spd" | "spe";
+
+export type BaseState = {
+    [key in BaseStatKey]: number;
+};
+
 export type PageDataType = {
     page_loading: boolean;
     rules: Array<{ value: number; text: string }>;
@@ -27,14 +33,7 @@ export type PageDataType = {
     pokemon_types: Array<Array<Array<number>>>;
     type_weakness: Array<Array<number>>;
     base_stats: {
-        [pm_id: number]: Array<{
-            hp: number;
-            atk: number;
-            def: number;
-            spa: number;
-            spd: number;
-            spe: number;
-        }>;
+        [pm_id: number]: Array<BaseState>;
     };
 };
 
