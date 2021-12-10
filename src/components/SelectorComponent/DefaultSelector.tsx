@@ -1,4 +1,4 @@
-import React, { useRef, ReactText, useState, useEffect } from "react";
+import React, { useRef, ReactText, useState } from "react";
 import classNames from "classnames";
 import Popup from "../PopupComponent";
 import { convertNodeToOption } from "./Option";
