@@ -1,4 +1,4 @@
-import React, { useRef, ReactText, useState, useEffect } from "react";
+import React, { useRef, ReactText, useState } from "react";
 import classNames from "classnames";
 import Popup from "../PopupComponent";
 import { convertNodeToOption } from "./Option";
@@ -65,15 +65,14 @@ const DefaultSelector: React.FC<DefaultSelectorProps> = ({
 
     const nextValue = getCurrentValue();
 
-    useEffect(() => {
-        if (
-            (nextValue.length > 0 && currentValue.length === 0) ||
+    if (
+        nextValue.length > 0 &&
+        (currentValue.length === 0 ||
             (currentValue.length > 0 &&
-                nextValue.length > 0 &&
-                nextValue[0].index !== currentValue[0].index)
-        )
-            setCurrentValue(nextValue);
-    }, [nextValue, currentValue]);
+                nextValue[0].index !== currentValue[0].index))
+    ) {
+        setCurrentValue(nextValue);
+    }
 
     const selectorRef = useRef<HTMLDivElement>(null);
 
