@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import PokemonSelectorPage from "../components/PokemonSelectorPage";
 import searchTextAction from "../redux/actions/searchText";
@@ -11,6 +11,10 @@ const MobilePokemonSelector: React.FC = () => {
     const dispatch = useDispatch();
 
     const searchText = useSelector(getSearchTextState);
+
+    useEffect(() => {
+        document.title = `搜尋 - PokéRank`;
+    });
 
     const str = searchText.trim();
 
