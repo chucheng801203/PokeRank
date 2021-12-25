@@ -6,29 +6,12 @@
     &-season-selector {
         margin-bottom: 16px;
     }
-
-    &-list {
-        width: 100%;
-        margin: 0 auto;
-    }
 }
 
 @media (min-width: 768px) {
     .app {
         &-season-selector {
             display: none;
-        }
-
-        &-list {
-            width: 80%;
-        }
-    }
-}
-
-@media (min-width: 992px) {
-    .app {
-        &-list {
-            width: 60%;
         }
     }
 }
