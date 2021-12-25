@@ -20,8 +20,7 @@ const HistoryContainer: React.FC = () => {
     const dispatch = useDispatch();
 
     const { state } = useLocation<HistoryState>();
-    const store = useStore<RootState>();
-    const {season, rule} = store.getState();
+    const {season, rule} = useStore<RootState>().getState();
 
     // push & popstate & replace event
     useEffect(() => {
