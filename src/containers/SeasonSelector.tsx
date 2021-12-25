@@ -22,6 +22,10 @@ const SeasonSelector: React.FC<SeasonSelectorProps> = (props) => {
 
     const history = useHistory<HistoryState>();
 
+    if (!season) {
+        return <Selector {...props} />;
+    }
+
     const onChange = (v: SelectValue) => {
         if (v.length <= 0) return;
 
@@ -53,7 +57,7 @@ const SeasonSelector: React.FC<SeasonSelectorProps> = (props) => {
     };
 
     return (
-        <Selector value={season} onChange={onChange} {...props}>
+        <Selector value={[season]} onChange={onChange} {...props}>
             {pageData.seasons.map((option, i) => (
                 <Option key={i} value={option.value}>
                     {option.text}

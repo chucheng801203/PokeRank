@@ -1,4 +1,4 @@
-import { SeasonState } from "../reducers/season";
+import { SeasonState } from "../reducers/rs";
 
 export const TOGGLE_SEASON = "toggleSeason";
 

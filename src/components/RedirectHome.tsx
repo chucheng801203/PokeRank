@@ -14,8 +14,8 @@ const RedirectHome: React.FC = () => {
                 pathname: "",
                 search: "",
                 state: {
-                    rule: defaultState.rule[0],
-                    season: defaultState.season[0],
+                    rule: defaultState.rs.rule,
+                    season: defaultState.rs.season,
                     searchText: "",
                 },
             }}

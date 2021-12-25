@@ -2,8 +2,7 @@ import React, { useContext } from "react";
 import PmList from "./ListComponent/PmList";
 import PmRow from "./ListComponent/PmRow";
 import { TopListState } from "../redux/reducers/topList";
-import { RuleState } from "../redux/reducers/rule";
-import { SeasonState } from "../redux/reducers/season";
+import { RuleState, SeasonState } from "../redux/reducers/rs";
 import PageDataContext from "../contexts/PageDataContext";
 import styles from "./rankTopList.module.scss";
 

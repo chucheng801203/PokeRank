@@ -15,9 +15,9 @@ const TitleWithSeasonInfo: React.FC<TitleWIthSeasonInfoProps> = ({ title }) => {
     const rule = useSelector(getRuleState);
 
     let seasonText: string = "　";
-    if (!page_loading) {
-        const s = seasons[season[0].index];
-        const r = rules[rule[0].index];
+    if (!page_loading && season && rule) {
+        const s = seasons[season.index];
+        const r = rules[rule.index];
         seasonText = `(${s.text}, ${r.text}, ${s.start}~${s.end})`;
     }
 

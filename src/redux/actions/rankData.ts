@@ -1,5 +1,6 @@
 import { AnyAction } from "redux";
 import { ThunkAction } from "redux-thunk";
+import { getRS } from "../selectors";
 import { RootState } from "../store";
 
 export const REQUEST_RANK_DATA = "REQUEST_RANK_DATA";
@@ -106,15 +107,19 @@ const fetchRankData =
         RequestRankData | ReceiveRankData
     > =>
     (dispatch, getState) => {
-        const { season } = getState();
+        const { season } = getRS(getState());
+
+        if (!season) {
+            return;
+        }
 
         dispatch({
             type: REQUEST_RANK_DATA,
-            season: season[0].value,
+            season: season.value,
             pmId: pmId,
         });
 
-        rankDataApi(season[0].value, pmId)
+        rankDataApi(season.value, pmId)
             .then((data) => {
                 if (!data || !rankDataCheck(data)) {
                     alert("與伺服器連接失敗，請稍後在試。");
@@ -123,7 +128,7 @@ const fetchRankData =
 
                 dispatch({
                     type: RECEIVE_RANK_DATA,
-                    season: season[0].value,
+                    season: season.value,
                     pmId: pmId,
                     rankData: data,
                 });
@@ -138,9 +143,14 @@ export const shouldFetchRankData = (
     state: RootState,
     pmId: number
 ): boolean => {
-    const { season, rankData } = state;
+    const { rs, rankData } = state;
+    const { season } = rs;
 
-    const currentRankData = rankData[season[0].value as number];
+    if (!season) {
+        return false;
+    }
+
+    const currentRankData = rankData[season.value as number];
 
     if (!currentRankData || !currentRankData[pmId]) {
         return true;

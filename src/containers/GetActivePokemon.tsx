@@ -23,9 +23,9 @@ const GetActivePokemon: React.FC = () => {
         document.title = "可使用的寶可夢 - PokéRank";
     });
 
-    if (page_loading) return <ActivePokemonPageLoading />;
+    if (page_loading || !season || !rule) return <ActivePokemonPageLoading />;
 
-    const acPms = activePokemon[`${season[0].value}_${rule[0].value}`];
+    const acPms = activePokemon[`${season.value}_${rule.value}`];
 
     const isFetching = !acPms || acPms.isFetching;
 
@@ -36,8 +36,8 @@ const GetActivePokemon: React.FC = () => {
             ) : (
                 <ActivePokemonPage
                     activePokemon={activePokemon}
-                    season={season[0]}
-                    rule={rule[0]}
+                    season={season}
+                    rule={rule}
                 />
             )}
         </>

@@ -1,5 +1,6 @@
 import { AnyAction } from "redux";
 import { ThunkAction } from "redux-thunk";
+import { getRS } from "../selectors";
 import { RootState } from "../store";
 
 export const REQUEST_TOP_LIST = "REQUEST_TOP_LIST";
@@ -66,15 +67,19 @@ export const fetchTopList: () => ThunkAction<
     unknown,
     ReceiveTopList | RequestTopList
 > = () => (dispatch, getState) => {
-    const { season, rule } = getState();
+    const { season, rule } = getRS(getState());
+
+    if (!season || !rule) {
+        return;
+    }
 
     dispatch({
         type: REQUEST_TOP_LIST,
-        season: season[0].value,
-        rule: rule[0].value,
+        season: season.value,
+        rule: rule.value,
     });
 
-    topListApi(season[0].value, rule[0].value)
+    topListApi(season.value, rule.value)
         .then((data) => {
             if (!data || !topListTypeCheck(data)) {
                 alert("與伺服器連接失敗，請稍後在試。");
@@ -83,8 +88,8 @@ export const fetchTopList: () => ThunkAction<
 
             dispatch({
                 type: RECEIVE_TOP_LIST,
-                season: season[0].value,
-                rule: rule[0].value,
+                season: season.value,
+                rule: rule.value,
                 topList: data,
             });
         })
@@ -95,9 +100,14 @@ export const fetchTopList: () => ThunkAction<
 };
 
 export const shouldFetchTopList = (state: RootState): boolean => {
-    const { season, rule, topList } = state;
+    const { rs, topList } = state;
+    const { season, rule } = rs;
 
-    const currentList = topList[`${season[0].value}_${rule[0].value}`];
+    if (!season || !rule) {
+        return false;
+    }
+
+    const currentList = topList[`${season.value}_${rule.value}`];
 
     if (!currentList) {
         return true;

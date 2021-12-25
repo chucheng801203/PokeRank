@@ -1,4 +1,4 @@
-import { RuleState } from "../reducers/rule";
+import { RuleState } from "../reducers/rs";
 
 export const TOGGLE_RULE = "toggleRule";
 

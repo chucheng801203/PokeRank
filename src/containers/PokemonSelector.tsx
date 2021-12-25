@@ -28,16 +28,20 @@ const PokemonInputSelector: React.FC<PokemonInputSelectorProps> = (props) => {
 
     const history = useHistory();
 
+    if (!season || !rule) {
+        return <TextInputSelector {...props} />;
+    }
+
     const onChangeHandler = (v: string) => {
         dispatch(searchTextAction(v));
     };
 
     const onSubmitHandler = (v: SelectValue) => {
         history.push(
-            `/${v[0].value}/0?season=${season[0].value}&rule=${rule[0].value}`,
+            `/${v[0].value}/0?season=${season.value}&rule=${rule.value}`,
             {
-                rule: rule[0],
-                season: season[0],
+                rule: rule,
+                season: season,
                 searchText: v[0].text,
             }
         );
@@ -59,10 +63,10 @@ const PokemonInputSelector: React.FC<PokemonInputSelectorProps> = (props) => {
                             style={{ color: "#d6d6d6", textDecoration: "none" }}
                             to={{
                                 pathname: `/${i}/0`,
-                                search: `?season=${season[0].value}&rule=${rule[0].value}`,
+                                search: `?season=${season.value}&rule=${rule.value}`,
                                 state: {
-                                    rule: rule[0],
-                                    season: season[0],
+                                    rule: rule,
+                                    season: season,
                                     searchText: pageData.pokemon[index],
                                 },
                             }}

@@ -37,9 +37,10 @@ const GetRankData: React.FC = () => {
         window.scroll(0, 0);
     });
 
-    if (pageData.page_loading) return <RankDataPage isLoading={true} />;
+    if (pageData.page_loading || !season || !rule)
+        return <RankDataPage isLoading={true} />;
 
-    const currentRankData = rankData[season[0].value as number];
+    const currentRankData = rankData[season.value as number];
 
     const isFetching =
         !currentRankData ||
@@ -54,8 +55,8 @@ const GetRankData: React.FC = () => {
                 <RankDataPage
                     isLoading={isFetching}
                     rankData={rankData}
-                    season={season[0]}
-                    rule={rule[0]}
+                    season={season}
+                    rule={rule}
                     pmId={pmIdNum}
                     formId={formIdNum}
                 />

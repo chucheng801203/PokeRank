@@ -22,6 +22,10 @@ const RuleSelector: React.FC<RuleSelectorProps> = (props) => {
 
     const history = useHistory<HistoryState>();
 
+    if (!rule) {
+        return <Selector {...props} />;
+    }
+
     const onChange = (v: SelectValue) => {
         if (v.length <= 0) return;
 
@@ -52,7 +56,7 @@ const RuleSelector: React.FC<RuleSelectorProps> = (props) => {
     };
 
     return (
-        <Selector value={rule} onChange={onChange} {...props}>
+        <Selector value={[rule]} onChange={onChange} {...props}>
             {pageData.rules.map((option, i) => (
                 <Option key={i} value={option.value}>
                     {option.text}

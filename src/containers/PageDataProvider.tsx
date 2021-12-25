@@ -13,16 +13,15 @@ import WikiDataContext, {
 } from "../contexts/WikiDataContext";
 import { getParameterByName } from "../util";
 import { getDefaultState } from "../redux/store";
+import PageDataException from "../exceptions/PageDataException";
 
 const getValue = (value: number, data: Array<{ value: number }>) => {
     for (let i = 0; i < data.length; i++) {
         if (data[i].value === value) {
-            return [
-                {
-                    index: i,
-                    value: data[i].value,
-                },
-            ];
+            return {
+                index: i,
+                value: data[i].value,
+            };
         }
     }
 };
@@ -55,13 +54,23 @@ const PageDataProvider: React.FC = ({ children }) => {
 
         requestPageData()
             .then((data) => {
+                if (
+                    !data[0] ||
+                    !Array.isArray(data[0].seasons) ||
+                    data[0].seasons.length === 0 ||
+                    !Array.isArray(data[0].rules) ||
+                    data[0].rules.length === 0
+                ) {
+                    throw new PageDataException();
+                }
+
                 let defaultState = getDefaultState(data[0]);
 
                 const rule = getParameterByName("rule");
                 if (rule) {
                     const ruleValue = getValue(parseInt(rule), data[0].rules);
                     if (ruleValue) {
-                        defaultState.rule = ruleValue;
+                        defaultState.rs.rule = ruleValue;
                     }
                 }
 
@@ -72,19 +81,19 @@ const PageDataProvider: React.FC = ({ children }) => {
                         data[0].seasons
                     );
                     if (seasonValue) {
-                        defaultState.season = seasonValue;
+                        defaultState.rs.season = seasonValue;
                     }
                 }
 
                 const { pathname, search } = history.location;
                 history.replace(pathname + search, {
-                    rule: defaultState.rule[0],
-                    season: defaultState.season[0],
+                    rule: defaultState.rs.rule,
+                    season: defaultState.rs.season,
                     searchText: "",
                 });
 
-                dispatch(toggleRule(defaultState.rule[0]));
-                dispatch(toggleSeason(defaultState.season[0]));
+                dispatch(toggleRule(defaultState.rs.rule));
+                dispatch(toggleSeason(defaultState.rs.season));
 
                 data[0].page_loading = false;
                 data[1].page_loading = false;

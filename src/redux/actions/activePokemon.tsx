@@ -1,5 +1,6 @@
 import { AnyAction } from "redux";
 import { ThunkAction } from "redux-thunk";
+import { getRS } from "../selectors";
 import { RootState } from "../store";
 
 export const REQUEST_ACTIVE_POKEMON = "REQUEST_ACTIVE_POKEMON";
@@ -62,15 +63,19 @@ const fetchActivePokemon: () => ThunkAction<
     unknown,
     RequestActivePokemon | ReceiveActivePokemon
 > = () => (dispatch, getState) => {
-    const { season, rule } = getState();
+    const { season, rule } = getRS(getState());
+
+    if (!season || !rule) {
+        return;
+    }
 
     dispatch({
         type: REQUEST_ACTIVE_POKEMON,
-        season: season[0].value,
-        rule: rule[0].value,
+        season: season.value,
+        rule: rule.value,
     });
 
-    activePokemonApi(season[0].value, rule[0].value)
+    activePokemonApi(season.value, rule.value)
         .then((data) => {
             if (!data || !activePokemonTypeCheck(data)) {
                 alert("與伺服器連接失敗，請稍後在試。");
@@ -79,8 +84,8 @@ const fetchActivePokemon: () => ThunkAction<
 
             dispatch({
                 type: RECEIVE_ACTIVE_POKEMON,
-                season: season[0].value,
-                rule: rule[0].value,
+                season: season.value,
+                rule: rule.value,
                 activePokemon: data,
             });
         })
@@ -91,9 +96,14 @@ const fetchActivePokemon: () => ThunkAction<
 };
 
 export const shouldFetchActivePokemon = (state: RootState): boolean => {
-    const { season, rule, activePokemon } = state;
+    const { rs, activePokemon } = state;
+    const { season, rule } = rs;
 
-    const acPms = activePokemon[`${season[0].value}_${rule[0].value}`];
+    if (!season || !rule) {
+        return false;
+    }
+
+    const acPms = activePokemon[`${season.value}_${rule.value}`];
 
     if (!acPms) {
         return true;

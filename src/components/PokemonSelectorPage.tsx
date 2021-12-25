@@ -32,6 +32,10 @@ const PokemonSelectorPage: React.FC<PokemonSelectorPageProps> = ({
         };
     });
 
+    if (!season || !rule) {
+        return null;
+    }
+
     return (
         <div className={styles["pm-selector-page"]}>
             <div className={styles["pm-selector-page-bar"]}>
@@ -62,10 +66,10 @@ const PokemonSelectorPage: React.FC<PokemonSelectorPageProps> = ({
                             className={styles["option-list-link"]}
                             to={{
                                 pathname: `/${o.id}/0`,
-                                search: `?season=${season[0].value}&rule=${rule[0].value}`,
+                                search: `?season=${season.value}&rule=${rule.value}`,
                                 state: {
-                                    rule: rule[0],
-                                    season: season[0],
+                                    rule: rule,
+                                    season: season,
                                     searchText: o.name,
                                 },
                             }}

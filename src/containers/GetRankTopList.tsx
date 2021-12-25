@@ -23,9 +23,9 @@ const GetRankTopList: React.FC = () => {
         document.title = "寶可夢排行榜 - PokéRank";
     });
 
-    if (page_loading) return <RankTopListLoading />;
+    if (page_loading || !season || !rule) return <RankTopListLoading />;
 
-    const currentList = topList[`${season[0].value}_${rule[0].value}`];
+    const currentList = topList[`${season.value}_${rule.value}`];
 
     const isFetching = !currentList || currentList.isFetching;
 
@@ -34,11 +34,7 @@ const GetRankTopList: React.FC = () => {
             {isFetching ? (
                 <RankTopListLoading />
             ) : (
-                <RankTopList
-                    topList={topList}
-                    season={season[0]}
-                    rule={rule[0]}
-                />
+                <RankTopList topList={topList} season={season} rule={rule} />
             )}
         </>
     );

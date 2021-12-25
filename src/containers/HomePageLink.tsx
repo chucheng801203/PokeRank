@@ -21,22 +21,23 @@ const HomePageLink: React.FC<HomePageLinkProps> = ({ children, className }) => {
         if (!pageData.page_loading) {
             const location = history.location;
             const { state } = location;
-            const { rule, season } = getDefaultState(pageData);
+            const { rs } = getDefaultState(pageData);
+            const { season, rule } = rs;
 
             if (
-                state.rule.index !== rule[0].index ||
-                state.season.index !== season[0].index ||
+                state.rule.index !== rule.index ||
+                state.season.index !== season.index ||
                 location.pathname !== "/"
             ) {
                 history.push("", {
-                    rule: rule[0],
-                    season: season[0],
+                    rule: rule,
+                    season: season,
                     searchText: "",
                 });
             } else if (location.search !== "") {
                 history.replace("", {
-                    rule: rule[0],
-                    season: season[0],
+                    rule: rule,
+                    season: season,
                     searchText: "",
                 });
             }
