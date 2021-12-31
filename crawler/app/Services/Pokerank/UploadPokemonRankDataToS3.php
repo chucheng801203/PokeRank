@@ -3,8 +3,8 @@
 namespace App\Services\Pokerank;
 
 use App\Models\Pokemon;
-use App\Models\RankTopPokemon;
 use App\Models\RankActivePokemon;
+use App\Models\RankTopPokemon;
 use App\Services\Pokemon\PokemonHome;
 use Aws\S3\S3Client;
 use Illuminate\Filesystem\Filesystem;
@@ -197,7 +197,7 @@ class UploadPokemonRankDataToS3
             }
         }
     }
-    
+
     /**
      * @param Illuminate\Support\Collection
      */
@@ -271,7 +271,7 @@ class UploadPokemonRankDataToS3
     {
         return $collection->map(function ($item, $key) {
             return [
-                'pf_id' => $item['pf_id'],
+                'pf_id'   => $item['pf_id'],
                 'id'      => $item['pokeform']['pm_id'],
                 'form_id' => $item['pokeform']['form_id'],
             ];

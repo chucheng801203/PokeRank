@@ -14,7 +14,6 @@ use App\Models\RankSeasonList;
 use App\Models\Type;
 use App\Services\Pokemon\PokemonHome;
 use Illuminate\Database\Capsule\Manager as Capsule;
-use Symfony\Component\Console\Input\ArrayInput;
 
 class UpdatePokemonData
 {
