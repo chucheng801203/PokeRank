@@ -3,7 +3,7 @@
  * 轉換 PokemonHome::get_top_pokemon 傳回的資料，轉成資料庫對應的欄位.
  */
 
-namespace App\Services\Pokemon;
+namespace App\Services\Pokerank;
 
 use App\Models\Pokeform;
 

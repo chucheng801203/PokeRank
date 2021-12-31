@@ -175,34 +175,6 @@ class PokemonHome
     }
 
     /**
-     * 把從 home 抓回來的資料轉換成資料庫對應欄位.
-     *
-     * @param int $season_number 指定賽季資料
-     *
-     * @return App\Services\Pokemon\PokemonRankDataAdapter
-     */
-    public function rank_data_generator($season_num)
-    {
-        $data = $this->get_rank_data($season_num);
-
-        return new PokemonRankDataAdapter($season_num, $data);
-    }
-
-    /**
-     * 把從 home 抓回來的資料轉換成資料庫對應欄位.
-     *
-     * @param int $season_number 指定賽季資料
-     *
-     * @return App\Services\Pokemon\PokemonRankTopListAdapter
-     */
-    public function top_list_generator($season_num)
-    {
-        $data = $this->get_top_pokemon($season_num);
-
-        return new PokemonRankTopListAdapter($season_num, $data);
-    }
-
-    /**
      * 下載指定賽季 pokemon 對戰資料.
      *
      * @param int $season_number 指定賽季資料
