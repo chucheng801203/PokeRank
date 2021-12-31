@@ -11,7 +11,7 @@ class RankAbility extends Model
 
     protected $table = 'rank_ability';
 
-    protected $primaryKey = null;
+    protected $primaryKey = ['pf_id', 'season_number', 'rule', 'ability_id'];
 
     public $incrementing = false;
 

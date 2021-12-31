@@ -11,7 +11,7 @@ class RankLosePokemon extends Model
 
     protected $table = 'rank_lose_pokemon';
 
-    protected $primaryKey = null;
+    protected $primaryKey = ['pf_id', 'season_number', 'rule', 'team_pf_id'];
 
     public $incrementing = false;
 

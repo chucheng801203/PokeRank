@@ -11,7 +11,7 @@ class RankItem extends Model
 
     protected $table = 'rank_item';
 
-    protected $primaryKey = null;
+    protected $primaryKey = ['pf_id', 'season_number', 'rule', 'item_id'];
 
     public $incrementing = false;
 

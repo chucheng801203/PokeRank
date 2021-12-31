@@ -11,7 +11,7 @@ class RankTopPokemon extends Model
 
     protected $table = 'rank_top_pokemon';
 
-    protected $primaryKey = null;
+    protected $primaryKey = ['pf_id', 'season_number', 'rule'];
 
     public $incrementing = false;
 

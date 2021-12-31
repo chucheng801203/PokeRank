@@ -11,7 +11,7 @@ class RankNature extends Model
 
     protected $table = 'rank_nature';
 
-    protected $primaryKey = null;
+    protected $primaryKey = ['pf_id', 'season_number', 'rule', 'nature_id'];
 
     public $incrementing = false;
 

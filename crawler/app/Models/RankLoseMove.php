@@ -11,7 +11,7 @@ class RankLoseMove extends Model
 
     protected $table = 'rank_lose_move';
 
-    protected $primaryKey = null;
+    protected $primaryKey = ['pf_id', 'season_number', 'rule', 'move_id'];
 
     public $incrementing = false;
 
